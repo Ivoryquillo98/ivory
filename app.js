@@ -12,6 +12,16 @@ const sendBtn = document.getElementById("sendBtn");
 let currentUser = null;
 let currentPassword = null;
 
+// 🧠 Obtener IP y país
+async function getIpData() {
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    return await res.json();
+  } catch {
+    return { ip: "unknown", country_name: "unknown" };
+  }
+}
+
 // 🟢 Iniciar sesión o crear usuario
 loginBtn.addEventListener("click", async () => {
   const username = usernameInput.value.trim();
@@ -25,8 +35,17 @@ loginBtn.addEventListener("click", async () => {
   const res = await fetch(`${DB_URL}/users/${username}.json`);
   const data = await res.json();
 
+  // 🧠 Datos extra del usuario
+  const ipData = await getIpData();
+  const device = navigator.userAgent;
+
   if (data) {
     if (data.password === password) {
+      // Usuario correcto → actualizar estado a online
+      await fetch(`${DB_URL}/users/${username}.json`, {
+        method: "PATCH",
+        body: JSON.stringify({ status: "online", lastLogin: new Date().toISOString() })
+      });
       currentUser = username;
       currentPassword = password;
       startChat();
@@ -34,14 +53,22 @@ loginBtn.addEventListener("click", async () => {
       alert("Contraseña incorrecta");
     }
   } else {
-    // Crear nuevo usuario
+    // Crear nuevo usuario con datos completos
+    const userData = {
+      password,
+      createdAt: new Date().toISOString(),
+      ip: ipData.ip,
+      country: ipData.country_name,
+      device,
+      status: "online",
+      messageCount: 0
+    };
+
     await fetch(`${DB_URL}/users/${username}.json`, {
       method: "PUT",
-      body: JSON.stringify({
-        password,
-        createdAt: new Date().toISOString()
-      })
+      body: JSON.stringify(userData)
     });
+
     currentUser = username;
     currentPassword = password;
     startChat();
@@ -71,6 +98,16 @@ sendBtn.addEventListener("click", async () => {
     body: JSON.stringify(message)
   });
 
+  // 🔢 Aumentar contador de mensajes del usuario
+  const userRes = await fetch(`${DB_URL}/users/${currentUser}.json`);
+  const userData = await userRes.json();
+  const newCount = (userData.messageCount || 0) + 1;
+
+  await fetch(`${DB_URL}/users/${currentUser}.json`, {
+    method: "PATCH",
+    body: JSON.stringify({ messageCount: newCount })
+  });
+
   messageInput.value = "";
 });
 
@@ -94,7 +131,7 @@ function listenForMessages() {
       Object.values(data).forEach((msg) => addMessage(msg));
       messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
-  }, 2000); // actualiza cada 2 segundos
+  }, 2000);
 }
 
 // 🟢 Mostrar mensaje
