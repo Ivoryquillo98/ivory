@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Camisetas Únicas · Creatividad y Tecnología</title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Archivo+Black&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Archivo+Black&family=Bungee&display=swap" rel="stylesheet"> 
+   <!-- Estilos -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/titulo.css">
+  <link rel="stylesheet" href="css/subtitulo.css">
+  <link rel="stylesheet" href="css/misiones.css"> <!-- CSS para h2/h3 -->
+</head>
+
+<body>
+  <!-- Fondo animado Matrix -->
+  <iframe src="fondo.html" class="fondo-matrix" frameborder="0"></iframe>
+
+  <!-- Header principal -->
+  <header class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <!-- Título Glitch -->
+      <div class="loader">
+        <div data-glitch="Camisetas Únicas" class="glitch">Camisetas Únicas</div>
+      </div>
+
+      <!-- Subtítulo neón -->
+      <p class="logo-1">Cada camiseta cuenta tu historia, y ninguna otra será igual.</p>
+
+      <!-- Botones -->
+      <a href="#mision" class="btn" aria-label="Conoce nuestra misión">Conoce nuestra misión</a>
+      <a href="catalogo.html" class="btn alt" aria-label="Ver camisetas creadas">Ver camisetas creadas</a>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="container">
+    <section id="mision" class="section">
+      <h2>Nuestra Misión</h2>
+      <h3>
+        En <strong>Camisetas Únicas</strong>, creemos que la moda puede ser una extensión del alma.
+        Buscamos ofrecer a cada persona la oportunidad de crear una prenda que refleje su identidad,
+        emociones y creatividad, utilizando herramientas digitales simples pero potentes.
+      </h3>
+      <h3>
+        Nuestra misión es democratizar la personalización textil, uniendo el arte con la tecnología.
+        Queremos que cualquier persona pueda convertir sus ideas en una obra tangible,
+        única e irrepetible, aprovechando las ventajas del entorno digital y la nube.
+      </h3>
+    </section>
+
+    <section id="vision" class="section alt">
+      <h2>Nuestra Visión</h2>
+      <h3>
+        Ser una plataforma de referencia en la creación de moda personalizada a nivel digital,
+        impulsando el talento artístico de los usuarios y fomentando la producción consciente.
+        Nos proyectamos como un espacio donde la creatividad individual tenga un valor real y visible.
+      </h3>
+      <h3>
+        A largo plazo, aspiramos a integrar inteligencia artificial, realidad aumentada y
+        certificaciones digitales NFT que respalden la autenticidad de cada diseño.
+      </h3>
+    </section>
+
+    <section id="servicio" class="section">
+      <h2>Acerca del Servicio</h2>
+      <h3>
+        <strong>Camisetas Únicas</strong> es una plataforma en la que cada prenda se convierte en una obra original.
+        El sistema permite cargar diseños personalizados, previsualizarlos y almacenarlos en un catálogo digital.
+        Cada camiseta se asocia al nombre de su creador, manteniendo su esencia como pieza exclusiva.
+      </h3>
+      <h3>
+        Nuestra infraestructura está basada en <strong>Firebase</strong>, lo que garantiza escalabilidad,
+        estabilidad y actualizaciones seguras en la nube. Esto nos permite mantener una experiencia
+        fluida para los usuarios y facilitar la gestión de cada colección de diseños.
+      </h3>
+    </section>
+
+    <section id="valores" class="section alt">
+      <h2>Nuestros Valores</h2>
+      <h3>
+        <ul>
+          <li><strong>Creatividad:</strong> impulsamos la expresión individual a través del diseño textil.</li>
+          <li><strong>Exclusividad:</strong> cada prenda es una pieza única e irrepetible.</li>
+          <li><strong>Tecnología:</strong> usamos herramientas modernas para conectar arte y funcionalidad.</li>
+          <li><strong>Sostenibilidad:</strong> promovemos una moda consciente, producida bajo demanda.</li>
+        </ul>
+      </h3>
+    </section>
+
+    <section id="galeria" class="section call-to-action">
+      <h2>Explora nuestras creaciones</h2>
+      <h3>Descubre las camisetas únicas que ya fueron creadas por nuestros usuarios y artistas.</h3>
+      <a href="catalogo.html" class="btn big" aria-label="Ver camisetas personalizadas">Ver camisetas personalizadas</a>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© <span id="year"></span> Camisetas Únicas · Innovación textil desde la creatividad</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
