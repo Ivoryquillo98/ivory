@@ -1,0 +1,193 @@
+:root {
+  --card-height: 300px;
+  --card-width: calc(var(--card-height) / 1.5);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: #191c29;
+  padding-top: 150px;
+  padding-bottom: 50px;
+}
+
+.grid {
+  display: flex;
+  gap: 50px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: var(--card-width);
+  height: var(--card-height);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0 36px;
+  perspective: 2500px;
+  margin: 0 50px;
+}
+
+.cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.5s ease;
+  filter: brightness(1.1) saturate(1.2); /* brillo inicial */
+}
+
+.wrapper {
+  transition: all 0.5s;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+  top: 0;
+}
+
+.card:hover .wrapper {
+  transform: perspective(900px) translateY(-5%) rotateX(25deg) translateZ(0);
+  box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+}
+
+.wrapper::before,
+.wrapper::after {
+  content: "";
+  opacity: 0;
+  width: 100%;
+  height: 80px;
+  transition: all 0.5s;
+  position: absolute;
+  left: 0;
+}
+
+.wrapper::before {
+  top: 0;
+  height: 100%;
+  background-image: linear-gradient(
+    to top,
+    transparent 46%,
+    rgba(12, 13, 19, 0.2) 68%,
+    rgba(12, 13, 19, 0.3) 97%
+  );
+}
+
+.wrapper::after {
+  bottom: 0;
+  opacity: 1;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 46%,
+    rgba(12, 13, 19, 0.2) 68%,
+    rgba(12, 13, 19, 0.3) 97%
+  );
+}
+
+.card:hover .wrapper::before,
+.wrapper::after {
+  opacity: 1;
+}
+
+.card:hover .wrapper::after {
+  height: 120px;
+}
+
+.title {
+  width: 100%;
+  transition: transform 0.5s;
+}
+
+.card:hover .title {
+  transform: translate3d(0%, -50px, 100px);
+}
+
+.character {
+  width: 100%;
+  opacity: 0;
+  transition: all 0.5s;
+  position: absolute;
+  z-index: -1;
+}
+
+.card:hover .character {
+  opacity: 1;
+  transform: translate3d(0%, -30%, 100px);
+}
+
+/* Hover luminoso para el cover */
+.card:hover .cover-image {
+  filter: brightness(1.35) saturate(1.4);
+}
+
+/* Personalizaciones por personaje */
+.hisoka-card .title { transform: scale(1.4); transition: transform 0.8s; }
+.hisoka-card:hover .title { transform: scale(1.5) translate3d(0%, -50px, 100px); }
+
+.itachi-card .title { transform: scale(1.4); transition: transform 0.5s; }
+.itachi-card:hover .title { transform: scale(1.6) translate3d(0%, -50px, 100px); }
+
+.vegeta-card .title { transform: scale(1.3); transition: transform 0.5s, filter 0.5s; }
+.vegeta-card:hover .title { transform: scale(1.4) translate3d(0%, -50px, 100px); filter: drop-shadow(0 0 15px rgba(150,0,255,0.8)) brightness(1.3); }
+
+.killua-card .title { transform: scale(1.3); transition: transform 0.5s, filter 0.5s; }
+.killua-card:hover .title { transform: scale(1.3) translate3d(0%, -50px, 100px); filter: drop-shadow(0 0 15px rgba(150,0,255,0.8)) brightness(1.3); }
+
+.chrollo-card .title { transform: scale(1.3); transition: transform 0.5s, filter 0.5s; }
+.chrollo-card:hover .title { transform: scale(1.4) translate3d(0%, -50px, 100px); filter: drop-shadow(0 0 15px rgba(150,0,255,0.8)) brightness(1.3); }
+
+.gon-card .title { transform: scale(0.8); transition: transform 0.5s, filter 0.5s; }
+.gon-card:hover .title { transform: scale(1.4) translate3d(0%, -30px, 100px); filter: drop-shadow(0 0 15px rgba(150,0,255,0.8)) brightness(1.3); }
+
+.leorio-card .title { transform: scale(1.6); transition: transform 0.5s, filter 0.5s; }
+.leorio-card:hover .title { transform: scale(1.9) translate3d(0%, -30px, 100px); filter: drop-shadow(0 0 15px rgba(150,0,255,0.8)) brightness(1.3); }
+
+.shizuku-card .title { transform: scale(1.7); transition: transform 0.5s, filter 0.5s; }
+.shizuku-card:hover .title { transform: scale(1.7) translate3d(0%, -30px, 100px); filter: drop-shadow(0 0 15px rgba(132,6,222,0.93)) brightness(1.3); }
+
+.kurapika-card .title { transform: scale(1.2); transition: transform 0.5s, filter 0.5s; }
+.kurapika-card:hover .title { transform: scale(1.5) translate3d(0%, -30px, 100px); filter: drop-shadow(0 0 15px rgba(255,215,0,0.9)) brightness(1.3); }
+
+.sasuke-card .title { transform: scale(1.7); transition: transform 0.5s, filter 0.5s; }
+.sasuke-card:hover .title { transform: scale(1.7) translate3d(0%, -30px, 100px); filter: drop-shadow(0 0 15px rgba(0,100,255,0.9)) brightness(1.3); }
+
+.naruto-card .title { transform: scale(1.8); transition: transform 0.5s, filter 0.5s; }
+.naruto-card:hover .title { transform: scale(1.7) translate3d(0%, -30px, 100px); filter: drop-shadow(0 0 15px rgba(255,140,0,0.9)) brightness(1.3); }
+
+.goku-card .title { transform: scale(0.8); transition: transform 0.5s, filter 0.5s; }
+.goku-card:hover .title { transform: scale(1.7) translate3d(0%, -30px, 100px); filter: drop-shadow(0 0 15px rgba(0,170,255,0.9)) brightness(1.3); }
+
+.gohan-card .title { transform: scale(1.2); transition: transform 0.5s, filter 0.5s; }
+.gohan-card:hover .title { transform: scale(1.7) translate3d(0%, -30px, 100px); filter: drop-shadow(0 0 15px rgba(128,0,255,0.9)) brightness(1.3); }
+
+.trunks-card .title { transform: scale(1.2); transition: transform 0.5s, filter 0.5s; }
+.trunks-card:hover .title { transform: scale(1.7) translate3d(0%, -30px, 100px); filter: drop-shadow(0 0 15px rgba(0,200,255,0.9)) brightness(1.3); }
+
+.luffy-card .title { transform: scale(1.7); transition: transform 0.5s, filter 0.5s; }
+.luffy-card:hover .title { transform: scale(1.7) translate3d(0%, -30px, 100px); filter: drop-shadow(0 0 15px rgba(255,80,0,0.9)) brightness(1.3); }
+
+.zoro-card .title { transform: scale(1.2); transition: transform 0.5s, filter 0.5s; }
+.zoro-card:hover .title { transform: scale(1.7) translate3d(0%, -30px, 100px); filter: drop-shadow(0 0 15px rgba(0,255,80,0.9)) brightness(1.3); }
+
+.sanji-card .title { transform: scale(1.2); transition: transform 0.5s, filter 0.5s; }
+.sanji-card:hover .title { transform: scale(1.7) translate3d(0%, -30px, 100px); filter: drop-shadow(0 0 15px rgba(255,200,0,0.9)) brightness(1.3); }
+
+.kakashi-card .title { transform: scale(1.1); transition: transform 0.8s; }
+.kakashi-card:hover .title { transform: scale(1.3) translate3d(0%, -50px, 100px); }
+
+/* 💫 Efecto para personaje activo en móvil */
+@media (hover: none) and (pointer: coarse) {
+  .card.active {
+    transform: scale(1.2);
+    z-index: 10;
+    transition: transform 0.3s ease, z-index 0.3s ease;
+  }
+}
