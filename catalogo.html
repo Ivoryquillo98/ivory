@@ -1,16 +1,55 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Catálogo · Camisetas Únicas</title>
+
+  <!-- Fuente Shadows Into Light -->
+  <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+  <!-- CSS principal -->
   <link rel="stylesheet" href="css/catalogo/catalogo.css">
+
+  <!-- CSS del efecto Matrix HISOKA -->
+  <link rel="stylesheet" href="css/catalogo/matrix.css">
+
+  <!-- CSS del efecto Matrix GON -->
+  <link rel="stylesheet" href="css/catalogo/matrix2.css">
 </head>
+
 <body>
+
+  <!-- 🌟 Fondo Matrix vertical -->
+  <div class="matrix-container">
+    <div class="matrix-pattern">
+
+      <!-- 5 columnas HISOKA (matrix.css) -->
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+
+      <!-- 5 columnas GON (matrix2.css: columnas 6 a 10) -->
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+
+    </div>
+  </div>
+
+  <!-- Contenido del catálogo -->
   <main class="container catalogo">
     <div class="grid" id="cardContainer"></div>
   </main>
 
+  <!-- Scripts -->
   <script src="js/catalogo.js"></script>
+
 </body>
+
 </html>
