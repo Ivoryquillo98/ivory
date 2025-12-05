@@ -1,0 +1,134 @@
+/* Fondo tipo Matrix personalizado para "Hisoka" */
+.matrix-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.matrix-pattern {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Cada columna */
+.matrix-column {
+  position: absolute;
+  top: -250px;
+  font-size: 34px;
+  line-height: 36px;
+  width: 38px;
+  font-weight: normal;
+  animation: fall linear infinite;
+}
+
+/* Texto "HISOKA" vertical UNA VEZ */
+.matrix-column::before {
+  content: "HISOKA"; /* MAYÚSCULAS */
+
+  font-family: "Shadows Into Light", cursive;
+  text-transform: uppercase;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+
+  /* degradado estilo Hisoka */
+  background: linear-gradient(
+    to bottom,
+    #ffffff 10%,
+    #ff2ff5 20%,
+    #dd00cc 40%,
+    #770055 70%,
+    transparent 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  letter-spacing: 8px; /* fuente delgada → más separación */
+}
+
+/* 📌 Posiciones y animaciones para SOLO 5 columnas */
+.matrix-column:nth-child(1) {
+  left: 40px;
+  animation-duration: 8s;
+  animation-delay: -1s;
+}
+
+.matrix-column:nth-child(2) {
+  left: 160px;
+  animation-duration: 9.2s;
+  animation-delay: -2.3s;
+}
+
+.matrix-column:nth-child(3) {
+  left: 280px;
+  animation-duration: 7.6s;
+  animation-delay: -0.8s;
+}
+
+.matrix-column:nth-child(4) {
+  left: 400px;
+  animation-duration: 10s;
+  animation-delay: -3.5s;
+}
+
+.matrix-column:nth-child(5) {
+  left: 520px;
+  animation-duration: 8.7s;
+  animation-delay: -1.5s;
+}
+
+/* 🔁 Animación de caída */
+@keyframes fall {
+  0% {
+    top: -250px;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    top: 120vh;
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .matrix-column {
+    font-size: 28px;
+    line-height: 30px;
+    width: 32px;
+  }
+
+  .matrix-column:nth-child(1) { left: 20px; }
+  .matrix-column:nth-child(2) { left: 100px; }
+  .matrix-column:nth-child(3) { left: 180px; }
+  .matrix-column:nth-child(4) { left: 260px; }
+  .matrix-column:nth-child(5) { left: 340px; }
+}
+
+@media (max-width: 480px) {
+  .matrix-column {
+    font-size: 22px;
+    line-height: 24px;
+    width: 26px;
+  }
+
+  .matrix-column:nth-child(1) { left: 15px; }
+  .matrix-column:nth-child(2) { left: 70px; }
+  .matrix-column:nth-child(3) { left: 130px; }
+  .matrix-column:nth-child(4) { left: 190px; }
+  .matrix-column:nth-child(5) { left: 250px; }
+}

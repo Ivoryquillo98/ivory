@@ -1,0 +1,80 @@
+/* 🎋 Config extra para GON (columas 6 a 10) */
+
+/* Posiciones y animaciones para las columnas 6 a 10 */
+.matrix-column:nth-child(6) {
+  left: 50vw;
+  animation-duration: 8.5s;
+  animation-delay: -1.7s;
+}
+
+.matrix-column:nth-child(7) {
+  left: 60vw;
+  animation-duration: 9.3s;
+  animation-delay: -2.4s;
+}
+
+.matrix-column:nth-child(8) {
+  left: 70vw;
+  animation-duration: 7.9s;
+  animation-delay: -0.9s;
+}
+
+.matrix-column:nth-child(9) {
+  left: 80vw;
+  animation-duration: 10.2s;
+  animation-delay: -3.1s;
+}
+
+.matrix-column:nth-child(10) {
+  left: 90vw;
+  animation-duration: 8.8s;
+  animation-delay: -1.2s;
+}
+
+/* 🔤 Texto "GON" vertical SOLO para columnas 6 a 10 */
+.matrix-column:nth-child(n+6)::before {
+  content: "GON";
+
+  font-family: "Shadows Into Light", cursive;
+  text-transform: uppercase;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+
+  /* degradado estilo Gon (verde) */
+  background: linear-gradient(
+    to bottom,
+    #ffffff 10%,
+    #7cff4f 20%,
+    #30b000 40%,
+    #006600 70%,
+    transparent 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  letter-spacing: 8px;
+}
+
+/* Responsive (ajustes si quieres afinar más) */
+@media (max-width: 768px) {
+  .matrix-column:nth-child(6) { left: 55vw; }
+  .matrix-column:nth-child(7) { left: 65vw; }
+  .matrix-column:nth-child(8) { left: 75vw; }
+  .matrix-column:nth-child(9) { left: 85vw; }
+  .matrix-column:nth-child(10) { left: 95vw; }
+}
+
+@media (max-width: 480px) {
+  .matrix-column:nth-child(6) { left: 50vw; }
+  .matrix-column:nth-child(7) { left: 65vw; }
+  .matrix-column:nth-child(8) { left: 80vw; }
+  .matrix-column:nth-child(9) { left: 90vw; }
+  .matrix-column:nth-child(10) { left: 100vw; }
+}
