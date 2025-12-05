@@ -1,3 +1,14 @@
+/* =====================================
+      Fondo HTML (transparente)
+   ===================================== */
+html {
+  background: transparent !important; /* ✔ Para que no tape el Matrix */
+}
+
+/* =====================================
+      Estilos del catálogo
+   ===================================== */
+
 :root {
   --card-height: 300px;
   --card-width: calc(var(--card-height) / 1.5);
@@ -14,7 +25,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background: #191c29;
+
+  /* 🌟 Fondo degradado EN EL BODY (queda sobre el Matrix) */
+  background: linear-gradient(180deg, #0b0f17 0%, #000000 100%) !important;
+
   padding-top: 150px;
   padding-bottom: 50px;
 }
@@ -43,7 +57,7 @@ body {
   height: 100%;
   object-fit: cover;
   transition: filter 0.5s ease;
-  filter: brightness(1.1) saturate(1.2); /* brillo inicial */
+  filter: brightness(1.1) saturate(1.2);
 }
 
 .wrapper {
@@ -128,7 +142,10 @@ body {
   filter: brightness(1.35) saturate(1.4);
 }
 
-/* Personalizaciones por personaje */
+/* ===============================
+   Personalizaciones por personaje
+   =============================== */
+
 .hisoka-card .title { transform: scale(1.4); transition: transform 0.8s; }
 .hisoka-card:hover .title { transform: scale(1.5) translate3d(0%, -50px, 100px); }
 
@@ -189,5 +206,42 @@ body {
     transform: scale(1.2);
     z-index: 10;
     transition: transform 0.3s ease, z-index 0.3s ease;
+  }
+}
+
+/* 📱 SOLO EN MÓVIL — 2 tarjetas por fila, tamaño pequeño y bien espaciadas */
+@media (max-width: 768px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 38px 32px;        /* separación agradable */
+    justify-items: center;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  /* Tamaño reducido de las tarjetas */
+  .card {
+    width: 100%;
+    max-width: 140px;
+    height: 210px;
+    padding: 0 8px;
+    margin: 0;
+  }
+
+  :root {
+    --card-height: 200px;
+    --card-width: 130px;
+  }
+
+  /* 🔤 Tamaño más pequeño para el nombre del personaje */
+  .title {
+    transform: scale(0.95) !important;   /* tamaño reducido del título */
+    margin-bottom: -1px;                 /* lo ajusta visualmente */
+  }
+
+  /* Simulación de hover en móvil (táctil) */
+  .card:hover .title {
+    transform: scale(0.75) translate3d(0, -20px, 40px) !important;
   }
 }
