@@ -1,0 +1,122 @@
+/* Fondo tipo Matrix verde INTENSO para "HISOKA" */
+
+.matrix-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.9; /* un poquito más fuerte */
+}
+
+.matrix-pattern {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Cada columna */
+.matrix-column {
+  position: absolute;
+  top: -260px;
+  font-size: 34px;
+  line-height: 36px;
+  width: 38px;
+  font-weight: normal;
+  animation: fall linear infinite;
+}
+
+/* Texto HISOKA vertical (una vez por columna) */
+.matrix-column::before {
+  content: "HISOKA";
+
+  font-family: "Shadows Into Light", cursive;
+  text-transform: uppercase;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+
+  /* 💚 Verde más intenso (sin blanco al inicio) */
+  background: linear-gradient(
+    to bottom,
+    #39ff88 0%,
+    #14ff63 18%,
+    #00e64f 38%,
+    #00b83f 62%,
+    transparent 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  letter-spacing: 8px;
+
+  /* Glow */
+  filter: drop-shadow(0 0 7px rgba(0, 255, 120, 0.65));
+}
+
+/* 📌 10 columnas (PC) */
+.matrix-column:nth-child(1)  { left:  40px; animation-duration:  8.0s; animation-delay: -1.0s; }
+.matrix-column:nth-child(2)  { left: 120px; animation-duration:  9.5s; animation-delay: -2.8s; }
+.matrix-column:nth-child(3)  { left: 200px; animation-duration:  7.8s; animation-delay: -0.9s; }
+.matrix-column:nth-child(4)  { left: 280px; animation-duration: 10.2s; animation-delay: -3.6s; }
+.matrix-column:nth-child(5)  { left: 360px; animation-duration:  8.9s; animation-delay: -1.7s; }
+.matrix-column:nth-child(6)  { left: 440px; animation-duration:  9.1s; animation-delay: -2.1s; }
+.matrix-column:nth-child(7)  { left: 520px; animation-duration:  7.6s; animation-delay: -0.6s; }
+.matrix-column:nth-child(8)  { left: 600px; animation-duration: 10.6s; animation-delay: -3.2s; }
+.matrix-column:nth-child(9)  { left: 680px; animation-duration:  8.3s; animation-delay: -1.3s; }
+.matrix-column:nth-child(10) { left: 760px; animation-duration:  9.8s; animation-delay: -2.9s; }
+
+/* Animación de caída */
+@keyframes fall {
+  0%   { top: -260px; opacity: 0; }
+  12%  { opacity: 1; }
+  100% { top: 120vh; opacity: 0; }
+}
+
+/* 📱 Responsive (más grande en móvil) */
+@media (max-width: 768px) {
+  .matrix-column {
+    font-size: 34px;     /* ✅ antes 28px */
+    line-height: 36px;   /* ✅ acorde */
+    width: 38px;         /* ✅ un poco más ancho para no apretar */
+  }
+
+  .matrix-column:nth-child(1)  { left:  12px; }
+  .matrix-column:nth-child(2)  { left:  62px; }
+  .matrix-column:nth-child(3)  { left: 112px; }
+  .matrix-column:nth-child(4)  { left: 162px; }
+  .matrix-column:nth-child(5)  { left: 212px; }
+  .matrix-column:nth-child(6)  { left: 262px; }
+  .matrix-column:nth-child(7)  { left: 312px; }
+  .matrix-column:nth-child(8)  { left: 362px; }
+  .matrix-column:nth-child(9)  { left: 412px; }
+  .matrix-column:nth-child(10) { left: 462px; }
+}
+
+@media (max-width: 480px) {
+  .matrix-column {
+    font-size: 44px;     /* ✅ antes 22px */
+    line-height: 30px;   /* ✅ acorde */
+    width: 32px;         /* ✅ acorde */
+  }
+
+  .matrix-column:nth-child(1)  { left:  10px; }
+  .matrix-column:nth-child(2)  { left:  46px; }
+  .matrix-column:nth-child(3)  { left:  82px; }
+  .matrix-column:nth-child(4)  { left: 118px; }
+  .matrix-column:nth-child(5)  { left: 154px; }
+  .matrix-column:nth-child(6)  { left: 190px; }
+  .matrix-column:nth-child(7)  { left: 226px; }
+  .matrix-column:nth-child(8)  { left: 262px; }
+  .matrix-column:nth-child(9)  { left: 298px; }
+  .matrix-column:nth-child(10) { left: 334px; }
+}
