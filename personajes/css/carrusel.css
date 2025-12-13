@@ -4,7 +4,7 @@
   text-align: center;
 }
 
-/* --- Botones circulares originales --- */
+/* --- Botones --- */
 .slider > a {
   display: inline-flex;
   width: 1.5rem;
@@ -27,25 +27,29 @@
   color: white;
 }
 
-/* --- Contenedor de la imagen principal --- */
+/* --- Contenedor imagen --- */
 .slides {
   width: 350px;
   height: 350px;
   overflow: hidden;
   border-radius: 10px;
   position: relative;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Imagen principal */
 .slides img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   display: block;
   transition: opacity 0.4s ease-in-out;
 }
 
-/* --- LUPA (magnifier) --- */
+/* --- LUPA --- */
 .magnifier-lens {
   position: absolute;
   width: 120px;
@@ -53,17 +57,60 @@
   border-radius: 50%;
   border: 2px solid white;
   background-repeat: no-repeat;
-  background-size: 200%; /* nivel de zoom */
+  background-size: 200%;
   pointer-events: none;
   display: none;
   z-index: 20;
 }
 
-/* --- Fade animación --- */
-.fade {
-  opacity: 0;
+.fade { opacity: 0; }
+.fade.show { opacity: 1; }
+
+/* ==========================
+   📱 MÓVIL – nombre MÁS grande
+========================== */
+@media (max-width: 768px) {
+  .slider {
+    width: 88vw;
+    max-width: 320px;
+  }
+
+  .slides {
+    width: 88vw;
+    max-width: 320px;
+    height: 36vh;
+    min-height: 240px;
+    max-height: 340px;
+  }
+
+  /* 🏷️ Nombre del dueño MÁS protagonista */
+  #dueños-container {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-top: 0.9rem;
+    letter-spacing: 0.6px;
+  }
+
+  /* En móvil no usamos lupa */
+  .magnifier-lens {
+    display: none !important;
+  }
 }
 
-.fade.show {
-  opacity: 1;
+/* 📱 Teléfonos chicos */
+@media (max-width: 480px) {
+  .slider {
+    max-width: 300px;
+  }
+
+  .slides {
+    max-width: 300px;
+    height: 32vh;
+    min-height: 220px;
+  }
+
+  /* Nombre aún más grande */
+  #dueños-container {
+    font-size: 1.45rem;
+  }
 }
