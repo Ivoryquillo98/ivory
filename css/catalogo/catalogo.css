@@ -245,3 +245,20 @@ body {
     transform: scale(0.75) translate3d(0, -20px, 40px) !important;
   }
 }
+
+/* 📱 MÓVIL: bajar solo el personaje (no el fondo) */
+@media (max-width: 768px) {
+
+  /* Estado normal (sin hover/active): lo dejamos oculto igual */
+  .character {
+    transform: translate3d(0%, 0%, 0); /* base */
+  }
+
+  /* Cuando se activa (hover o active): aparece más abajo */
+  .card:hover .character,
+  .card.active .character {
+    opacity: 1;
+    transform: translate3d(0%, -15%, 80px); /* antes: -30% */
+  }
+}
+
