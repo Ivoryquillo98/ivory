@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Card Animada - Vegeta</title>
+
+  <!-- CSS del personaje -->
+  <link rel="stylesheet" href="css/personajes.css">
+  <!-- CSS del slider -->
+  <link rel="stylesheet" href="css/carrusel.css">
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    /* 🔵🟡 FONDO VEGETA — orgullo + energía Saiyajin */
+    body {
+      background: radial-gradient(
+        circle at top,
+        #1e4fff 0%,
+        #0a1b3a 45%,
+        #040813 100%
+      );
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .container {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 📱 MÓVIL: card arriba / carrusel abajo */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 1.25rem 1rem;
+        gap: 1.25rem;
+      }
+    }
+
+    /* NOMBRE DEL DUEÑO */
+    #dueños-container {
+      margin-top: 1rem;
+      font-weight: 600;
+      text-align: center;
+      font-size: 1.4rem;
+      color: #ffe27a; /* dorado Vegeta */
+      text-shadow: 0 0 8px rgba(255, 210, 90, 0.5);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- TARJETA DEL PERSONAJE -->
+    <article class="card">
+      <img
+        class="card__background"
+        src="imagenes/vegeta/vegeta.png"
+        alt="Vegeta"
+      />
+
+      <div class="card__content flow">
+        <div class="card__content--container flow">
+          <h2 class="card__title">Vegeta</h2>
+          <p class="card__description">
+            El príncipe de los Saiyajin, orgulloso y poderoso.
+            Con una determinación inquebrantable y una rivalidad eterna con Goku,
+            Vegeta evoluciona de villano a héroe sin perder su honor ni su orgullo.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- SLIDER -->
+    <div class="slider">
+
+      <!-- BOTONES -->
+      <a href="#slide-1">1</a>
+      <a href="#slide-2">2</a>
+      <a href="#slide-3">3</a>
+      <a href="#slide-4">4</a>
+
+      <!-- CONTENEDOR IMÁGENES -->
+      <div class="slides" id="slides">
+        <img
+          id="sliderImage"
+          src="imagenes/vegeta/vegeta1.png"
+          class="fade show"
+          alt="Vegeta artwork"
+        >
+      </div>
+
+      <!-- DUEÑO -->
+      <div id="dueños-container">Emilio Contreras</div>
+
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    const imagenesVegeta = [
+      { src: "imagenes/vegeta/vegeta1.png", dueño: "Emilio Contreras" },
+      { src: "imagenes/vegeta/vegeta2.png", dueño: "María Pérez" },
+      { src: "imagenes/vegeta/vegeta3.png", dueño: "Carlos Gómez" },
+      { src: "imagenes/vegeta/vegeta4.png", dueño: "Lucía Torres" }
+    ];
+
+    const sliderImage = document.getElementById("sliderImage");
+    const dueñoContainer = document.getElementById("dueños-container");
+    const buttons = document.querySelectorAll(".slider > a");
+
+    buttons.forEach((btn, index) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        sliderImage.classList.remove("show");
+
+        setTimeout(() => {
+          sliderImage.src = imagenesVegeta[index].src;
+          dueñoContainer.textContent = imagenesVegeta[index].dueño;
+          sliderImage.classList.add("show");
+        }, 150);
+      });
+    });
+  </script>
+
+</body>
+</html>

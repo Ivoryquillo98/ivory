@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Card Animada - Leorio</title>
+
+  <!-- CSS del personaje -->
+  <link rel="stylesheet" href="css/personajes.css">
+  <!-- CSS del slider/carrusel -->
+  <link rel="stylesheet" href="css/carrusel.css">
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    /* 🟢 Fondo Leorio: verde médico + cálido */
+    body {
+      background:
+        radial-gradient(circle at 30% 20%, rgba(120, 180, 120, 0.35) 0%, rgba(120, 180, 120, 0) 45%),
+        radial-gradient(circle at 70% 30%, rgba(200, 220, 170, 0.25) 0%, rgba(200, 220, 170, 0) 50%),
+        linear-gradient(135deg, #f4f6ec, #dfe8d6, #c6d6b8);
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .container {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 📱 MÓVIL: card arriba / carrusel abajo */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 1.25rem 1rem;
+        gap: 1.25rem;
+      }
+    }
+
+    /* NOMBRE DEL DUEÑO */
+    #dueños-container {
+      margin-top: 1rem;
+      font-weight: 700;
+      text-align: center;
+      font-size: 1.4rem;
+      color: #1f3d1f;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- TARJETA DEL PERSONAJE -->
+    <article class="card">
+      <img
+        class="card__background"
+        src="imagenes/leorio/leorio.png"
+        alt="Leorio"
+      />
+
+      <div class="card__content flow">
+        <div class="card__content--container flow">
+          <h2 class="card__title">Leorio Paradinight</h2>
+          <p class="card__description">
+            Leorio es un aspirante a médico con un fuerte sentido de la justicia
+            y un gran corazón. Aunque aparenta ser impulsivo, su verdadera
+            motivación es ayudar a los demás y salvar vidas.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- SLIDER -->
+    <div class="slider">
+      <a href="#slide-1">1</a>
+      <a href="#slide-2">2</a>
+      <a href="#slide-3">3</a>
+      <a href="#slide-4">4</a>
+
+      <div class="slides" id="slides">
+        <img
+          id="sliderImage"
+          src="imagenes/leorio/leorio1.png"
+          class="fade show"
+          alt="Leorio artwork"
+        >
+      </div>
+
+      <div id="dueños-container">Emilio Contreras</div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    const imagenesLeorio = [
+      { src: "imagenes/leorio/leorio1.png", dueño: "Emilio Contreras" },
+      { src: "imagenes/leorio/leorio2.png", dueño: "María Pérez" },
+      { src: "imagenes/leorio/leorio3.png", dueño: "Carlos Gómez" },
+      { src: "imagenes/leorio/leorio4.png", dueño: "Lucía Torres" }
+    ];
+
+    const sliderImage = document.getElementById("sliderImage");
+    const dueñoContainer = document.getElementById("dueños-container");
+    const buttons = document.querySelectorAll(".slider > a");
+
+    buttons.forEach((btn, index) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        sliderImage.classList.remove("show");
+
+        setTimeout(() => {
+          sliderImage.src = imagenesLeorio[index].src;
+          dueñoContainer.textContent = imagenesLeorio[index].dueño;
+          sliderImage.classList.add("show");
+        }, 150);
+      });
+    });
+  </script>
+</body>
+</html>

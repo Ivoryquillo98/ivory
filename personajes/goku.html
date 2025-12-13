@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Card Animada - Goku</title>
+
+  <!-- CSS del personaje -->
+  <link rel="stylesheet" href="css/personajes.css">
+  <!-- CSS del slider/carrusel -->
+  <link rel="stylesheet" href="css/carrusel.css">
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ✅ Fondo acorde a Goku (naranjo + azul, estilo gi y cielo) */
+    body{
+      background:
+        radial-gradient(circle at 25% 15%, rgba(255, 140, 0, 0.55) 0%, rgba(255, 140, 0, 0) 45%),
+        radial-gradient(circle at 75% 20%, rgba(0, 170, 255, 0.55) 0%, rgba(0, 170, 255, 0) 48%),
+        radial-gradient(circle at 50% 85%, rgba(255, 230, 140, 0.25) 0%, rgba(255, 230, 140, 0) 55%),
+        linear-gradient(135deg, #0a1630, #10264a, #061022);
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .container {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem;
+
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ✅ MÓVIL: card arriba / carrusel abajo */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 1.25rem 1rem;
+        gap: 1.25rem;
+      }
+    }
+
+    /* NOMBRE DEL DUEÑO */
+    #dueños-container {
+      margin-top: 1rem;
+      font-weight: 700;
+      text-align: center;
+      font-size: 1.4rem;
+      padding: 0;
+      background: transparent;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Tarjeta del personaje -->
+    <article class="card">
+      <img
+        class="card__background"
+        src="imagenes/goku/goku.png"
+        alt="Goku"
+      />
+
+      <div class="card__content flow">
+        <div class="card__content--container flow">
+          <h2 class="card__title">Goku</h2>
+          <p class="card__description">
+            El legendario Saiyajin criado en la Tierra, conocido por su espíritu de lucha y deseo de superación.
+            Goku ha salvado el universo en innumerables ocasiones con su poder, valentía y corazón puro.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- Slider de imágenes del personaje -->
+    <div class="slider">
+
+      <!-- Botones numerados -->
+      <a href="#slide-1">1</a>
+      <a href="#slide-2">2</a>
+      <a href="#slide-3">3</a>
+      <a href="#slide-4">4</a>
+
+      <!-- Contenedor de imágenes -->
+      <div class="slides" id="slides">
+        <img
+          id="sliderImage"
+          src="imagenes/goku/goku1.png"
+          class="fade show"
+          alt="Goku artwork"
+        >
+      </div>
+
+      <!-- Nombre del dueño -->
+      <div id="dueños-container">Emilio Contreras</div>
+    </div>
+
+  </div>
+
+  <!-- JS del slider -->
+  <script>
+    const imagenesGoku = [
+      { src: "imagenes/goku/goku1.png", dueño: "Emilio Contreras" },
+      { src: "imagenes/goku/goku2.png", dueño: "María Pérez" },
+      { src: "imagenes/goku/goku3.png", dueño: "Carlos Gómez" },
+      { src: "imagenes/goku/goku4.png", dueño: "Lucía Torres" }
+    ];
+
+    const sliderImage = document.getElementById("sliderImage");
+    const dueñoContainer = document.getElementById("dueños-container");
+    const buttons = document.querySelectorAll(".slider > a");
+
+    buttons.forEach((btn, index) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        sliderImage.classList.remove("show");
+
+        setTimeout(() => {
+          sliderImage.src = imagenesGoku[index].src;
+          dueñoContainer.textContent = imagenesGoku[index].dueño;
+          sliderImage.classList.add("show");
+        }, 150);
+      });
+    });
+  </script>
+</body>
+</html>
