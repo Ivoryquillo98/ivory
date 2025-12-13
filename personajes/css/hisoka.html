@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Card Animada con Slider</title>
+
+  <!-- CSS del personaje -->
+  <link rel="stylesheet" href="css/personajes.css">
+  <!-- CSS del slider -->
+  <link rel="stylesheet" href="css/carrusel.css">
+  <!-- CSS del Matrix -->
+  <link rel="stylesheet" href="css/matrix/hisoka.css">
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+  <style>
+    /* ✅ FONDO SOLO DESDE CSS (PC vs MÓVIL) */
+    body{
+      /* 🖥️ PC: varios colores */
+      background: linear-gradient(135deg, #ff4fa3, #ff86c8, #ffd1e8);
+    }
+
+    /* 📱 MÓVIL: un solo color */
+    @media (max-width: 768px){
+      body{
+        background: #ff86c8; /* cambia aquí el color único que quieras */
+      }
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .container {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem;
+
+      /* Para que el contenido quede sobre el matrix */
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ✅ MÓVIL: card arriba / carrusel abajo */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 1.25rem 1rem;
+        gap: 1.25rem;
+      }
+    }
+
+    /* NOMBRE DEL DUEÑO (SIN CAJITA) */
+    #dueños-container {
+      margin-top: 1rem;
+      font-weight: 600;
+      text-align: center;
+      font-size: 1.5rem;
+      padding: 0;
+      background: transparent;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ✅ MATRIX (10 columnas) -->
+  <div class="matrix-container">
+    <div class="matrix-pattern">
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+      <div class="matrix-column"></div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- TARJETA DEL PERSONAJE -->
+    <article class="card">
+      <img class="card__background" src="imagenes/hisoka/hisoka.png" alt="Hisoka" />
+
+      <div class="card__content flow">
+        <div class="card__content--container flow">
+          <h2 class="card__title">Hisoka</h2>
+          <p class="card__description">
+            El famoso personaje de anime de Hunter x Hunter con su estilo único y peligroso.
+            Hisoka es un mago impredecible, carismático y letal, obsesionado con encontrar
+            oponentes fuertes que le den verdadera emoción en combate.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- SLIDER -->
+    <div class="slider">
+
+      <!-- BOTONES -->
+      <a href="#slide-1">1</a>
+      <a href="#slide-2">2</a>
+      <a href="#slide-3">3</a>
+      <a href="#slide-4">4</a>
+
+      <!-- CONTENEDOR DE IMÁGENES -->
+      <div class="slides" id="slides">
+
+        <!-- LUPA -->
+        <div class="magnifier-lens" id="lens"></div>
+
+        <!-- IMAGEN ACTIVA -->
+        <img
+          id="sliderImage"
+          src="imagenes/hisoka/hisoka1.png"
+          class="fade show"
+          alt="Hisoka artwork"
+        >
+      </div>
+
+      <!-- DUEÑO -->
+      <div id="dueños-container">Emilio Contreras</div>
+
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    /* LISTA DE IMÁGENES */
+    const imagenesHisoka = [
+      { src: "imagenes/hisoka/hisoka1.png", dueño: "Emilio Contreras" },
+      { src: "imagenes/hisoka/hisoka2.png", dueño: "María Pérez" },
+      { src: "imagenes/hisoka/hisoka3.png", dueño: "Carlos Gómez" },
+      { src: "imagenes/hisoka/hisoka4.png", dueño: "Lucía Torres" }
+    ];
+
+    const sliderImage = document.getElementById("sliderImage");
+    const lens = document.getElementById("lens");
+    const slidesContainer = document.getElementById("slides");
+    const dueñoContainer = document.getElementById("dueños-container");
+
+    /* BOTONES DEL SLIDER */
+    const buttons = document.querySelectorAll(".slider > a");
+
+    buttons.forEach((btn, index) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        sliderImage.classList.remove("show");
+
+        setTimeout(() => {
+          sliderImage.src = imagenesHisoka[index].src;
+          dueñoContainer.textContent = imagenesHisoka[index].dueño;
+          sliderImage.classList.add("show");
+        }, 150);
+      });
+    });
+
+    /* LUPA */
+    slidesContainer.addEventListener("mousemove", (e) => {
+      lens.style.display = "block";
+
+      const rect = slidesContainer.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const relX = (x / rect.width) * 100;
+      const relY = (y / rect.height) * 100;
+
+      lens.style.left = (x - lens.offsetWidth / 2) + "px";
+      lens.style.top = (y - lens.offsetHeight / 2) + "px";
+
+      lens.style.backgroundImage = `url(${sliderImage.src})`;
+      lens.style.backgroundSize = "500%";
+      lens.style.backgroundPosition = `${relX}% ${relY}%`;
+    });
+
+    slidesContainer.addEventListener("mouseleave", () => {
+      lens.style.display = "none";
+    });
+  </script>
+
+</body>
+</html>
