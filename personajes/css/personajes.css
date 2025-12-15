@@ -14,7 +14,7 @@ body, h2, p { margin: 0; }
 body {
   display: grid;
   align-items: center;
-  justify-items: center;   /* centrado horizontal */
+  justify-items: center;
   height: 100vh;
 }
 
@@ -65,7 +65,7 @@ p {
   --flow-space: 0.9375rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-self: flex-end;
   height: 55%;
   padding: 12% 1.25rem 1.875rem;
@@ -96,7 +96,7 @@ p {
   background-color: var(--brand-color);
 }
 
-/* --- BOTÓN (si lo usas después) --- */
+/* --- BOTÓN --- */
 .card__button {
   padding: 0.75em 1.6em;
   border-radius: 0.45em;
@@ -113,7 +113,7 @@ p {
   outline-offset: -5px;
 }
 
-/* --- ANIMACIONES HOVER (SOLO PC) --- */
+/* --- HOVER SOLO PC --- */
 @media (any-hover: hover) and (any-pointer: fine) {
   .card__content {
     transform: translateY(62%);
@@ -165,7 +165,7 @@ p {
   }
 }
 
-/* 📱 MÓVIL */
+/* 📱 MÓVIL – TEXTO MÁS ARRIBA */
 @media (max-width: 768px) {
   body {
     display: block;
@@ -178,24 +178,29 @@ p {
     height: 46vh;
     min-height: 320px;
     max-height: 460px;
-    margin: 3rem auto 0; /* 👈 empieza más abajo SOLO en móvil */
+    margin: 3rem auto 0;
   }
 
-  /* ✅ Ajuste clave: más espacio real para texto */
   .card__content {
-    height: auto;              /* antes 55% */
-    max-height: 72%;           /* limita el panel para que no tape toda la imagen */
-    padding: 1rem 1rem 1rem;   /* antes 12% arriba (se comía espacio) */
+    height: auto;
+    max-height: 78%;
+    padding-top: 0.75rem;     /* 🔥 SUBE el inicio del texto */
+    padding-bottom: 1rem;
+    justify-content: flex-start; /* 🔥 empieza desde arriba */
   }
 
-  /* ✅ Si la descripción es larga: se puede scrollear */
   .card__content--container {
     overflow: auto;
     max-height: 100%;
     -webkit-overflow-scrolling: touch;
   }
 
-  /* ✅ Tipos más cómodos en pantallas chicas */
-  h2 { font-size: 1.4rem; }
-  p  { font-size: 0.92rem; line-height: 1.35; }
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  p {
+    font-size: 0.92rem;
+    line-height: 1.35;
+  }
 }
