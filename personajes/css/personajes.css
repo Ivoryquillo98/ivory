@@ -47,7 +47,6 @@ p {
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
-
   margin: 0 auto;
 }
 
@@ -179,7 +178,24 @@ p {
     height: 46vh;
     min-height: 320px;
     max-height: 460px;
-
     margin: 3rem auto 0; /* 👈 empieza más abajo SOLO en móvil */
   }
+
+  /* ✅ Ajuste clave: más espacio real para texto */
+  .card__content {
+    height: auto;              /* antes 55% */
+    max-height: 72%;           /* limita el panel para que no tape toda la imagen */
+    padding: 1rem 1rem 1rem;   /* antes 12% arriba (se comía espacio) */
+  }
+
+  /* ✅ Si la descripción es larga: se puede scrollear */
+  .card__content--container {
+    overflow: auto;
+    max-height: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ✅ Tipos más cómodos en pantallas chicas */
+  h2 { font-size: 1.4rem; }
+  p  { font-size: 0.92rem; line-height: 1.35; }
 }
