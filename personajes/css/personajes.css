@@ -190,13 +190,14 @@ p {
 @media (max-width: 768px) {
 
   h2 {
-    font-size: 1.65rem;   /* antes 2.25rem */
+    font-size: 1.5rem;   /* antes 2.25rem */
     line-height: 1.15;
   }
 
   p {
-    font-size: 0.9rem;    /* antes 1rem */
-    line-height: 1.45;
+    font-size: 0.8rem;    /* antes 1rem */
+    line-height: 1.1;
   }
 }
+
 
