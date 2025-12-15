@@ -187,3 +187,16 @@ p {
     margin: 3rem auto 0;
   }
 }
+@media (max-width: 768px) {
+
+  h2 {
+    font-size: 1.65rem;   /* antes 2.25rem */
+    line-height: 1.15;
+  }
+
+  p {
+    font-size: 0.9rem;    /* antes 1rem */
+    line-height: 1.45;
+  }
+}
+
