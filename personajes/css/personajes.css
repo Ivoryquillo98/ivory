@@ -10,13 +10,15 @@
 *, *::before, *::after { box-sizing: border-box; }
 body, h2, p { margin: 0; }
 
-/* 🖥️ DESKTOP */
-body {
-  display: grid;
-  align-items: center;
-  justify-items: start;
-  height: 100vh;
-  padding-left: 7.5rem; 
+/* ✅ SOLO PC (para que NO afecte a móvil) */
+@media (min-width: 769px) {
+  body {
+    display: grid;
+    align-items: center;
+    justify-items: start;
+    height: 100vh;
+    padding-left: 7.5rem;
+  }
 }
 
 /* TEXTOS */
@@ -176,6 +178,7 @@ p {
   body {
     display: block;
     height: auto;
+    padding-left: 0;   /* ✅ importante: evita que todo se corra a la derecha */
   }
 
   .card {
@@ -188,8 +191,8 @@ p {
     margin: 3rem auto 0;
   }
 }
-@media (max-width: 768px) {
 
+@media (max-width: 768px) {
   h2 {
     font-size: 1.5rem;   /* antes 2.25rem */
     line-height: 1.15;
@@ -200,6 +203,3 @@ p {
     line-height: 1.1;
   }
 }
-
-
-
