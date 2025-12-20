@@ -14,8 +14,9 @@ body, h2, p { margin: 0; }
 body {
   display: grid;
   align-items: center;
-  justify-items: center;
+  justify-items: start;
   height: 100vh;
+  padding-left: 7.5rem; 
 }
 
 /* TEXTOS */
@@ -199,5 +200,6 @@ p {
     line-height: 1.1;
   }
 }
+
 
 
