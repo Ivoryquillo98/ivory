@@ -186,6 +186,35 @@
       line-height: 1.15;
     }
 
+    /* ✅ NUEVO: flecha para ir a gohan.html (sin eliminar nada) */
+    .go-character{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+      transition: transform 180ms ease, background 180ms ease;
+      margin-top: 0.9rem;
+    }
+    .go-character:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.10);
+    }
+    .go-character span{
+      font-size: 1.15rem;
+      font-weight: 900;
+      line-height: 1;
+      font-family: "Montserrat", sans-serif;
+    }
+
     /* MÓVIL */
     @media (max-width: 768px) {
       .container {
@@ -234,6 +263,11 @@
             Líder de la Brigada Fantasma, Chrollo es un estratega brillante y carismático.
             Su calma y frialdad lo convierten en uno de los personajes más intrigantes de Hunter x Hunter.
           </p>
+
+          <!-- ✅ NUEVO: Flecha que redirecciona a gohan.html (mismo directorio) -->
+          <a class="go-character" href="gohan.html" aria-label="Ir a Gohan">
+            <span>→</span>
+          </a>
         </div>
       </div>
     </article>
@@ -247,12 +281,8 @@
         <div class="carousel-info">
           <h3 class="carousel-title">Catálogo de diseños personalizados</h3>
           <p class="carousel-desc">
-          Estas imágenes corresponden a <b>camisetas únicas</b> diseñadas por nuestros clientes y
-          <b>fabricadas por nosotros</b>.
-          Cada compra deja una huella: tu diseño <b>aparecerá aquí</b> junto a tu nombre,
-          como parte de una colección irrepetible.
-</p>
-
+            Este diseño existe porque tú existes.
+          </p>
         </div>
 
         <div class="slider">
