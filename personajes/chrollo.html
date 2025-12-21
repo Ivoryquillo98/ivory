@@ -247,9 +247,12 @@
         <div class="carousel-info">
           <h3 class="carousel-title">Catálogo de diseños personalizados</h3>
           <p class="carousel-desc">
-            Estas imágenes representan <b>camisetas únicas</b> creadas por clientes.
-            Al comprar una camiseta personalizada, tu diseño puede aparecer aquí junto a tu nombre.
-          </p>
+          Estas imágenes corresponden a <b>camisetas únicas</b> diseñadas por nuestros clientes y
+          <b>fabricadas por nosotros</b>.
+          Cada compra deja una huella: tu diseño <b>aparecerá aquí</b> junto a tu nombre,
+          como parte de una colección irrepetible.
+</p>
+
         </div>
 
         <div class="slider">
@@ -328,6 +331,8 @@
   <script>
     /* ===========================
        SLIDER (igual al patrón)
+       + ✅ NUEVO: soporte de URL con hash #slide-X
+       (ideal para QR en cada polera)
        =========================== */
     const imagenesChrollo = [
       { src: "imagenes/chrollo/chrollo1.png", dueño: "Emilio Contreras" },
@@ -346,18 +351,45 @@
         `<span class="owner-name">${name}</span>`;
     }
 
-    buttons.forEach((btn, index) => {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        sliderImage.classList.remove("show");
+    /* ✅ NUEVO: función central para mostrar una slide por índice */
+    function showSlide(index){
+      if (index < 0 || index >= imagenesChrollo.length) return;
 
-        setTimeout(() => {
-          sliderImage.src = imagenesChrollo[index].src;
-          setOwner(imagenesChrollo[index].dueño);
-          sliderImage.classList.add("show");
-        }, 150);
+      sliderImage.classList.remove("show");
+
+      setTimeout(() => {
+        sliderImage.src = imagenesChrollo[index].src;
+        setOwner(imagenesChrollo[index].dueño);
+        sliderImage.classList.add("show");
+      }, 150);
+    }
+
+    /* ✅ NUEVO: aplica el hash (ej: #slide-3) al cargar / cambiar */
+    function applyHash(){
+      const hash = window.location.hash; // "#slide-3"
+      const match = hash.match(/^#slide-(\d+)$/);
+
+      if (!match) return; // si no hay hash válido, no hacemos nada
+
+      const num = Number(match[1]); // 1..N
+      const index = num - 1;        // 0..N-1
+
+      showSlide(index);
+    }
+
+    /* Click: dejamos que el href cambie el hash (para QR / compartir link)
+       y solo mostramos la imagen (sin e.preventDefault()) */
+    buttons.forEach((btn, index) => {
+      btn.addEventListener("click", () => {
+        showSlide(index);
       });
     });
+
+    /* ✅ escucha cambios de hash (back/forward del navegador) */
+    window.addEventListener("hashchange", applyHash);
+
+    /* ✅ al iniciar: si viene con #slide-X, muestra esa */
+    applyHash();
 
     /* ===========================
        PLANES (precio + features)
