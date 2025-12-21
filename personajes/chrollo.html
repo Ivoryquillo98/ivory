@@ -38,6 +38,36 @@
       gap: 2rem;
     }
 
+    /* ✅ NUEVO: bloque de texto sobre el carrusel */
+    .carousel-info{
+      max-width: 420px;
+      margin: 0 0 0.9rem;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(10px);
+      color: #fff;
+    }
+    .carousel-title{
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      margin: 0 0 0.35rem;
+      letter-spacing: 0.2px;
+    }
+    .carousel-desc{
+      font-family: "Lato", sans-serif;
+      font-size: 0.92rem;
+      line-height: 1.35;
+      margin: 0;
+      color: rgba(255,255,255,0.86);
+    }
+    .carousel-desc b{
+      color: rgba(255,255,255,0.98);
+      font-weight: 800;
+    }
+
     /* BLOQUE DE COMPRA (titulo + radios + detalles + wsp) */
     .buy-panel{
       display: flex;
@@ -46,8 +76,8 @@
       min-width: 260px;
       max-width: 320px;
 
-      /* ✅ NUEVO: desplaza TODO el bloque de compra a la derecha (PC) */
-      margin-left: 5rem; /* ajusta entre 2rem y 3.5rem si quieres */
+      /* ✅ desplaza TODO el bloque de compra a la derecha (PC) */
+      margin-left: 5rem;
     }
 
     .buy-title{
@@ -128,6 +158,34 @@
       text-align: center;
     }
 
+    /* ✅ NUEVO: “Diseñada para: Nombre” más bonito */
+    #dueños-container {
+      margin-top: 1rem;
+      text-align: center;
+      color: #fff;
+      padding: 0.75rem 0.9rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(10px);
+    }
+    #dueños-container .owner-label{
+      display: block;
+      font-family: "Lato", sans-serif;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.2px;
+      margin-bottom: 0.2rem;
+    }
+    #dueños-container .owner-name{
+      display: block;
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.98);
+      line-height: 1.15;
+    }
+
     /* MÓVIL */
     @media (max-width: 768px) {
       .container {
@@ -147,18 +205,13 @@
         width: 100%;
         max-width: 360px;
 
-        /* ✅ NUEVO: en móvil vuelve a 0 para que quede centrado */
+        /* ✅ en móvil vuelve a 0 para que quede centrado */
         margin-left: 0;
       }
-    }
 
-    /* NOMBRE DEL DUEÑO */
-    #dueños-container {
-      margin-top: 1rem;
-      font-weight: 700;
-      text-align: center;
-      font-size: 1.4rem;
-      color: #fff;
+      .carousel-info{
+        max-width: 360px;
+      }
     }
   </style>
 </head>
@@ -188,30 +241,45 @@
     <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER (poleras reales vendidas) -->
-      <div class="slider">
-        <a href="#slide-1">1</a>
-        <a href="#slide-2">2</a>
-        <a href="#slide-3">3</a>
-        <a href="#slide-4">4</a>
-
-        <div class="slides" id="slides">
-          <img
-            id="sliderImage"
-            src="imagenes/chrollo/chrollo1.png"
-            class="fade show"
-            alt="Chrollo artwork"
-          >
+      <!-- SLIDER (diseños personalizados de clientes) -->
+      <div>
+        <!-- ✅ NUEVO TEXTO EXPLICATIVO -->
+        <div class="carousel-info">
+          <h3 class="carousel-title">Catálogo de diseños personalizados</h3>
+          <p class="carousel-desc">
+            Estas imágenes representan <b>camisetas únicas</b> creadas por clientes.
+            Al comprar una camiseta personalizada, tu diseño puede aparecer aquí junto a tu nombre.
+          </p>
         </div>
 
-        <div id="dueños-container">Emilio Contreras</div>
+        <div class="slider">
+          <a href="#slide-1">1</a>
+          <a href="#slide-2">2</a>
+          <a href="#slide-3">3</a>
+          <a href="#slide-4">4</a>
+
+          <div class="slides" id="slides">
+            <img
+              id="sliderImage"
+              src="imagenes/chrollo/chrollo1.png"
+              class="fade show"
+              alt="Chrollo artwork"
+            >
+          </div>
+
+          <!-- ✅ MEJOR DISEÑADA PARA + NOMBRE -->
+          <div id="dueños-container">
+            <span class="owner-label">Diseñada para</span>
+            <span class="owner-name">Emilio Contreras</span>
+          </div>
+        </div>
       </div>
 
       <!-- BLOQUE DE COMPRA -->
       <div class="buy-panel">
-        <h3 class="buy-title">Elige tu plan</h3>
+        <h3 class="buy-title">Personaliza tu camiseta</h3>
 
-        <!-- RADIOS -->
+        <!-- ✅ RADIOS (MISMA ESTRUCTURA ORIGINAL para radio.css) -->
         <div class="glass-radio-group-vertical" id="planRadios">
           <input checked id="glass-silver" name="plan" type="radio" />
           <label for="glass-silver">
@@ -239,9 +307,10 @@
           <p class="plan-name" id="planName">Plan Silver</p>
           <p class="plan-price" id="planPrice">$12.990 CLP</p>
           <ul class="plan-features" id="planFeatures">
-            <li>Polera algodón (calidad estándar)</li>
+            <li>Camiseta personalizada con tu diseño</li>
             <li>Estampado en 1 área (frente)</li>
             <li>1 ajuste de color/contraste</li>
+            <li>Tu diseño puede aparecer en el catálogo</li>
             <li>Entrega estándar</li>
           </ul>
         </div>
@@ -271,6 +340,12 @@
     const dueñoContainer = document.getElementById("dueños-container");
     const buttons = document.querySelectorAll(".slider > a");
 
+    function setOwner(name){
+      dueñoContainer.innerHTML =
+        `<span class="owner-label">Diseñada para</span>` +
+        `<span class="owner-name">${name}</span>`;
+    }
+
     buttons.forEach((btn, index) => {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
@@ -278,7 +353,7 @@
 
         setTimeout(() => {
           sliderImage.src = imagenesChrollo[index].src;
-          dueñoContainer.textContent = imagenesChrollo[index].dueño;
+          setOwner(imagenesChrollo[index].dueño);
           sliderImage.classList.add("show");
         }, 150);
       });
@@ -292,9 +367,10 @@
         label: "Plan Silver",
         price: "$12.990 CLP",
         features: [
-          "Polera algodón (calidad estándar)",
+          "Camiseta personalizada con tu diseño",
           "Estampado en 1 área (frente)",
           "1 ajuste de color/contraste",
+          "Tu diseño puede aparecer en el catálogo",
           "Entrega estándar"
         ]
       },
@@ -302,10 +378,11 @@
         label: "Plan Gold",
         price: "$17.990 CLP",
         features: [
-          "Polera algodón premium (mejor caída)",
+          "Camiseta personalizada (mejor calidad de tela)",
           "Estampado más nítido + mejor durabilidad",
           "Estampado en 2 áreas (frente + espalda o manga)",
           "Hasta 2 revisiones del diseño",
+          "Tu diseño puede aparecer en el catálogo",
           "Entrega prioritaria"
         ]
       },
@@ -313,10 +390,11 @@
         label: "Plan Platinum",
         price: "$24.990 CLP",
         features: [
-          "Polera premium + opción oversize",
+          "Camiseta premium + opción oversize",
           "Estampado full color (máxima calidad)",
           "Estampado en 3 áreas (frente + espalda + manga)",
           "Hasta 4 revisiones + retoque pro del diseño",
+          "Tu diseño puede aparecer en el catálogo",
           "Empaque premium + entrega prioritaria"
         ]
       }
@@ -343,7 +421,8 @@
       });
 
       const msg =
-        `Hola! Quiero comprar una polera personalizada de Chrollo.\n` +
+        `Hola! Quiero comprar una camiseta personalizada (Camisetas Únicas).\n` +
+        `Diseño inspirado en: Chrollo\n` +
         `Plan elegido: ${p.label}\n` +
         `Precio: ${p.price}\n` +
         `¿Qué tallas y colores tienes disponibles?`;
