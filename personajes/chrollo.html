@@ -186,13 +186,16 @@
       line-height: 1.15;
     }
 
-    /* ✅ NUEVO: flecha para ir a gohan.html (sin eliminar nada) */
+    /* ✅ CAMBIO: flecha más chica y pensada para ir al lado del título */
     .go-character{
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 42px;
-      height: 42px;
+
+      /* ↓ más chica */
+      width: 32px;
+      height: 32px;
+
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.18);
       background: rgba(255,255,255,0.06);
@@ -202,17 +205,31 @@
       cursor: pointer;
       box-shadow: 0 10px 20px rgba(0,0,0,0.25);
       transition: transform 180ms ease, background 180ms ease;
-      margin-top: 0.9rem;
+
+      /* ↓ ya no necesita margin-top porque va junto al título */
+      margin-top: 0;
     }
     .go-character:hover{
       transform: translateY(-1px);
       background: rgba(255,255,255,0.10);
     }
     .go-character span{
-      font-size: 1.15rem;
+      /* ↓ icono un poco más pequeño */
+      font-size: 1rem;
       font-weight: 900;
       line-height: 1;
       font-family: "Montserrat", sans-serif;
+    }
+
+    /* ✅ NUEVO: fila título + flecha */
+    .title-row{
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.6rem;
+    }
+    .title-row .card__title{
+      margin: 0; /* evita saltos raros si el h2 trae margen */
     }
 
     /* MÓVIL */
@@ -258,16 +275,22 @@
 
       <div class="card__content flow">
         <div class="card__content--container flow">
-          <h2 class="card__title">Chrollo Lucilfer</h2>
+
+          <!-- ✅ CAMBIO: título + flecha en la misma fila -->
+          <div class="title-row">
+            <h2 class="card__title">Chrollo Lucilfer</h2>
+
+            <!-- ✅ Flecha a gohan.html -->
+            <a class="go-character" href="gohan.html" aria-label="Ir a Gohan">
+              <span>→</span>
+            </a>
+          </div>
+
           <p class="card__description">
             Líder de la Brigada Fantasma, Chrollo es un estratega brillante y carismático.
             Su calma y frialdad lo convierten en uno de los personajes más intrigantes de Hunter x Hunter.
           </p>
 
-          <!-- ✅ NUEVO: Flecha que redirecciona a gohan.html (mismo directorio) -->
-          <a class="go-character" href="gohan.html" aria-label="Ir a Gohan">
-            <span>→</span>
-          </a>
         </div>
       </div>
     </article>
@@ -279,10 +302,7 @@
       <div>
         <!-- ✅ NUEVO TEXTO EXPLICATIVO -->
         <div class="carousel-info">
-          <h3 class="carousel-title">Catálogo de diseños personalizados</h3>
-          <p class="carousel-desc">
-            Este diseño existe porque tú existes.
-          </p>
+          <h3 class="carousel-title">Este diseño existe  porque tú existes</h3>
         </div>
 
         <div class="slider">
