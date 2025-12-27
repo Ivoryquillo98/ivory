@@ -172,6 +172,7 @@
       letter-spacing: 0.4px;
       line-height: 1.15;
       text-align: center;
+      cursor: pointer; /* ✅ repetir voz */
     }
 
     /* BLOQUE DE COMPRA */
@@ -327,6 +328,7 @@
     }
     .title-row .card__title{
       margin: 0;
+      cursor: pointer; /* ✅ repetir voz */
     }
 
     /* MÓVIL */
@@ -381,8 +383,11 @@
     <span>B</span><span>o</span><span>k</span><span>u</span>
   </a>
 
-  <!-- ✅ BOTÓN AUDIO (mute/unmute) -->
-  <button class="audio-fab" id="audioFab" aria-label="Audio: activar o silenciar" type="button">
+  <!-- ✅ BOTÓN AUDIO (global del sistema) -->
+  <!-- ✅ data-voice: al activar, dice el nombre -->
+  <button class="audio-fab" id="audioFab"
+    data-voice="voces/gohan.mp3"
+    aria-label="Audio: activar o silenciar" type="button">
     <span id="audioIcon">🔇</span>
     <span class="hint" id="audioHint">Click para activar</span>
   </button>
@@ -390,18 +395,14 @@
   <div class="container">
 
     <!-- CARD DEL PERSONAJE -->
-    <article class="card">
-      <img
-        class="card__background"
-        src="imagenes/gohan/gohan.png"
-        alt="Gohan"
-      />
+    <article class="card" id="characterCard">
+      <img class="card__background" src="imagenes/gohan/gohan.png" alt="Gohan" />
 
       <div class="card__content flow">
         <div class="card__content--container flow">
 
           <div class="title-row">
-            <h2 class="card__title">Gohan</h2>
+            <h2 class="card__title" id="characterTitle">Gohan</h2>
 
             <a class="go-character" href="goku.html" aria-label="Ir a Goku">
               <span>→</span>
@@ -424,7 +425,7 @@
       <div>
 
         <div class="carousel-info">
-          <h3 class="carousel-title">Este diseño existe porque tú existes</h3>
+          <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
         <div class="slider">
@@ -434,12 +435,7 @@
           <a href="#slide-4">4</a>
 
           <div class="slides" id="slides">
-            <img
-              id="sliderImage"
-              src="imagenes/gohan/gohan1.png"
-              class="fade show"
-              alt="Gohan artwork"
-            >
+            <img id="sliderImage" src="imagenes/gohan/gohan1.png" class="fade show" alt="Gohan artwork">
           </div>
 
           <div id="dueños-container">
@@ -487,16 +483,14 @@
           </ul>
         </div>
 
-        <a class="wsp-btn" id="wspBtn" href="#" target="_blank" rel="noopener">
-          Comprar por WhatsApp
-        </a>
+        <a class="wsp-btn" id="wspBtn" href="#" target="_blank" rel="noopener">Comprar por WhatsApp</a>
         <p class="wsp-sub" id="wspSub">Te llevará con el mensaje listo para enviar.</p>
       </div>
 
     </div>
   </div>
 
-  <!-- ✅ AUDIO -->
+  <!-- ✅ Música base SOLO para el sistema global (no la controlamos aquí) -->
   <audio id="openingAudio" src="musica/dbz.mp3" preload="auto"></audio>
 
   <script>
@@ -524,13 +518,10 @@
       if (index < 0 || index >= imagenesGohan.length) return;
 
       sliderImage.classList.remove("show");
-
       setTimeout(() => {
         sliderImage.src = imagenesGohan[index].src;
         setOwner(imagenesGohan[index].dueño);
         sliderImage.classList.add("show");
-
-        // re-inicia rotación del label si el DOM se reescribió
         resetOwnerLabelRotation();
       }, 150);
     }
@@ -539,18 +530,11 @@
       const hash = window.location.hash;
       const match = hash.match(/^#slide-(\d+)$/);
       if (!match) return;
-
       const num = Number(match[1]);
-      const index = num - 1;
-      showSlide(index);
+      showSlide(num - 1);
     }
 
-    buttons.forEach((btn, index) => {
-      btn.addEventListener("click", () => {
-        showSlide(index);
-      });
-    });
-
+    buttons.forEach((btn, index) => btn.addEventListener("click", () => showSlide(index)));
     window.addEventListener("hashchange", applyHash);
     applyHash();
 
@@ -558,24 +542,14 @@
        ROTACIÓN "Diseñada para" (cada 5s)
        =========================== */
     const ownerLabelTexts = [
-      "Diseñada para",   // ES
-      "Designed for",    // EN
-      "Conçu pour",      // FR
-      "Progettata per",  // IT
-      "Entworfen für",   // DE
-      "Desenhada para",  // PT
-      "デザインされた",   // JP
-      "디자인됨",         // KR
-      "为…设计"          // ZH
+      "Diseñada para","Designed for","Conçu pour","Progettata per","Entworfen für","Desenhada para","デザインされた","디자인됨","为…设计"
     ];
-
     let ownerLabelIndex = 0;
     let ownerLabelTimer = null;
 
     function startOwnerLabelRotation(){
       const labelEl = document.getElementById("ownerLabel");
       if (!labelEl) return;
-
       if (ownerLabelTimer) return;
 
       labelEl.textContent = ownerLabelTexts[ownerLabelIndex];
@@ -583,7 +557,6 @@
       ownerLabelTimer = setInterval(() => {
         const el = document.getElementById("ownerLabel");
         if (!el) return;
-
         ownerLabelIndex = (ownerLabelIndex + 1) % ownerLabelTexts.length;
         el.textContent = ownerLabelTexts[ownerLabelIndex];
       }, 5000);
@@ -644,12 +617,10 @@
     const planPrice = document.getElementById("planPrice");
     const planFeatures = document.getElementById("planFeatures");
     const wspBtn = document.getElementById("wspBtn");
-
     const phoneNumber = "56920282860";
 
     function setPlan(planKey) {
       const p = plans[planKey];
-
       planName.textContent = p.label;
       planPrice.textContent = p.price;
 
@@ -667,71 +638,48 @@
         `Precio: ${p.price}\n` +
         `¿Qué tallas y colores tienes disponibles?`;
 
-      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
-      wspBtn.href = url;
+      wspBtn.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
     }
 
     setPlan("silver");
-
     document.getElementById("glass-silver").addEventListener("change", () => setPlan("silver"));
     document.getElementById("glass-gold").addEventListener("change", () => setPlan("gold"));
     document.getElementById("glass-platinum").addEventListener("change", () => setPlan("platinum"));
+  </script>
 
-    /* ===========================
-       ✅ AUDIO: autoplay + botón mute/unmute
-       =========================== */
-    const audio = document.getElementById("openingAudio");
-    const audioFab = document.getElementById("audioFab");
-    const audioIcon = document.getElementById("audioIcon");
-    const audioHint = document.getElementById("audioHint");
+  <!-- ✅ Cargar sistema global (mantiene estado entre páginas) -->
+  <script src="js/audio-system.js"></script>
 
-    audio.volume = 0.35;
-    audio.loop = true;
-    audio.muted = true;
+  <!-- ✅ VOZ GOHAN (auto si venía ON, y fallback al primer click) -->
+  <script>
+    const VOICE_SRC = "voces/gohan.mp3";
 
-    function setFabState(){
-      if (audio.muted || audio.paused){
-        audioIcon.textContent = "🔇";
-        audioHint.textContent = "Click para activar";
-      } else {
-        audioIcon.textContent = "🔊";
-        audioHint.textContent = "Click para silenciar";
-      }
+    function playVoice(){
+      if (window.AudioSystem) AudioSystem.playVoice(VOICE_SRC);
     }
 
-    async function tryPlayUnmuted(){
-      audio.muted = false;
-      try{
-        await audio.play();
-      }catch(e){
-        audio.muted = true;
-      }
-      setFabState();
-    }
-
-    window.addEventListener("load", async () => {
-      try{ await audio.play(); }catch(e){}
-      setFabState();
-    });
-
-    audioFab.addEventListener("click", async () => {
-      if (audio.muted || audio.paused){
-        await tryPlayUnmuted();
-      } else {
-        audio.muted = true;
-        setFabState();
+    // ✅ intenta automáticamente si ya venía activado desde otra página
+    window.addEventListener("load", () => {
+      if (window.AudioSystem && AudioSystem.isEnabled()){
+        playVoice(); // puede bloquearse en algunos navegadores
       }
     });
 
-    const enableOnFirstInteraction = async () => {
-      if (audio.muted || audio.paused){
-        await tryPlayUnmuted();
+    // ✅ fallback: en el primer click de la página, si está ON, dispara voz
+    const voiceOnFirstInteraction = () => {
+      if (window.AudioSystem && AudioSystem.isEnabled()){
+        playVoice();
       }
-      document.removeEventListener("click", enableOnFirstInteraction);
-      document.removeEventListener("touchstart", enableOnFirstInteraction);
+      document.removeEventListener("click", voiceOnFirstInteraction);
+      document.removeEventListener("touchstart", voiceOnFirstInteraction);
     };
-    document.addEventListener("click", enableOnFirstInteraction, { once: true });
-    document.addEventListener("touchstart", enableOnFirstInteraction, { once: true });
+    document.addEventListener("click", voiceOnFirstInteraction, { once: true });
+    document.addEventListener("touchstart", voiceOnFirstInteraction, { once: true });
+
+    // ✅ clicks para repetir el nombre
+    document.getElementById("characterCard").addEventListener("click", playVoice);
+    document.getElementById("characterTitle").addEventListener("click", (e) => { e.stopPropagation(); playVoice(); });
+    document.getElementById("carouselTitle").addEventListener("click", (e) => { e.stopPropagation(); playVoice(); });
   </script>
 </body>
 </html>
