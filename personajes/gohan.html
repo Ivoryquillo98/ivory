@@ -384,9 +384,9 @@
   </a>
 
   <!-- ✅ BOTÓN AUDIO (global del sistema) -->
-  <!-- ✅ data-voice: al activar / reactivar, dice el nombre -->
+  <!-- ✅ data-voice: al activar, dice el nombre -->
   <button class="audio-fab" id="audioFab"
-    data-voice="gohan.mp3"
+    data-voice="voces/gohan.mp3"
     aria-label="Audio: activar o silenciar" type="button">
     <span id="audioIcon">🔇</span>
     <span class="hint" id="audioHint">Click para activar</span>
@@ -650,9 +650,9 @@
   <!-- ✅ Cargar sistema global (mantiene estado entre páginas) -->
   <script src="js/audio-system.js"></script>
 
-  <!-- ✅ VOZ GOHAN (ruta simple porque la carpeta de voces está al lado del HTML) -->
+  <!-- ✅ VOZ GOHAN (auto si venía ON, y fallback al primer click) -->
   <script>
-    const VOICE_SRC = "gohan.mp3";
+    const VOICE_SRC = "voces/gohan.mp3";
 
     function playVoice(){
       if (window.AudioSystem) AudioSystem.playVoice(VOICE_SRC);
