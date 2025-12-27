@@ -34,7 +34,7 @@
 
       font-family: "Yuji Boku", serif;
       font-weight: 400;
-      font-size: 28px;
+      font-size: 32px;
       letter-spacing: 2px;
       text-decoration: none;
 
@@ -169,18 +169,7 @@
       letter-spacing: 0.4px;
       line-height: 1.15;
       text-align: center;
-    }
-
-    .carousel-desc{
-      font-family: "Lato", sans-serif;
-      font-size: 0.92rem;
-      line-height: 1.35;
-      margin: 0;
-      color: rgba(255,255,255,0.86);
-    }
-    .carousel-desc b{
-      color: rgba(255,255,255,0.98);
-      font-weight: 800;
+      cursor: pointer;
     }
 
     /* BLOQUE DE COMPRA */
@@ -273,14 +262,12 @@
 
     /* “Diseñada para: Nombre” */
     #dueños-container {
-      margin-top: 1rem;
-      text-align: center;
-      color: #fff;
-      padding: 0.75rem 0.9rem;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.03);
-      backdrop-filter: blur(10px);
+      background: transparent;
+      backdrop-filter: none;
+      border: none;
+      padding: 0;
+      margin-top: 0.6rem;
+      margin-left: 3rem;
     }
     #dueños-container .owner-label{
       display: block;
@@ -338,6 +325,7 @@
     }
     .title-row .card__title{
       margin: 0;
+      cursor: pointer;
     }
 
     /* MÓVIL */
@@ -392,8 +380,11 @@
     <span>B</span><span>o</span><span>k</span><span>u</span>
   </a>
 
-  <!-- ✅ BOTÓN AUDIO (mute/unmute) -->
-  <button class="audio-fab" id="audioFab" aria-label="Audio: activar o silenciar" type="button">
+  <!-- ✅ BOTÓN AUDIO (global ON/OFF) -->
+  <!-- ✅ AÑADIDO: data-voice para que al activar diga el nombre -->
+  <button class="audio-fab" id="audioFab"
+    data-voice="voces/chrollo.mp3"
+    aria-label="Audio: activar o silenciar" type="button">
     <span id="audioIcon">🔇</span>
     <span class="hint" id="audioHint">Click para activar</span>
   </button>
@@ -401,7 +392,7 @@
   <div class="container">
 
     <!-- CARD DEL PERSONAJE -->
-    <article class="card">
+    <article class="card" id="characterCard">
       <img
         class="card__background"
         src="imagenes/chrollo/chrollo.png"
@@ -412,7 +403,7 @@
         <div class="card__content--container flow">
 
           <div class="title-row">
-            <h2 class="card__title">Chrollo Lucilfer</h2>
+            <h2 class="card__title" id="characterTitle">Chrollo Lucilfer</h2>
 
             <a class="go-character" href="gohan.html" aria-label="Ir a Gohan">
               <span>→</span>
@@ -435,7 +426,7 @@
       <div>
 
         <div class="carousel-info">
-          <h3 class="carousel-title">Este diseño existe porque tú existes</h3>
+          <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
         <div class="slider">
@@ -507,7 +498,7 @@
     </div>
   </div>
 
-  <!-- ✅ AUDIO -->
+  <!-- ✅ SOLO música base aquí (el sistema global la controla) -->
   <audio id="openingAudio" src="musica/hxh.mp3" preload="auto"></audio>
 
   <script>
@@ -540,8 +531,6 @@
         sliderImage.src = imagenesChrollo[index].src;
         setOwner(imagenesChrollo[index].dueño);
         sliderImage.classList.add("show");
-
-        // re-inicia rotación del label si el DOM se reescribió
         resetOwnerLabelRotation();
       }, 150);
     }
@@ -557,9 +546,7 @@
     }
 
     buttons.forEach((btn, index) => {
-      btn.addEventListener("click", () => {
-        showSlide(index);
-      });
+      btn.addEventListener("click", () => showSlide(index));
     });
 
     window.addEventListener("hashchange", applyHash);
@@ -569,15 +556,7 @@
        ROTACIÓN "Diseñada para" (cada 5s)
        =========================== */
     const ownerLabelTexts = [
-      "Diseñada para",   // ES
-      "Designed for",    // EN
-      "Conçu pour",      // FR
-      "Progettata per",  // IT
-      "Entworfen für",   // DE
-      "Desenhada para",  // PT
-      "デザインされた",   // JP (corto; si quieres lo dejo más natural)
-      "디자인됨",         // KR (corto)
-      "为…设计"          // ZH (corto)
+      "Diseñada para","Designed for","Conçu pour","Progettata per","Entworfen für","Desenhada para","デザインされた","디자인됨","为…设计"
     ];
 
     let ownerLabelIndex = 0;
@@ -586,7 +565,6 @@
     function startOwnerLabelRotation(){
       const labelEl = document.getElementById("ownerLabel");
       if (!labelEl) return;
-
       if (ownerLabelTimer) return;
 
       labelEl.textContent = ownerLabelTexts[ownerLabelIndex];
@@ -601,7 +579,6 @@
     }
 
     function resetOwnerLabelRotation(){
-      // evita duplicados si el DOM se re-escribió
       if (ownerLabelTimer){
         clearInterval(ownerLabelTimer);
         ownerLabelTimer = null;
@@ -679,8 +656,7 @@
         `Precio: ${p.price}\n` +
         `¿Qué tallas y colores tienes disponibles?`;
 
-      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
-      wspBtn.href = url;
+      wspBtn.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
     }
 
     setPlan("silver");
@@ -688,68 +664,24 @@
     document.getElementById("glass-silver").addEventListener("change", () => setPlan("silver"));
     document.getElementById("glass-gold").addEventListener("change", () => setPlan("gold"));
     document.getElementById("glass-platinum").addEventListener("change", () => setPlan("platinum"));
+  </script>
 
-    /* ===========================
-       ✅ AUDIO: autoplay + botón mute/unmute
-       =========================== */
-    const audio = document.getElementById("openingAudio");
-    const audioFab = document.getElementById("audioFab");
-    const audioIcon = document.getElementById("audioIcon");
-    const audioHint = document.getElementById("audioHint");
+  <!-- ✅ Carga el sistema global (música + estado global + voz) -->
+  <script src="js/audio-system.js"></script>
 
-    audio.volume = 0.35;
-    audio.loop = true;
-    audio.muted = true; // inicia silenciado para evitar bloqueo fuerte de autoplay
+  <!-- ✅ Lógica de VOZ del personaje -->
+  <script>
+    const VOICE_SRC = "voces/chrollo.mp3";
 
-    function setFabState(){
-      if (audio.muted || audio.paused){
-        audioIcon.textContent = "🔇";
-        audioHint.textContent = "Click para activar";
-      } else {
-        audioIcon.textContent = "🔊";
-        audioHint.textContent = "Click para silenciar";
-      }
+    function playVoice(){
+      if (window.AudioSystem) AudioSystem.playVoice(VOICE_SRC);
     }
 
-    async function tryPlayUnmuted(){
-      audio.muted = false;
-      try{
-        await audio.play();
-      }catch(e){
-        // si falla, dejamos muteado pero listo para click
-        audio.muted = true;
-      }
-      setFabState();
-    }
-
-    window.addEventListener("load", async () => {
-      try{
-        // intentamos play muted (suele permitir autoplay)
-        await audio.play();
-      }catch(e){}
-      setFabState();
-    });
-
-    audioFab.addEventListener("click", async () => {
-      // si está muteado o pausado => activar
-      if (audio.muted || audio.paused){
-        await tryPlayUnmuted();
-      } else {
-        audio.muted = true;
-        setFabState();
-      }
-    });
-
-    // primer click en cualquier parte también intenta activar (por si el usuario no ve el botón)
-    const enableOnFirstInteraction = async () => {
-      if (audio.muted || audio.paused){
-        await tryPlayUnmuted();
-      }
-      document.removeEventListener("click", enableOnFirstInteraction);
-      document.removeEventListener("touchstart", enableOnFirstInteraction);
-    };
-    document.addEventListener("click", enableOnFirstInteraction, { once: true });
-    document.addEventListener("touchstart", enableOnFirstInteraction, { once: true });
+    // ✅ NO disparamos voz en load (autoplay lo puede bloquear).
+    // Solo con interacción del usuario.
+    document.getElementById("characterCard").addEventListener("click", playVoice);
+    document.getElementById("characterTitle").addEventListener("click", (e) => { e.stopPropagation(); playVoice(); });
+    document.getElementById("carouselTitle").addEventListener("click", (e) => { e.stopPropagation(); playVoice(); });
   </script>
 </body>
 </html>
