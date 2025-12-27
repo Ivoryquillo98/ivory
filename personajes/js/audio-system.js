@@ -46,6 +46,12 @@
     try{ voice.currentTime = 0; }catch{}
   }
 
+  function getVoiceOnThisPage(){
+    // ✅ La voz de esta página viene desde el botón: data-voice=".../voces/xxx.mp3"
+    const btn = document.getElementById("audioFab");
+    return btn ? (btn.getAttribute("data-voice") || null) : null;
+  }
+
   // ✅ UI depende SOLO de la preferencia (no de started)
   function setFabState(){
     if (!audioIcon || !audioHint) return;
@@ -57,6 +63,21 @@
       audioIcon.textContent = "🔊";
       audioHint.textContent = "Click para silenciar";
     }
+  }
+
+  async function playVoice(src){
+    if (!prefEnabled()) return false;
+
+    // si todavía no arrancó por bloqueo de autoplay,
+    // dejamos que suene recién cuando haya un gesto (click en título/carta/botón)
+    if (!started) return false;
+
+    ensureVoice();
+    stopVoice();
+    voice.muted = false;
+    voice.src = src;
+    voice.currentTime = 0;
+    return await safePlay(voice);
   }
 
   async function startAudioNow({playVoiceSrc=null} = {}){
@@ -117,30 +138,15 @@
     }
   }
 
-  async function playVoice(src){
-    if (!prefEnabled()) return false;
-
-    // si todavía no arrancó por bloqueo de autoplay,
-    // dejamos que suene recién cuando haya un gesto (click en título/carta/botón)
-    if (!started) return false;
-
-    ensureVoice();
-    stopVoice();
-    voice.muted = false;
-    voice.src = src;
-    voice.currentTime = 0;
-    return await safePlay(voice);
-  }
-
   function bindFab(){
     audioFab = document.getElementById("audioFab");
     audioIcon = document.getElementById("audioIcon");
     audioHint = document.getElementById("audioHint");
     if (!audioFab) return;
 
-    const voiceOnEnable = audioFab.getAttribute("data-voice") || null;
-
     audioFab.addEventListener("click", async () => {
+      const voiceOnEnable = getVoiceOnThisPage(); // ✅ se lee en el momento del click
+
       if (!prefEnabled()){
         setPref(true);
         await startAudioNow({ playVoiceSrc: voiceOnEnable });
@@ -154,14 +160,18 @@
   }
 
   function bindFirstGestureReactivate(){
-    // Si pref ON pero autoplay bloqueó, primer gesto arranca audio real
+    // ✅ Si pref ON pero autoplay bloqueó, primer gesto arranca audio real
+    // ✅ y AHORA también dispara la voz de la página actual (si existe)
     const firstGesture = async () => {
       if (prefEnabled() && !started){
-        await startAudioNow(); // no forzamos voz aquí
+        const voiceOnThisPage = getVoiceOnThisPage();
+        await startAudioNow({ playVoiceSrc: voiceOnThisPage });
       }
+
       document.removeEventListener("click", firstGesture);
       document.removeEventListener("touchstart", firstGesture);
     };
+
     document.addEventListener("click", firstGesture, { once: true });
     document.addEventListener("touchstart", firstGesture, { once: true });
   }
@@ -169,7 +179,7 @@
   // API pública
   window.AudioSystem = {
     playVoice,
-    isEnabled: () => prefEnabled(), // ✅ ahora es global real
+    isEnabled: () => prefEnabled(), // ✅ preferencia global real
   };
 
   window.addEventListener("load", async () => {
@@ -178,7 +188,7 @@
 
     bindFab();
     await tryAutoplayIfEnabled();   // ✅ intenta arrancar al entrar
-    bindFirstGestureReactivate();   // ✅ fallback si lo bloquea
+    bindFirstGestureReactivate();   // ✅ fallback si lo bloquea (y dice nombre)
     setFabState();
   });
 })();
