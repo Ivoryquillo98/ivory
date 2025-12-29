@@ -11,6 +11,10 @@
   <link rel="stylesheet" href="css/carrusel.css">
   <!-- CSS radios de planes -->
   <link rel="stylesheet" href="css/radio.css">
+  <!-- ✅ CSS global de marca + botón de audio -->
+  <link rel="stylesheet" href="css/boku-brand.css">
+  <!-- ✅ CSS global de layout -->
+  <link rel="stylesheet" href="css/layout-global.css">
 
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,357 +23,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet">
 
   <style>
-    /* ✅ Fondo acorde a Gon (verde, naturaleza, energía juvenil) */
+    /* ✅ Fondo acorde a Gon (verde, naturaleza, energía juvenil) — ÚNICO por personaje */
     body{
       background:
         radial-gradient(circle at 20% 20%, rgba(80, 255, 160, 0.55) 0%, rgba(80, 255, 160, 0) 45%),
         radial-gradient(circle at 75% 25%, rgba(120, 255, 120, 0.45) 0%, rgba(120, 255, 120, 0) 50%),
         radial-gradient(circle at 50% 85%, rgba(255, 255, 180, 0.25) 0%, rgba(255, 255, 180, 0) 55%),
         linear-gradient(135deg, #0b2e1b, #114a2d, #071a10);
-    }
-
-    /* ✅ Marca arriba izquierda (SIN FONDO: solo letras) */
-    .brand-boku{
-      position: fixed;
-      top: 18px;
-      left: 18px;
-      z-index: 50;
-
-      font-family: "Yuji Boku", serif;
-      font-weight: 400;
-      font-size: 32px;
-      letter-spacing: 2px;
-      text-decoration: none;
-
-      padding: 0;
-      border-radius: 0;
-      border: none;
-      background: transparent;
-      backdrop-filter: none;
-
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .brand-boku span{
-      display: inline-block;
-      animation: bokuColor 3.2s linear infinite;
-      text-shadow:
-        0 0 10px rgba(255,255,255,0.08),
-        0 0 18px rgba(255,255,255,0.06);
-    }
-
-    .brand-boku span:nth-child(1){ animation-delay: 0s; }
-    .brand-boku span:nth-child(2){ animation-delay: 0.18s; }
-    .brand-boku span:nth-child(3){ animation-delay: 0.36s; }
-    .brand-boku span:nth-child(4){ animation-delay: 0.54s; }
-
-    @keyframes bokuColor{
-      0%   { color: #ffffff; }
-      20%  { color: #ff4fd8; }
-      45%  { color: #7c4dff; }
-      70%  { color: #34d3ff; }
-      100% { color: #ffffff; }
-    }
-
-    /* ✅ Botón flotante de audio */
-    .audio-fab{
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      z-index: 60;
-
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.07);
-      backdrop-filter: blur(10px);
-
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-
-      color: rgba(255,255,255,0.95);
-      cursor: pointer;
-
-      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-      transition: transform 180ms ease, background 180ms ease;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .audio-fab:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,0.11);
-    }
-    .audio-fab:active{
-      transform: translateY(0px) scale(0.98);
-    }
-    .audio-fab span{
-      font-family: "Montserrat", sans-serif;
-      font-weight: 900;
-      font-size: 18px;
-      line-height: 1;
-    }
-    .audio-fab .hint{
-      position: absolute;
-      top: 52px;
-      right: 0;
-      padding: 6px 10px;
-      border-radius: 10px;
-      background: rgba(0,0,0,0.55);
-      color: rgba(255,255,255,0.9);
-      font-family: "Lato", sans-serif;
-      font-size: 12px;
-      white-space: nowrap;
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(10px);
-      opacity: 0;
-      transform: translateY(-4px);
-      pointer-events: none;
-      transition: opacity 180ms ease, transform 180ms ease;
-    }
-    .audio-fab:hover .hint{
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* CONTENEDOR PRINCIPAL */
-    .container {
-      display: flex;
-      gap: 6rem;
-      align-items: flex-start;
-      justify-content: flex-start;
-      padding: 2rem;
-    }
-
-    /* PANEL DERECHO GENERAL */
-    .side-panel{
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-
-    /* bloque de texto sobre el carrusel */
-    .carousel-info{
-      max-width: 420px;
-      margin: 0 0 0.9rem;
-      padding: 0.85rem 1rem;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(10px);
-      color: #fff;
-    }
-
-    .carousel-title{
-      font-family: "Yuji Boku", serif;
-      font-weight: 400;
-      font-size: 1.65rem;
-      margin: 0;
-      letter-spacing: 0.4px;
-      line-height: 1.15;
-      text-align: center;
-    }
-
-    /* BLOQUE DE COMPRA */
-    .buy-panel{
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      min-width: 260px;
-      max-width: 320px;
-      margin-left: 5rem;
-    }
-
-    .buy-title{
-      font-family: "Montserrat", sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #fff;
-      letter-spacing: 0.2px;
-      margin: 0;
-    }
-
-    .plan-box{
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 14px;
-      padding: 1rem 1rem 0.9rem;
-      background: rgba(255,255,255,0.03);
-      backdrop-filter: blur(10px);
-      color: #fff;
-    }
-
-    .plan-name{
-      font-family: "Montserrat", sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      margin: 0 0 0.25rem;
-    }
-
-    .plan-price{
-      font-family: "Montserrat", sans-serif;
-      font-weight: 700;
-      font-size: 1.25rem;
-      margin: 0 0 0.75rem;
-    }
-
-    .plan-features{
-      margin: 0;
-      padding-left: 1.1rem;
-      font-family: "Lato", sans-serif;
-      line-height: 1.35;
-      color: rgba(255,255,255,0.92);
-      font-size: 0.95rem;
-    }
-
-    .plan-features li{
-      margin: 0.25rem 0;
-    }
-
-    .wsp-btn{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-
-      width: 100%;
-      padding: 0.9rem 1rem;
-      border-radius: 14px;
-
-      background: #25D366;
-      color: #08120b;
-      text-decoration: none;
-
-      font-family: "Montserrat", sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
-
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-      transition: transform 180ms ease;
-    }
-    .wsp-btn:hover{ transform: translateY(-1px); }
-
-    .wsp-sub{
-      font-family: "Lato", sans-serif;
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.75);
-      margin: 0;
-      text-align: center;
-    }
-
-    /* “Diseñada para: Nombre” (igual al prototipo) */
-    #dueños-container {
-      background: transparent;
-      backdrop-filter: none;
-      border: none;
-      padding: 0;
-      margin-top: 0.6rem;
-      margin-left: 3rem;
-    }
-    #dueños-container .owner-label{
-      display: block;
-      font-family: "Lato", sans-serif;
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.72);
-      letter-spacing: 0.2px;
-      margin-bottom: 0.2rem;
-    }
-    #dueños-container .owner-name{
-      display: block;
-      font-family: "Montserrat", sans-serif;
-      font-size: 1.15rem;
-      font-weight: 900;
-      color: rgba(255,255,255,0.98);
-      line-height: 1.15;
-    }
-
-    /* flecha más chica */
-    .go-character{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(10px);
-      color: #fff;
-      text-decoration: none;
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-      transition: transform 180ms ease, background 180ms ease;
-      margin-top: 0;
-    }
-    .go-character:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,0.10);
-    }
-    .go-character span{
-      font-size: 1rem;
-      font-weight: 900;
-      line-height: 1;
-      font-family: "Montserrat", sans-serif;
-    }
-
-    /* fila título + flecha */
-    .title-row{
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 0.6rem;
-    }
-    .title-row .card__title{
-      margin: 0;
-    }
-
-    /* 📱 MÓVIL */
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        align-items: center;
-        padding: 1.25rem 1rem;
-        gap: 1.5rem;
-      }
-
-      .side-panel{
-        flex-direction: column;
-        align-items: center;
-        gap: 1.25rem;
-      }
-
-      .buy-panel{
-        width: 100%;
-        max-width: 360px;
-        margin-left: 0;
-      }
-
-      .carousel-info{
-        max-width: 360px;
-      }
-
-      .carousel-title{
-        font-size: 1.35rem;
-      }
-
-      .brand-boku{
-        top: 12px;
-        left: 12px;
-        font-size: 22px;
-      }
-
-      .audio-fab{
-        top: 12px;
-        right: 12px;
-        width: 42px;
-        height: 42px;
-      }
     }
   </style>
 </head>
@@ -381,30 +41,31 @@
     <span>B</span><span>o</span><span>k</span><span>u</span>
   </a>
 
-  <!-- ✅ BOTÓN AUDIO (mute/unmute) -->
-  <button class="audio-fab" id="audioFab" aria-label="Audio: activar o silenciar" type="button">
+  <!-- ✅ BOTÓN AUDIO (global ON/OFF) -->
+  <button class="audio-fab" id="audioFab"
+    data-voice="voces/gon.mp3"
+    aria-label="Audio: activar o silenciar" type="button">
     <span id="audioIcon">🔇</span>
     <span class="hint" id="audioHint">Click para activar</span>
   </button>
 
   <div class="container">
 
-    <!-- Tarjeta del personaje -->
-    <article class="card">
-      <img
-        class="card__background"
-        src="imagenes/gon/gon.png"
-        alt="Gon Freecss"
-      />
+    <!-- CARD DEL PERSONAJE -->
+    <article class="card" id="characterCard">
+      <img class="card__background" src="imagenes/gon/gon.png" alt="Gon Freecss" />
 
       <div class="card__content flow">
         <div class="card__content--container flow">
 
           <div class="title-row">
-            <h2 class="card__title">Gon Freecss</h2>
+            <h2 class="card__title" id="characterTitle">Gon Freecss</h2>
 
-            <!-- ✅ Flecha a hisoka.html -->
-            <a class="go-character" href="hisoka.html" aria-label="Ir a Hisoka">
+            <!-- ✅ Flecha: reproduce la VOZ del siguiente personaje antes de navegar -->
+            <a class="go-character"
+               href="hisoka.html"
+               data-voice-next="voces/hisoka.mp3"
+               aria-label="Ir a Hisoka">
               <span>→</span>
             </a>
           </div>
@@ -424,7 +85,7 @@
       <!-- SLIDER -->
       <div>
         <div class="carousel-info">
-          <h3 class="carousel-title">Este diseño existe porque tú existes</h3>
+          <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
         <div class="slider">
@@ -434,17 +95,12 @@
           <a href="#slide-4">4</a>
 
           <div class="slides" id="slides">
-            <img
-              id="sliderImage"
-              src="imagenes/gon/gon1.png"
-              class="fade show"
-              alt="Gon artwork"
-            >
+            <img id="sliderImage" src="imagenes/gon/gon1.png" class="fade show" alt="Gon artwork">
           </div>
 
           <div id="dueños-container">
             <span class="owner-label" id="ownerLabel">Diseñada para</span>
-            <span class="owner-name">Emilio Contreras</span>
+            <span class="owner-name" id="ownerName">Emilio Contreras</span>
           </div>
         </div>
       </div>
@@ -496,241 +152,31 @@
     </div>
   </div>
 
-  <!-- ✅ AUDIO -->
+  <!-- ✅ Música base SOLO para el sistema global -->
   <audio id="openingAudio" src="musica/hxh.mp3" preload="auto"></audio>
 
+  <!-- ✅ Sistema global (música + estado global + voz) -->
+  <script src="js/audio-system.js"></script>
+
+  <!-- ✅ Config por página -->
   <script>
-    /* ===========================
-       SLIDER
-       =========================== */
-    const imagenesGon = [
-      { src: "imagenes/gon/gon1.png", dueño: "Emilio Contreras" },
-      { src: "imagenes/gon/gon2.png", dueño: "María Pérez" },
-      { src: "imagenes/gon/gon3.png", dueño: "Carlos Gómez" },
-      { src: "imagenes/gon/gon4.png", dueño: "Lucía Torres" }
-    ];
-
-    const sliderImage = document.getElementById("sliderImage");
-    const dueñoContainer = document.getElementById("dueños-container");
-    const buttons = document.querySelectorAll(".slider > a");
-
-    function setOwner(name){
-      dueñoContainer.innerHTML =
-        `<span class="owner-label" id="ownerLabel">Diseñada para</span>` +
-        `<span class="owner-name">${name}</span>`;
-    }
-
-    function showSlide(index){
-      if (index < 0 || index >= imagenesGon.length) return;
-
-      sliderImage.classList.remove("show");
-
-      setTimeout(() => {
-        sliderImage.src = imagenesGon[index].src;
-        setOwner(imagenesGon[index].dueño);
-        sliderImage.classList.add("show");
-
-        resetOwnerLabelRotation();
-      }, 150);
-    }
-
-    function applyHash(){
-      const hash = window.location.hash;
-      const match = hash.match(/^#slide-(\d+)$/);
-      if (!match) return;
-
-      const num = Number(match[1]);
-      const index = num - 1;
-      showSlide(index);
-    }
-
-    buttons.forEach((btn, index) => {
-      btn.addEventListener("click", () => {
-        showSlide(index);
-      });
-    });
-
-    window.addEventListener("hashchange", applyHash);
-    applyHash();
-
-    /* ===========================
-       ROTACIÓN "Diseñada para" (cada 5s)
-       =========================== */
-    const ownerLabelTexts = [
-      "Diseñada para",   // ES
-      "Designed for",    // EN
-      "Conçu pour",      // FR
-      "Progettata per",  // IT
-      "Entworfen für",   // DE
-      "Desenhada para",  // PT
-      "デザインされた",   // JP
-      "디자인됨",         // KR
-      "为…设计"          // ZH
-    ];
-
-    let ownerLabelIndex = 0;
-    let ownerLabelTimer = null;
-
-    function startOwnerLabelRotation(){
-      const labelEl = document.getElementById("ownerLabel");
-      if (!labelEl) return;
-
-      if (ownerLabelTimer) return;
-
-      labelEl.textContent = ownerLabelTexts[ownerLabelIndex];
-
-      ownerLabelTimer = setInterval(() => {
-        const el = document.getElementById("ownerLabel");
-        if (!el) return;
-
-        ownerLabelIndex = (ownerLabelIndex + 1) % ownerLabelTexts.length;
-        el.textContent = ownerLabelTexts[ownerLabelIndex];
-      }, 5000);
-    }
-
-    function resetOwnerLabelRotation(){
-      if (ownerLabelTimer){
-        clearInterval(ownerLabelTimer);
-        ownerLabelTimer = null;
-      }
-      startOwnerLabelRotation();
-    }
-
-    startOwnerLabelRotation();
-
-    /* ===========================
-       PLANES
-       =========================== */
-    const plans = {
-      silver: {
-        label: "Plan Silver",
-        price: "$12.990 CLP",
-        features: [
-          "Camiseta personalizada con tu diseño",
-          "Estampado en 1 área (frente)",
-          "1 ajuste de color/contraste",
-          "Tu diseño puede aparecer en el catálogo",
-          "Entrega estándar"
-        ]
-      },
-      gold: {
-        label: "Plan Gold",
-        price: "$17.990 CLP",
-        features: [
-          "Camiseta personalizada (mejor calidad de tela)",
-          "Estampado más nítido + mejor durabilidad",
-          "Estampado en 2 áreas (frente + espalda o manga)",
-          "Hasta 2 revisiones del diseño",
-          "Tu diseño puede aparecer en el catálogo",
-          "Entrega prioritaria"
-        ]
-      },
-      platinum: {
-        label: "Plan Platinum",
-        price: "$24.990 CLP",
-        features: [
-          "Camiseta premium + opción oversize",
-          "Estampado full color (máxima calidad)",
-          "Estampado en 3 áreas (frente + espalda + manga)",
-          "Hasta 4 revisiones + retoque pro del diseño",
-          "Tu diseño puede aparecer en el catálogo",
-          "Empaque premium + entrega prioritaria"
-        ]
-      }
+    window.PAGE_CONFIG = {
+      characterName: "Gon",
+      voiceSrc: "voces/gon.mp3",
+      nextHref: "hisoka.html",
+      nextVoiceSrc: "voces/hisoka.mp3", // ✅ agregado
+      phoneNumber: "56920282860",
+      images: [
+        { src: "imagenes/gon/gon1.png", owner: "Emilio Contreras" },
+        { src: "imagenes/gon/gon2.png", owner: "María Pérez" },
+        { src: "imagenes/gon/gon3.png", owner: "Carlos Gómez" },
+        { src: "imagenes/gon/gon4.png", owner: "Lucía Torres" }
+      ]
     };
-
-    const planName = document.getElementById("planName");
-    const planPrice = document.getElementById("planPrice");
-    const planFeatures = document.getElementById("planFeatures");
-    const wspBtn = document.getElementById("wspBtn");
-
-    const phoneNumber = "56920282860";
-
-    function setPlan(planKey) {
-      const p = plans[planKey];
-
-      planName.textContent = p.label;
-      planPrice.textContent = p.price;
-
-      planFeatures.innerHTML = "";
-      p.features.forEach((f) => {
-        const li = document.createElement("li");
-        li.textContent = f;
-        planFeatures.appendChild(li);
-      });
-
-      const msg =
-        `Hola! Quiero comprar una camiseta personalizada (Camisetas Únicas).\n` +
-        `Diseño inspirado en: Gon\n` +
-        `Plan elegido: ${p.label}\n` +
-        `Precio: ${p.price}\n` +
-        `¿Qué tallas y colores tienes disponibles?`;
-
-      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
-      wspBtn.href = url;
-    }
-
-    setPlan("silver");
-
-    document.getElementById("glass-silver").addEventListener("change", () => setPlan("silver"));
-    document.getElementById("glass-gold").addEventListener("change", () => setPlan("gold"));
-    document.getElementById("glass-platinum").addEventListener("change", () => setPlan("platinum"));
-
-    /* ===========================
-       ✅ AUDIO: autoplay + botón mute/unmute
-       =========================== */
-    const audio = document.getElementById("openingAudio");
-    const audioFab = document.getElementById("audioFab");
-    const audioIcon = document.getElementById("audioIcon");
-    const audioHint = document.getElementById("audioHint");
-
-    audio.volume = 0.35;
-    audio.loop = true;
-    audio.muted = true;
-
-    function setFabState(){
-      if (audio.muted || audio.paused){
-        audioIcon.textContent = "🔇";
-        audioHint.textContent = "Click para activar";
-      } else {
-        audioIcon.textContent = "🔊";
-        audioHint.textContent = "Click para silenciar";
-      }
-    }
-
-    async function tryPlayUnmuted(){
-      audio.muted = false;
-      try{
-        await audio.play();
-      }catch(e){
-        audio.muted = true;
-      }
-      setFabState();
-    }
-
-    window.addEventListener("load", async () => {
-      try{ await audio.play(); }catch(e){}
-      setFabState();
-    });
-
-    audioFab.addEventListener("click", async () => {
-      if (audio.muted || audio.paused){
-        await tryPlayUnmuted();
-      } else {
-        audio.muted = true;
-        setFabState();
-      }
-    });
-
-    const enableOnFirstInteraction = async () => {
-      if (audio.muted || audio.paused){
-        await tryPlayUnmuted();
-      }
-      document.removeEventListener("click", enableOnFirstInteraction);
-      document.removeEventListener("touchstart", enableOnFirstInteraction);
-    };
-    document.addEventListener("click", enableOnFirstInteraction, { once: true });
-    document.addEventListener("touchstart", enableOnFirstInteraction, { once: true });
   </script>
+
+  <!-- ✅ Lógica global: slider + label + planes + WhatsApp + voz -->
+  <script src="js/page-ui.js"></script>
+
 </body>
 </html>
