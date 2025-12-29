@@ -5,412 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Card Animada - Shizuku</title>
 
-  <!-- CSS del personaje -->
+  <!-- CSS base -->
   <link rel="stylesheet" href="css/personajes.css">
-  <!-- CSS del slider/carrusel -->
   <link rel="stylesheet" href="css/carrusel.css">
-  <!-- CSS radios de planes -->
   <link rel="stylesheet" href="css/radio.css">
+
+  <!-- CSS global -->
+  <link rel="stylesheet" href="css/boku-brand.css">
+  <link rel="stylesheet" href="css/layout-global.css">
 
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-  <!-- Boku -->
   <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet">
 
   <style>
-    /* 🩵🟣 FONDO SHIZUKU (frío, suave, “calma letal”) */
-    body {
-      background: radial-gradient(
-        circle at top,
-        #7a7df0 0%,
-        #3a2b66 45%,
-        #0b0814 100%
-      );
+    /* 🩵🟣 Fondo Shizuku (frío, suave, “calma letal”) */
+    body{
+      background:
+        radial-gradient(circle at 28% 16%, rgba(185,190,255,0.30) 0%, rgba(185,190,255,0) 46%),
+        radial-gradient(circle at 74% 30%, rgba(122,125,240,0.22) 0%, rgba(122,125,240,0) 55%),
+        linear-gradient(135deg, #0b0814, #3a2b66, #7a7df0);
     }
 
-    /* ✅ MARCA "Boku" arriba izquierda (solo letras, sin fondo) */
-    .brand-boku{
-      position: fixed;
-      top: 18px;
-      left: 18px;
-      z-index: 50;
-
-      font-family: "Yuji Boku", serif;
-      font-weight: 400;
-      font-size: 32px;
-      letter-spacing: 2px;
-      text-decoration: none;
-
-      padding: 0;
-      border-radius: 0;
-      border: none;
-      background: transparent;
-      backdrop-filter: none;
-
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .brand-boku span{
-      display: inline-block;
-      animation: bokuColor 3.2s linear infinite;
-      text-shadow:
-        0 0 12px rgba(0,0,0,0.30),
-        0 0 22px rgba(0,0,0,0.22);
-    }
-
-    .brand-boku span:nth-child(1){ animation-delay: 0s; }
-    .brand-boku span:nth-child(2){ animation-delay: 0.18s; }
-    .brand-boku span:nth-child(3){ animation-delay: 0.36s; }
-    .brand-boku span:nth-child(4){ animation-delay: 0.54s; }
-
+    /* 🎴 Vibe Shizuku para la marca */
     @keyframes bokuColor{
       0%   { color: #e7e6ff; }
       30%  { color: #ffffff; }
       60%  { color: #b9b6ff; }
       100% { color: #e7e6ff; }
     }
-
-    /* ✅ Botón flotante de audio */
-    .audio-fab{
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      z-index: 60;
-
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
-
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-
-      color: rgba(255,255,255,0.95);
-      cursor: pointer;
-
-      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-      transition: transform 180ms ease, background 180ms ease;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .audio-fab:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,0.12);
-    }
-    .audio-fab:active{
-      transform: translateY(0px) scale(0.98);
-    }
-    .audio-fab span{
-      font-family: "Montserrat", sans-serif;
-      font-weight: 900;
-      font-size: 18px;
-      line-height: 1;
-    }
-    .audio-fab .hint{
-      position: absolute;
-      top: 52px;
-      right: 0;
-      padding: 6px 10px;
-      border-radius: 10px;
-      background: rgba(0,0,0,0.35);
-      color: rgba(255,255,255,0.88);
-      font-family: "Lato", sans-serif;
-      font-size: 12px;
-      white-space: nowrap;
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(10px);
-      opacity: 0;
-      transform: translateY(-4px);
-      pointer-events: none;
-      transition: opacity 180ms ease, transform 180ms ease;
-    }
-    .audio-fab:hover .hint{
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* CONTENEDOR PRINCIPAL */
-    .container {
-      display: flex;
-      gap: 3.7rem;
-      align-items: flex-start;
-      justify-content: flex-start;
-      padding: 2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* PANEL DERECHO GENERAL */
-    .side-panel{
-      display: flex;
-      flex-direction: row;          /* PC: slider + bloque compra en fila */
-      align-items: flex-start;
-      gap: 2rem;
-    }
-
-    /* ✅ bloque de texto sobre el carrusel */
-    .carousel-info{
-      max-width: 420px;
-      margin: 0 0 0.9rem;
-      padding: 0.85rem 1rem;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(10px);
-      color: #fff;
-    }
-
-    /* ✅ SOLO el título */
-    .carousel-title{
-      font-family: "Yuji Boku", serif;
-      font-weight: 400;
-      font-size: 1.65rem;
-      margin: 0;
-      letter-spacing: 0.3px;
-      line-height: 1.15;
-      text-align: center;
-      color: rgba(255,255,255,0.96);
-      text-shadow: 0 10px 24px rgba(0,0,0,0.35);
-    }
-
-    /* BLOQUE DE COMPRA */
-    .buy-panel{
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      min-width: 260px;
-      max-width: 320px;
-      margin-left: 5rem;
-    }
-
-    .buy-title{
-      font-family: "Montserrat", sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #fff;
-      letter-spacing: 0.2px;
-      margin: 0;
-    }
-
-    .plan-box{
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 14px;
-      padding: 1rem 1rem 0.9rem;
-      background: rgba(255,255,255,0.03);
-      backdrop-filter: blur(10px);
-      color: #fff;
-    }
-
-    .plan-name{
-      font-family: "Montserrat", sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      margin: 0 0 0.25rem;
-    }
-
-    .plan-price{
-      font-family: "Montserrat", sans-serif;
-      font-weight: 700;
-      font-size: 1.25rem;
-      margin: 0 0 0.75rem;
-    }
-
-    .plan-features{
-      margin: 0;
-      padding-left: 1.1rem;
-      font-family: "Lato", sans-serif;
-      line-height: 1.35;
-      color: rgba(255,255,255,0.92);
-      font-size: 0.95rem;
-    }
-    .plan-features li{ margin: 0.25rem 0; }
-
-    .wsp-btn{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-
-      width: 100%;
-      padding: 0.9rem 1rem;
-      border-radius: 14px;
-
-      background: #25D366;
-      color: #08120b;
-      text-decoration: none;
-
-      font-family: "Montserrat", sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
-
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-      transition: transform 180ms ease;
-    }
-    .wsp-btn:hover{ transform: translateY(-1px); }
-
-    .wsp-sub{
-      font-family: "Lato", sans-serif;
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.75);
-      margin: 0;
-      text-align: center;
-    }
-
-    /* ✅ “Diseñada para” TRANSPARENTE + más abajo y un poco a la derecha */
-    #dueños-container {
-      background: transparent;
-      backdrop-filter: none;
-      border: none;
-      padding: 0;
-
-      margin-top: 0.65rem; /* más abajo */
-      margin-left: 3rem;   /* un poco a la derecha */
-
-      text-align: left;
-      color: #fff;
-    }
-    #dueños-container .owner-label{
-      display: block;
-      font-family: "Lato", sans-serif;
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.72);
-      letter-spacing: 0.2px;
-      margin-bottom: 0.2rem;
-    }
-    #dueños-container .owner-name{
-      display: block;
-      font-family: "Montserrat", sans-serif;
-      font-size: 1.15rem;
-      font-weight: 900;
-      color: rgba(255,255,255,0.98);
-      line-height: 1.15;
-    }
-
-    /* ✅ Flecha chica al lado del título */
-    .go-character{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(10px);
-      color: #fff;
-      text-decoration: none;
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-      transition: transform 180ms ease, background 180ms ease;
-      margin-top: 0;
-    }
-    .go-character:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,0.10);
-    }
-    .go-character span{
-      font-size: 1rem;
-      font-weight: 900;
-      line-height: 1;
-      font-family: "Montserrat", sans-serif;
-    }
-
-    .title-row{
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 0.6rem;
-    }
-    .title-row .card__title{ margin: 0; }
-
-    /* 📱 MÓVIL */
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 1.25rem 1rem;
-        gap: 1.5rem;
-      }
-
-      .side-panel{
-        flex-direction: column;
-        align-items: center;
-        gap: 1.25rem;
-      }
-
-      .buy-panel{
-        width: 100%;
-        max-width: 360px;
-        margin-left: 0;
-      }
-
-      .carousel-info{
-        max-width: 360px;
-      }
-
-      /* ✅ Tamaño + posición Boku en móvil */
-      .brand-boku{
-        top: 12px;
-        left: 12px;
-        font-size: 22px;
-      }
-
-      .audio-fab{
-        top: 12px;
-        right: 12px;
-        width: 42px;
-        height: 42px;
-      }
-
-      /* ✅ “Diseñada para” en móvil (no tan a la derecha) */
-      #dueños-container{
-        margin-left: 0.5rem;
-      }
-
-      .carousel-title{
-        font-size: 1.35rem;
-      }
-    }
   </style>
 </head>
 
 <body>
 
-  <!-- ✅ MARCA SUPERIOR IZQUIERDA -->
+  <!-- MARCA -->
   <a class="brand-boku" href="index.html" aria-label="Ir al inicio">
     <span>B</span><span>o</span><span>k</span><span>u</span>
   </a>
 
-  <!-- ✅ BOTÓN AUDIO (mute/unmute) -->
-  <button class="audio-fab" id="audioFab" aria-label="Audio: activar o silenciar" type="button">
+  <!-- AUDIO -->
+  <button
+    class="audio-fab"
+    id="audioFab"
+    data-voice="voces/shizuku.mp3"
+    aria-label="Audio: activar o silenciar"
+    type="button"
+  >
     <span id="audioIcon">🔇</span>
     <span class="hint" id="audioHint">Click para activar</span>
   </button>
 
   <div class="container">
 
-    <!-- TARJETA DEL PERSONAJE -->
-    <article class="card">
-      <img class="card__background" src="imagenes/shizuku/shizuku.png" alt="Shizuku" />
+    <!-- CARD -->
+    <article class="card" id="characterCard">
+      <img
+        class="card__background"
+        src="imagenes/shizuku/shizuku.png"
+        alt="Shizuku"
+      />
 
       <div class="card__content flow">
         <div class="card__content--container flow">
 
           <div class="title-row">
-            <h2 class="card__title">Shizuku</h2>
+            <h2 class="card__title" id="characterTitle">Shizuku</h2>
 
-            <!-- ✅ Flecha a trunks.html -->
-            <a class="go-character" href="trunks.html" aria-label="Ir a Trunks">
+            <!-- ✅ Flecha con voz del siguiente personaje -->
+            <a class="go-character"
+               href="trunks.html"
+               data-voice-next="voces/trunks.mp3"
+               aria-label="Ir a Trunks">
               <span>→</span>
             </a>
           </div>
@@ -427,10 +95,10 @@
     <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER (diseños personalizados de clientes) -->
+      <!-- SLIDER -->
       <div>
         <div class="carousel-info">
-          <h3 class="carousel-title">Este diseño existe porque tú existes</h3>
+          <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
         <div class="slider">
@@ -440,6 +108,7 @@
           <a href="#slide-4">4</a>
 
           <div class="slides" id="slides">
+            <!-- ✅ src inicial -->
             <img
               id="sliderImage"
               src="imagenes/shizuku/shizuku1.png"
@@ -450,16 +119,15 @@
 
           <div id="dueños-container">
             <span class="owner-label" id="ownerLabel">Diseñada para</span>
-            <span class="owner-name">Emilio Contreras</span>
+            <span class="owner-name" id="ownerName">Emilio Contreras</span>
           </div>
         </div>
       </div>
 
-      <!-- BLOQUE DE COMPRA -->
+      <!-- COMPRA -->
       <div class="buy-panel">
         <h3 class="buy-title">Personaliza tu camiseta</h3>
 
-        <!-- ✅ RADIOS (MISMA ESTRUCTURA para radio.css) -->
         <div class="glass-radio-group-vertical" id="planRadios">
           <input checked id="glass-silver" name="plan" type="radio" />
           <label for="glass-silver">
@@ -482,7 +150,6 @@
           <div class="glass-glider-vertical"></div>
         </div>
 
-        <!-- DETALLES -->
         <div class="plan-box" id="planBox">
           <p class="plan-name" id="planName">Plan Silver</p>
           <p class="plan-price" id="planPrice">$12.990 CLP</p>
@@ -495,249 +162,36 @@
           </ul>
         </div>
 
-        <!-- WHATSAPP -->
-        <a class="wsp-btn" id="wspBtn" href="#" target="_blank" rel="noopener">
-          Comprar por WhatsApp
-        </a>
+        <a class="wsp-btn" id="wspBtn" href="#" target="_blank" rel="noopener">Comprar por WhatsApp</a>
         <p class="wsp-sub" id="wspSub">Te llevará con el mensaje listo para enviar.</p>
       </div>
 
     </div>
   </div>
 
-  <!-- ✅ AUDIO (opening) -->
+  <!-- AUDIO BASE -->
   <audio id="openingAudio" src="musica/hxh.mp3" preload="auto"></audio>
 
+  <!-- SISTEMAS GLOBALES -->
+  <script src="js/audio-system.js"></script>
+
   <script>
-    /* ===========================
-       SLIDER + soporte hash #slide-X
-       =========================== */
-    const imagenesShizuku = [
-      { src: "imagenes/shizuku/shizuku1.png", dueño: "Emilio Contreras" },
-      { src: "imagenes/shizuku/shizuku2.png", dueño: "María Pérez" },
-      { src: "imagenes/shizuku/shizuku3.png", dueño: "Carlos Gómez" },
-      { src: "imagenes/shizuku/shizuku4.png", dueño: "Lucía Torres" }
-    ];
-
-    const sliderImage = document.getElementById("sliderImage");
-    const dueñoContainer = document.getElementById("dueños-container");
-    const buttons = document.querySelectorAll(".slider > a");
-
-    function setOwner(name){
-      dueñoContainer.innerHTML =
-        `<span class="owner-label" id="ownerLabel">Diseñada para</span>` +
-        `<span class="owner-name">${name}</span>`;
-    }
-
-    function showSlide(index){
-      if (index < 0 || index >= imagenesShizuku.length) return;
-
-      sliderImage.classList.remove("show");
-
-      setTimeout(() => {
-        sliderImage.src = imagenesShizuku[index].src;
-        setOwner(imagenesShizuku[index].dueño);
-        sliderImage.classList.add("show");
-
-        resetOwnerLabelRotation();
-      }, 150);
-    }
-
-    function applyHash(){
-      const hash = window.location.hash; // "#slide-3"
-      const match = hash.match(/^#slide-(\d+)$/);
-      if (!match) return;
-
-      const num = Number(match[1]);
-      const index = num - 1;
-      showSlide(index);
-    }
-
-    buttons.forEach((btn, index) => {
-      btn.addEventListener("click", () => showSlide(index));
-    });
-
-    window.addEventListener("hashchange", applyHash);
-    applyHash();
-
-    /* ===========================
-       ROTACIÓN "Diseñada para" (cada 5s)
-       =========================== */
-    const ownerLabelTexts = [
-      "Diseñada para",   // ES
-      "Designed for",    // EN
-      "Conçu pour",      // FR
-      "Progettata per",  // IT
-      "Entworfen für",   // DE
-      "Desenhada para",  // PT
-      "デザインされた",   // JP
-      "디자인됨",         // KR
-      "为…设计"          // ZH
-    ];
-
-    let ownerLabelIndex = 0;
-    let ownerLabelTimer = null;
-
-    function startOwnerLabelRotation(){
-      const labelEl = document.getElementById("ownerLabel");
-      if (!labelEl) return;
-      if (ownerLabelTimer) return;
-
-      labelEl.textContent = ownerLabelTexts[ownerLabelIndex];
-
-      ownerLabelTimer = setInterval(() => {
-        const el = document.getElementById("ownerLabel");
-        if (!el) return;
-
-        ownerLabelIndex = (ownerLabelIndex + 1) % ownerLabelTexts.length;
-        el.textContent = ownerLabelTexts[ownerLabelIndex];
-      }, 5000);
-    }
-
-    function resetOwnerLabelRotation(){
-      if (ownerLabelTimer){
-        clearInterval(ownerLabelTimer);
-        ownerLabelTimer = null;
-      }
-      startOwnerLabelRotation();
-    }
-
-    startOwnerLabelRotation();
-
-    /* ===========================
-       PLANES
-       =========================== */
-    const plans = {
-      silver: {
-        label: "Plan Silver",
-        price: "$12.990 CLP",
-        features: [
-          "Camiseta personalizada con tu diseño",
-          "Estampado en 1 área (frente)",
-          "1 ajuste de color/contraste",
-          "Tu diseño puede aparecer en el catálogo",
-          "Entrega estándar"
-        ]
-      },
-      gold: {
-        label: "Plan Gold",
-        price: "$17.990 CLP",
-        features: [
-          "Camiseta personalizada (mejor calidad de tela)",
-          "Estampado más nítido + mejor durabilidad",
-          "Estampado en 2 áreas (frente + espalda o manga)",
-          "Hasta 2 revisiones del diseño",
-          "Tu diseño puede aparecer en el catálogo",
-          "Entrega prioritaria"
-        ]
-      },
-      platinum: {
-        label: "Plan Platinum",
-        price: "$24.990 CLP",
-        features: [
-          "Camiseta premium + opción oversize",
-          "Estampado full color (máxima calidad)",
-          "Estampado en 3 áreas (frente + espalda + manga)",
-          "Hasta 4 revisiones + retoque pro del diseño",
-          "Tu diseño puede aparecer en el catálogo",
-          "Empaque premium + entrega prioritaria"
-        ]
-      }
+    window.PAGE_CONFIG = {
+      characterName: "Shizuku",
+      voiceSrc: "voces/shizuku.mp3",
+      nextHref: "trunks.html",
+      nextVoiceSrc: "voces/trunks.mp3", // ✅ agregado
+      phoneNumber: "56920282860",
+      images: [
+        { src: "imagenes/shizuku/shizuku1.png", owner: "Emilio Contreras" },
+        { src: "imagenes/shizuku/shizuku2.png", owner: "María Pérez" },
+        { src: "imagenes/shizuku/shizuku3.png", owner: "Carlos Gómez" },
+        { src: "imagenes/shizuku/shizuku4.png", owner: "Lucía Torres" }
+      ]
     };
-
-    const planName = document.getElementById("planName");
-    const planPrice = document.getElementById("planPrice");
-    const planFeatures = document.getElementById("planFeatures");
-    const wspBtn = document.getElementById("wspBtn");
-
-    const phoneNumber = "56920282860"; // sin +, sin espacios
-
-    function setPlan(planKey) {
-      const p = plans[planKey];
-
-      planName.textContent = p.label;
-      planPrice.textContent = p.price;
-
-      planFeatures.innerHTML = "";
-      p.features.forEach((f) => {
-        const li = document.createElement("li");
-        li.textContent = f;
-        planFeatures.appendChild(li);
-      });
-
-      const msg =
-        `Hola! Quiero comprar una camiseta personalizada (Camisetas Únicas).\n` +
-        `Diseño inspirado en: Shizuku\n` +
-        `Plan elegido: ${p.label}\n` +
-        `Precio: ${p.price}\n` +
-        `¿Qué tallas y colores tienes disponibles?`;
-
-      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
-      wspBtn.href = url;
-    }
-
-    setPlan("silver");
-
-    document.getElementById("glass-silver").addEventListener("change", () => setPlan("silver"));
-    document.getElementById("glass-gold").addEventListener("change", () => setPlan("gold"));
-    document.getElementById("glass-platinum").addEventListener("change", () => setPlan("platinum"));
-
-    /* ===========================
-       ✅ AUDIO: autoplay + botón mute/unmute
-       =========================== */
-    const audio = document.getElementById("openingAudio");
-    const audioFab = document.getElementById("audioFab");
-    const audioIcon = document.getElementById("audioIcon");
-    const audioHint = document.getElementById("audioHint");
-
-    audio.volume = 0.35;
-    audio.loop = true;
-    audio.muted = true;
-
-    function setFabState(){
-      if (audio.muted || audio.paused){
-        audioIcon.textContent = "🔇";
-        audioHint.textContent = "Click para activar";
-      } else {
-        audioIcon.textContent = "🔊";
-        audioHint.textContent = "Click para silenciar";
-      }
-    }
-
-    async function tryPlayUnmuted(){
-      audio.muted = false;
-      try{
-        await audio.play();
-      }catch(e){
-        audio.muted = true;
-      }
-      setFabState();
-    }
-
-    window.addEventListener("load", async () => {
-      try{ await audio.play(); }catch(e){}
-      setFabState();
-    });
-
-    audioFab.addEventListener("click", async () => {
-      if (audio.muted || audio.paused){
-        await tryPlayUnmuted();
-      } else {
-        audio.muted = true;
-        setFabState();
-      }
-    });
-
-    const enableOnFirstInteraction = async () => {
-      if (audio.muted || audio.paused){
-        await tryPlayUnmuted();
-      }
-      document.removeEventListener("click", enableOnFirstInteraction);
-      document.removeEventListener("touchstart", enableOnFirstInteraction);
-    };
-    document.addEventListener("click", enableOnFirstInteraction, { once: true });
-    document.addEventListener("touchstart", enableOnFirstInteraction, { once: true });
   </script>
+
+  <script src="js/page-ui.js"></script>
 
 </body>
 </html>
