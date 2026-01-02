@@ -3,6 +3,7 @@
    Controla: Slider + Dueños + Rotación "Diseñada para" +
             Planes + WhatsApp + Voz del personaje +
             ✅ Voz al cambiar de personaje (flecha)
+            ✅ Tier visual (silver / gold / platinum) por imagen
    Requiere: window.PAGE_CONFIG definido antes de cargar este script
    ========================================================= */
 
@@ -21,10 +22,11 @@
   // Elementos esperados en el HTML
   // ===========================
   const sliderImage = byId("sliderImage");
+  const slidesEl = byId("slides");
   const sliderButtons = document.querySelectorAll(".slider > a");
 
   const ownerLabel = byId("ownerLabel");
-  const ownerNameEl = byId("ownerName"); // id="ownerName"
+  const ownerNameEl = byId("ownerName");
 
   const characterCard = byId("characterCard");
   const characterTitle = byId("characterTitle");
@@ -42,18 +44,23 @@
   const nextLink = document.querySelector(".go-character");
 
   if (!sliderImage) console.warn("[page-ui] Falta #sliderImage");
+  if (!slidesEl) console.warn("[page-ui] Falta #slides");
   if (!ownerLabel) console.warn("[page-ui] Falta #ownerLabel");
-  if (!ownerNameEl) console.warn("[page-ui] Falta #ownerName (pon id='ownerName' en el span del nombre)");
+  if (!ownerNameEl) console.warn("[page-ui] Falta #ownerName");
   if (!wspBtn) console.warn("[page-ui] Falta #wspBtn");
 
   // ===========================
-  // 1) SLIDER
+  // 1) SLIDER + TIER VISUAL
   // ===========================
   const images = Array.isArray(cfg.images) ? cfg.images : [];
 
   function setOwner(name) {
-    if (!ownerNameEl) return;
-    ownerNameEl.textContent = name || "";
+    if (ownerNameEl) ownerNameEl.textContent = name || "";
+  }
+
+  function setTier(tier) {
+    if (!slidesEl) return;
+    slidesEl.setAttribute("data-tier", tier || "silver");
   }
 
   function showSlide(index) {
@@ -64,20 +71,19 @@
 
     setTimeout(() => {
       const item = images[index];
+
       sliderImage.src = item.src;
       setOwner(item.owner);
+      setTier(item.tier);
+
       sliderImage.classList.add("show");
     }, 150);
   }
 
   function applyHash() {
-    const hash = window.location.hash;
-    const match = hash.match(/^#slide-(\d+)$/);
+    const match = window.location.hash.match(/^#slide-(\d+)$/);
     if (!match) return;
-
-    const num = Number(match[1]);
-    const index = num - 1;
-    showSlide(index);
+    showSlide(Number(match[1]) - 1);
   }
 
   sliderButtons.forEach((btn, index) => {
@@ -90,7 +96,7 @@
   else if (images.length) showSlide(0);
 
   // ===========================
-  // 2) ROTACIÓN "Diseñada para" (cada 5s)
+  // 2) ROTACIÓN "Diseñada para"
   // ===========================
   const ownerLabelTexts = [
     "Diseñada para",
@@ -108,13 +114,11 @@
   let labelTimer = null;
 
   function startOwnerLabelRotation() {
-    if (!ownerLabel) return;
-    if (labelTimer) return;
+    if (!ownerLabel || labelTimer) return;
 
     ownerLabel.textContent = ownerLabelTexts[labelIndex];
 
     labelTimer = setInterval(() => {
-      if (!ownerLabel) return;
       labelIndex = (labelIndex + 1) % ownerLabelTexts.length;
       ownerLabel.textContent = ownerLabelTexts[labelIndex];
     }, 5000);
@@ -143,9 +147,8 @@
       features: [
         "Camiseta personalizada (mejor calidad de tela)",
         "Estampado más nítido + mejor durabilidad",
-        "Estampado en 2 áreas (frente + espalda o manga)",
+        "Estampado en 2 áreas",
         "Hasta 2 revisiones del diseño",
-        "Tu diseño puede aparecer en el catálogo",
         "Entrega prioritaria"
       ]
     },
@@ -153,12 +156,11 @@
       label: "Plan Platinum",
       price: "$24.990 CLP",
       features: [
-        "Camiseta premium + opción oversize",
-        "Estampado full color (máxima calidad)",
-        "Estampado en 3 áreas (frente + espalda + manga)",
-        "Hasta 4 revisiones + retoque pro del diseño",
-        "Tu diseño puede aparecer en el catálogo",
-        "Empaque premium + entrega prioritaria"
+        "Camiseta premium + oversize opcional",
+        "Estampado full color",
+        "Estampado en 3 áreas",
+        "Hasta 4 revisiones + retoque pro",
+        "Empaque premium"
       ]
     }
   };
@@ -172,7 +174,7 @@
 
     if (planFeatures) {
       planFeatures.innerHTML = "";
-      p.features.forEach((f) => {
+      p.features.forEach(f => {
         const li = document.createElement("li");
         li.textContent = f;
         planFeatures.appendChild(li);
@@ -180,90 +182,65 @@
     }
 
     if (wspBtn) {
-      const character = cfg.characterName || "Camiseta";
-      const phone = cfg.phoneNumber || "";
-
       const msg =
         `Hola! Quiero comprar una camiseta personalizada (Camisetas Únicas).\n` +
-        `Diseño inspirado en: ${character}\n` +
+        `Diseño inspirado en: ${cfg.characterName || "Camiseta"}\n` +
         `Plan elegido: ${p.label}\n` +
         `Precio: ${p.price}\n` +
         `¿Qué tallas y colores tienes disponibles?`;
 
-      wspBtn.href = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+      wspBtn.href = `https://wa.me/${cfg.phoneNumber || ""}?text=${encodeURIComponent(msg)}`;
     }
   }
 
   setPlan("silver");
-  if (radioSilver) radioSilver.addEventListener("change", () => setPlan("silver"));
-  if (radioGold) radioGold.addEventListener("change", () => setPlan("gold"));
-  if (radioPlatinum) radioPlatinum.addEventListener("change", () => setPlan("platinum"));
+  radioSilver?.addEventListener("change", () => setPlan("silver"));
+  radioGold?.addEventListener("change", () => setPlan("gold"));
+  radioPlatinum?.addEventListener("change", () => setPlan("platinum"));
 
   // ===========================
-  // 4) VOZ del personaje (click en card/títulos)
+  // 4) VOZ del personaje
   // ===========================
   const voiceSrc = cfg.voiceSrc || "";
 
   function playVoice(src = voiceSrc) {
     if (!src) return;
-    if (window.AudioSystem && typeof window.AudioSystem.playVoice === "function") {
-      window.AudioSystem.playVoice(src);
-    }
+    window.AudioSystem?.playVoice?.(src);
   }
 
-  if (characterCard) characterCard.addEventListener("click", () => playVoice());
-  if (characterTitle) characterTitle.addEventListener("click", (e) => { e.stopPropagation(); playVoice(); });
-  if (carouselTitle) carouselTitle.addEventListener("click", (e) => { e.stopPropagation(); playVoice(); });
+  characterCard?.addEventListener("click", playVoice);
+  characterTitle?.addEventListener("click", e => { e.stopPropagation(); playVoice(); });
+  carouselTitle?.addEventListener("click", e => { e.stopPropagation(); playVoice(); });
 
   // ===========================
-  // 5) ✅ VOZ AL CAMBIAR DE PERSONAJE (click en flecha)
+  // 5) VOZ AL CAMBIAR DE PERSONAJE
   // ===========================
   let navigating = false;
 
   async function handleGoCharacterClick(e) {
-    const href = e.currentTarget.getAttribute("href");
-    if (!href) return;
-
     e.preventDefault();
     if (navigating) return;
     navigating = true;
 
+    const href = e.currentTarget.getAttribute("href");
     const nextVoice = e.currentTarget.getAttribute("data-voice-next") || cfg.nextVoiceSrc || "";
     const AS = window.AudioSystem;
 
-    // Si audio está apagado → navega al toque
-    if (!AS || typeof AS.isEnabled !== "function" || !AS.isEnabled()) {
+    if (!AS?.isEnabled?.()) {
       window.location.href = href;
       return;
     }
 
-    // ✅ Si está ON pero aún no arrancó por autoplay, forzamos startNow con este gesto
-    if (typeof AS.startNow === "function") {
-      try { await AS.startNow(); } catch {}
-    }
+    try { await AS.startNow?.(); } catch {}
 
-    // Intentar reproducir voz del siguiente (si existe)
-    let played = false;
-    if (nextVoice && typeof AS.playVoice === "function") {
-      try {
-        played = await AS.playVoice(nextVoice);
-      } catch {
-        played = false;
-      }
-    }
+    const played = nextVoice ? await AS.playVoice?.(nextVoice) : false;
+    const delay = played ? 1500 : 0;
 
-    // Si alcanzó a sonar, esperamos un poco; si no, navegamos igual
-    const delay = played ? 1200 : 0;
     setTimeout(() => {
       window.location.href = href;
     }, delay);
   }
 
-  if (nextLink) {
-    nextLink.addEventListener("click", handleGoCharacterClick);
-  }
+  nextLink?.addEventListener("click", handleGoCharacterClick);
 
 })();
-
-
-
