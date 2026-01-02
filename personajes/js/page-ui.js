@@ -253,7 +253,7 @@
     }
 
     // Si alcanzó a sonar, esperamos un poco; si no, navegamos igual
-    const delay = played ? 850 : 0;
+    const delay = played ? 950 : 0;
     setTimeout(() => {
       window.location.href = href;
     }, delay);
@@ -264,4 +264,5 @@
   }
 
 })();
+
 
