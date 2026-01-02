@@ -264,6 +264,13 @@
   text-shadow: 0 1px 10px rgba(0,0,0,0.35);
 }
 
+/* ✅ AJUSTE (PC): SOLO aplica desde 769px hacia arriba */
+@media (min-width: 769px){
+  #dueños-container{
+    transform: translateX(-16px);
+  }
+}
+
 /* Animaciones de texto */
 @keyframes nameMetalSheen {
   0%   { background-position: 0% 50%; }
@@ -395,6 +402,9 @@
     font-weight: 700;
     margin-top: 0.9rem;
     letter-spacing: 0.6px;
+
+    /* ✅ AJUSTE: izquierda también en móvil (forzado) */
+    transform: translateX(-28px) !important;
   }
 
   .magnifier-lens {
@@ -414,6 +424,9 @@
   }
 
   #dueños-container {
-    font-size: 1.45rem;
+    font-size: 1.55rem;
+
+    /* ✅ AJUSTE: un poquito menos para evitar desbordes (forzado) */
+    transform: translateX(-22px) !important;
   }
 }
