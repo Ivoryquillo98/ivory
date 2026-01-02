@@ -95,7 +95,8 @@
           <a href="#slide-3">3</a>
           <a href="#slide-4">4</a>
 
-          <div class="slides" id="slides">
+          <!-- ✅ data-tier inicial (el JS lo actualizará por cada imagen) -->
+          <div class="slides" id="slides" data-tier="silver">
             <img
               id="sliderImage"
               src="imagenes/chrollo/chrollo1.png"
@@ -115,6 +116,7 @@
       <div class="buy-panel">
         <h3 class="buy-title">Personaliza tu camiseta</h3>
 
+        <!-- ✅ Solo 3 categorías (Silver/Gold/Platinum) -->
         <div class="glass-radio-group-vertical" id="planRadios">
           <input checked id="glass-silver" name="plan" type="radio" />
           <label for="glass-silver">
@@ -164,25 +166,30 @@
   <!-- ✅ Carga el sistema global (música + estado global + voz) -->
   <script src="js/audio-system.js"></script>
 
-  <!-- ✅ Config por página (solo cambia esto en cada personaje) -->
+  <!-- ✅ Config por página -->
   <script>
     window.PAGE_CONFIG = {
       characterName: "Chrollo",
       voiceSrc: "voces/chrollo.mp3",
       nextHref: "gohan.html",
-      nextVoiceSrc: "voces/gohan.mp3",   // ✅ opcional (por si lo quieres usar desde JS)
+      nextVoiceSrc: "voces/gohan.mp3",
       phoneNumber: "56920282860",
+
+      /* ✅ 4 imágenes, pero SOLO 3 categorías para probar:
+         - silver
+         - gold
+         - platinum
+         (repetimos silver para la 4ta) */
       images: [
-        { src: "imagenes/chrollo/chrollo1.png", owner: "Emilio Contreras" },
-        { src: "imagenes/chrollo/chrollo2.png", owner: "María Pérez" },
-        { src: "imagenes/chrollo/chrollo3.png", owner: "Carlos Gómez" },
-        { src: "imagenes/chrollo/chrollo4.png", owner: "Lucía Torres" }
+        { src: "imagenes/chrollo/chrollo1.png", owner: "Emilio Contreras", tier: "silver" },
+        { src: "imagenes/chrollo/chrollo2.png", owner: "María Pérez", tier: "gold" },
+        { src: "imagenes/chrollo/chrollo3.png", owner: "Carlos Gómez", tier: "platinum" },
+        { src: "imagenes/chrollo/chrollo4.png", owner: "Lucía Torres", tier: "silver" }
       ]
     };
   </script>
 
-  <!-- ✅ Lógica global: slider + label + planes + WhatsApp + voz -->
-  <!-- IMPORTANTE: usa el page-ui.js corregido (con voz en la flecha) -->
+  <!-- ✅ Lógica global -->
   <script src="js/page-ui.js"></script>
 
 </body>
