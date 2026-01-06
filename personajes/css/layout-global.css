@@ -218,6 +218,9 @@
     width: 100%;
     max-width: 360px;
     margin-left: 0;
+
+    /* ✅ AJUSTE: baja el bloque de compra (incluye "Personaliza tu camiseta") en móvil */
+    margin-top: 1.5rem;
   }
 
   .carousel-info{
