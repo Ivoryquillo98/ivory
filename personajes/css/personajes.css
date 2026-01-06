@@ -188,11 +188,10 @@ p {
     min-height: 320px;
     max-height: 460px;
 
-    margin: 3rem auto 0;
+    /* ✅ MÁS ABAJO EN MÓVIL (ANTES: 3rem) */
+    margin: 5rem auto 0;
   }
-}
 
-@media (max-width: 768px) {
   h2 {
     font-size: 1.5rem;   /* antes 2.25rem */
     line-height: 1.15;
