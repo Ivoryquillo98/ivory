@@ -200,8 +200,5 @@
   .glass-radio-group-vertical {
     width: 100%;
     max-width: 320px;
-
-    /* 🔽 BAJAR EL BLOQUE EN MÓVIL */
-    margin-top: 1.5rem;
   }
 }
