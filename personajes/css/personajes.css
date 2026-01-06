@@ -189,7 +189,7 @@ p {
     max-height: 460px;
 
     /* ✅ MÁS ABAJO EN MÓVIL (ANTES: 3rem) */
-    margin: 5rem auto 0;
+    margin: 4.5rem auto 0;
   }
 
   h2 {
@@ -202,3 +202,4 @@ p {
     line-height: 1.1;
   }
 }
+
