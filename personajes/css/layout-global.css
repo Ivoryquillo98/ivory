@@ -220,7 +220,7 @@
     margin-left: 0;
 
     /* ✅ AJUSTE: baja el bloque de compra (incluye "Personaliza tu camiseta") en móvil */
-    margin-top: 3rem;
+    margin-top: 5rem;
   }
 
   .carousel-info{
@@ -231,4 +231,5 @@
     font-size: 1.35rem;
   }
 }
+
 
