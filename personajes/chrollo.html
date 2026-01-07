@@ -5,57 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Card Animada - Chrollo</title>
 
-  <!-- CSS del personaje -->
   <link rel="stylesheet" href="css/personajes.css">
-  <!-- CSS del slider/carrusel -->
   <link rel="stylesheet" href="css/carrusel.css">
-  <!-- CSS radios de planes -->
   <link rel="stylesheet" href="css/radio.css">
-  <!-- ✅ CSS global de marca + botón de audio -->
   <link rel="stylesheet" href="css/boku-brand.css">
-  <!-- ✅ CSS global de layout -->
   <link rel="stylesheet" href="css/layout-global.css">
+  <link rel="stylesheet" href="css/titulos.css">
 
-  <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet">
 
   <style>
-    /* ✅ Fondo (ÚNICO por personaje) */
     body{
       background: radial-gradient(circle at 20% 10%, #2a1141 0%, #120718 35%, #06040a 100%);
     }
 
-    /* =========================================================
-       🎨 SLOGAN (cuadro "Este diseño existe...")
-       Pedido: perímetro blanco + área morada + letras blancas
-       ✅ Pensado para distinguirse sobre el fondo oscuro
-       (usa las variables del layout-global.css actualizado)
-       ========================================================= */
     :root{
-      /* Perímetro (borde) */
       --slogan-perimeter: rgba(255,255,255,0.88);
-
-      /* Área (morado con mezcla sutil para que se note el degradado) */
-      --slogan-area-main: rgba(138, 43, 226, 0.55);   /* morado principal */
-      --slogan-area-accent: rgba(190, 130, 255, 0.22);/* morado claro/acento */
-
-      /* Letras */
+      --slogan-area-main: rgba(138, 43, 226, 0.55);
+      --slogan-area-accent: rgba(190, 130, 255, 0.22);
       --slogan-letters: #ffffff;
+
+      /* ✅ TODO el color del monitor se controla aquí */
+      --slogan-monitor-base: rgba(255, 255, 255, 0.55);
+      --slogan-monitor-ecg: rgba(196, 88, 255, 0.98);
+      --slogan-monitor-glow: rgba(196, 88, 255, 0.75);
+      --slogan-monitor-alpha: 1;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ✅ MARCA SUPERIOR IZQUIERDA -->
   <a class="brand-boku" href="index.html" aria-label="Ir al inicio">
     <span>B</span><span>o</span><span>k</span><span>u</span>
   </a>
 
-  <!-- ✅ BOTÓN AUDIO (global ON/OFF) -->
   <button class="audio-fab" id="audioFab"
     data-voice="voces/chrollo.mp3"
     aria-label="Audio: activar o silenciar" type="button">
@@ -65,13 +52,8 @@
 
   <div class="container">
 
-    <!-- CARD DEL PERSONAJE -->
     <article class="card" id="characterCard">
-      <img
-        class="card__background"
-        src="imagenes/chrollo/chrollo.png"
-        alt="Chrollo"
-      />
+      <img class="card__background" src="imagenes/chrollo/chrollo.png" alt="Chrollo" />
 
       <div class="card__content flow">
         <div class="card__content--container flow">
@@ -79,7 +61,6 @@
           <div class="title-row">
             <h2 class="card__title" id="characterTitle">Chrollo Lucilfer</h2>
 
-            <!-- ✅ Flecha: reproduce la VOZ del siguiente personaje antes de navegar -->
             <a class="go-character"
                href="gohan.html"
                data-voice-next="voces/gohan.mp3"
@@ -97,13 +78,14 @@
       </div>
     </article>
 
-    <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER -->
       <div>
 
         <div class="carousel-info">
+          <!-- ✅ NUEVO: monitor real (para que no exista “negro” fuera del HTML) -->
+          <span class="slogan-monitor" aria-hidden="true"></span>
+
           <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
@@ -113,14 +95,11 @@
           <a href="#slide-3">3</a>
           <a href="#slide-4">4</a>
 
-          <!-- ✅ data-tier inicial (el JS lo actualizará por cada imagen) -->
           <div class="slides" id="slides" data-tier="silver">
-            <img
-              id="sliderImage"
-              src="imagenes/chrollo/chrollo1.png"
-              class="fade show"
-              alt="Chrollo artwork"
-            >
+            <img id="sliderImage"
+                 src="imagenes/chrollo/chrollo1.png"
+                 class="fade show"
+                 alt="Chrollo artwork">
           </div>
 
           <div id="dueños-container">
@@ -130,11 +109,9 @@
         </div>
       </div>
 
-      <!-- BLOQUE DE COMPRA -->
       <div class="buy-panel">
         <h3 class="buy-title">Personaliza tu camiseta</h3>
 
-        <!-- ✅ Solo 3 categorías (Silver/Gold/Platinum) -->
         <div class="glass-radio-group-vertical" id="planRadios">
           <input checked id="glass-silver" name="plan" type="radio" />
           <label for="glass-silver">
@@ -178,13 +155,10 @@
     </div>
   </div>
 
-  <!-- ✅ SOLO música base aquí (el sistema global la controla) -->
   <audio id="openingAudio" src="musica/hxh.mp3" preload="auto"></audio>
 
-  <!-- ✅ Carga el sistema global (música + estado global + voz) -->
   <script src="js/audio-system.js"></script>
 
-  <!-- ✅ Config por página -->
   <script>
     window.PAGE_CONFIG = {
       characterName: "Chrollo",
@@ -192,12 +166,6 @@
       nextHref: "gohan.html",
       nextVoiceSrc: "voces/gohan.mp3",
       phoneNumber: "56920282860",
-
-      /* ✅ 4 imágenes, pero SOLO 3 categorías para probar:
-         - silver
-         - gold
-         - platinum
-         (repetimos silver para la 4ta) */
       images: [
         { src: "imagenes/chrollo/chrollo1.png", owner: "Emilio Contreras", tier: "silver" },
         { src: "imagenes/chrollo/chrollo2.png", owner: "María Pérez", tier: "gold" },
@@ -207,8 +175,8 @@
     };
   </script>
 
-  <!-- ✅ Lógica global -->
   <script src="js/page-ui.js"></script>
+  <script src="js/monitor.js"></script>
 
 </body>
 </html>
