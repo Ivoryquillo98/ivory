@@ -1,11 +1,41 @@
 /* ===========================
    Layout global (todas las páginas)
    Archivo: css/layout-global.css
-   ✅ Limpio: este archivo NO controla títulos
-   ✅ Se movió a titulos.css:
-      - .carousel-info
-      - .carousel-title
+   ✅ UPDATE: SLOGAN con 3 controles por personaje:
+      - Perímetro (borde)
+      - Área (fondo)
+      - Letras (texto)
+   ✅ El perímetro (forma/grosor) queda SIEMPRE igual
+   ✅ EXTRA: “monitor de signos vitales” SOLO en la línea superior
    =========================== */
+
+/* =========================================================
+   🎨 VARIABLES (se sobreescriben por personaje en el HTML)
+   Perímetro = color del borde
+   Área      = fondo (2 colores para mezcla)
+   Letras    = color del texto
+
+   ✅ Monitor (línea superior):
+   --slogan-monitor-line  : color de la línea
+   --slogan-monitor-glow  : brillo
+   --slogan-monitor-alpha : intensidad
+   ========================================================= */
+:root{
+  /* ✅ Perímetro (solo color; el grosor SIEMPRE será 1px) */
+  --slogan-perimeter: rgba(255,255,255,0.14);
+
+  /* ✅ Área (fondo mezclado) */
+  --slogan-area-main: rgba(255,255,255,0.05);
+  --slogan-area-accent: rgba(255,255,255,0.02);
+
+  /* ✅ Letras */
+  --slogan-letters: #ffffff;
+
+  /* ✅ Monitor (por defecto: usa el perímetro) */
+  --slogan-monitor-line: rgba(255,255,255,0.95);
+  --slogan-monitor-glow: rgba(255,255,255,0.28);
+  --slogan-monitor-alpha: 1;
+}
 
 /* CONTENEDOR PRINCIPAL */
 .container {
@@ -24,6 +54,125 @@
   gap: 1rem;
 }
 
+/* =========================================================
+   bloque de texto sobre el carrusel (SLOGAN)
+   ✅ Perímetro definido igual: mismo borde (1px) + mismo radio (14px)
+   ✅ Cambia solo color del borde, fondo y letras con variables
+   ✅ Monitor: línea “ECG” SOLO arriba
+   ========================================================= */
+.carousel-info{
+  max-width: 420px;
+  margin: 0 0 0.9rem;
+  padding: 0.85rem 1rem;
+
+  /* ✅ PERÍMETRO FIJO (misma forma siempre) */
+  border-radius: 14px;
+  border: 1px solid var(--slogan-perimeter); /* grosor fijo, solo cambia color */
+
+  /* ✅ ÁREA (fondo mezclado por personaje) */
+  background: linear-gradient(
+    135deg,
+    var(--slogan-area-main),
+    var(--slogan-area-accent)
+  );
+
+  /* ✅ glass */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  /* ✅ letras */
+  color: var(--slogan-letters);
+
+  /* ✅ para el monitor */
+  position: relative;
+  overflow: hidden; /* recorta la línea superior dentro del radio */
+}
+
+/* ✅ Línea superior estilo “monitor multiparamétrico” (solo arriba) */
+.carousel-info::before{
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 6px;
+  height: 12px;
+  opacity: var(--slogan-monitor-alpha);
+  pointer-events: none;
+
+  /* Base tenue (línea recta) + señal ECG que se desplaza */
+  background-image:
+    linear-gradient(to right,
+      rgba(255,255,255,0.00) 0%,
+      var(--slogan-monitor-line) 10%,
+      var(--slogan-monitor-line) 90%,
+      rgba(255,255,255,0.00) 100%
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='12' viewBox='0 0 260 12'%3E%3Cpath d='M0 6 L55 6 L65 6 L71 6 L76 6 L82 6 L88 6 L94 6 L98 2 L102 10 L106 6 L112 6 L118 6 L124 6 L130 6 L136 6 L142 6 L148 6 L154 6 L160 6 L166 6 L172 6 L178 6 L184 6 L190 6 L196 6 L202 6 L208 6 L214 6 L220 6 L226 6 L232 6 L238 6 L244 6 L260 6' fill='none' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+  background-repeat: no-repeat, repeat-x;
+  background-size: 100% 2px, 260px 12px;
+  background-position: center 10px, 0 0;
+
+  filter:
+    drop-shadow(0 0 6px var(--slogan-monitor-glow))
+    drop-shadow(0 0 14px var(--slogan-monitor-glow));
+  transform: translateZ(0);
+
+  animation: monitor-scroll 5.5s linear infinite;
+}
+
+/* ✅ “pulso” sutil (destello breve) para que no sea loop obvio */
+.carousel-info::after{
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 6px;
+  height: 12px;
+  pointer-events: none;
+  opacity: 0;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.00) 0%,
+    rgba(255,255,255,0.00) 35%,
+    rgba(255,255,255,0.35) 48%,
+    rgba(255,255,255,0.00) 60%,
+    rgba(255,255,255,0.00) 100%
+  );
+
+  filter: blur(0.2px);
+  animation: monitor-flash 7.2s ease-in-out infinite;
+}
+
+/* ✅ mueve la señal ECG horizontalmente */
+@keyframes monitor-scroll{
+  from { background-position: center 10px, 0 0; }
+  to   { background-position: center 10px, -520px 0; }
+}
+
+/* ✅ destello ocasional (no constante) */
+@keyframes monitor-flash{
+  0%, 52% { opacity: 0; transform: translateX(-20px); }
+  56%     { opacity: 0.55; transform: translateX(0); }
+  60%     { opacity: 0.15; transform: translateX(18px); }
+  100%    { opacity: 0; transform: translateX(24px); }
+}
+
+.carousel-title{
+  font-family: "Yuji Boku", serif;
+  font-weight: 400;
+  font-size: 1.65rem;
+  margin: 0;
+  letter-spacing: 0.4px;
+  line-height: 1.15;
+  text-align: center;
+  cursor: pointer;
+
+  /* ✅ LETRAS (variable) */
+  color: var(--slogan-letters);
+}
+
 /* BLOQUE DE COMPRA */
 .buy-panel{
   display: flex;
@@ -37,7 +186,7 @@
 .buy-title{
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.45rem;
   color: #fff;
   letter-spacing: 0.2px;
   margin: 0;
@@ -182,6 +331,16 @@
   cursor: pointer;
 }
 
+/* ✅ Accesibilidad: reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .carousel-info::before,
+  .carousel-info::after{
+    animation: none !important;
+  }
+  .carousel-info::before{ opacity: 0.55; }
+  .carousel-info::after{ opacity: 0; }
+}
+
 /* MÓVIL */
 @media (max-width: 768px) {
   .container {
@@ -201,5 +360,27 @@
     width: 100%;
     max-width: 360px;
     margin-left: 0;
+
+    /* ✅ baja el bloque de compra en móvil */
+    margin-top: 5rem;
+  }
+
+  .carousel-info{
+    max-width: 360px;
+  }
+
+  .carousel-title{
+    font-size: 1.5rem;
+  }
+
+  /* ✅ En móvil: un poco menos intenso para no distraer */
+  .carousel-info::before{
+    opacity: calc(var(--slogan-monitor-alpha) * 0.75);
+  }
+}
+
+@media (max-width: 768px){
+  .carousel-info{
+    margin-top: 2rem;
   }
 }
