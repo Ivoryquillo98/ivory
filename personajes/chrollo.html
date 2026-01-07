@@ -27,6 +27,24 @@
     body{
       background: radial-gradient(circle at 20% 10%, #2a1141 0%, #120718 35%, #06040a 100%);
     }
+
+    /* =========================================================
+       🎨 SLOGAN (cuadro "Este diseño existe...")
+       Pedido: perímetro blanco + área morada + letras blancas
+       ✅ Pensado para distinguirse sobre el fondo oscuro
+       (usa las variables del layout-global.css actualizado)
+       ========================================================= */
+    :root{
+      /* Perímetro (borde) */
+      --slogan-perimeter: rgba(255,255,255,0.88);
+
+      /* Área (morado con mezcla sutil para que se note el degradado) */
+      --slogan-area-main: rgba(138, 43, 226, 0.55);   /* morado principal */
+      --slogan-area-accent: rgba(190, 130, 255, 0.22);/* morado claro/acento */
+
+      /* Letras */
+      --slogan-letters: #ffffff;
+    }
   </style>
 </head>
 
