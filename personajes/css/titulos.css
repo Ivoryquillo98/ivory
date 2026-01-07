@@ -1,0 +1,303 @@
+/* ===========================
+   TÍTULOS
+   Archivo: css/titulos.css
+
+   ✅ FIX IMPORTANTE:
+   - No usamos currentColor dentro de background-image (puede volverse negro)
+   - Ahora el ECG se pinta con background-color + mask-image
+   - El color queda 100% controlado desde el HTML
+
+   Variables desde HTML:
+   --slogan-perimeter
+   --slogan-area-main
+   --slogan-area-accent
+   --slogan-letters
+
+   --slogan-monitor-base
+   --slogan-monitor-ecg
+   --slogan-monitor-glow
+   --slogan-monitor-alpha
+   =========================== */
+
+
+/* =========================================================
+   SLOGAN / CONTENEDOR
+   ========================================================= */
+.carousel-info{
+  max-width: 420px;
+  margin: 0 0 0.9rem;
+  padding: 1.25rem 1rem 0.95rem;
+
+  border-radius: 14px;
+  border: 1px solid var(--slogan-perimeter);
+
+  background: linear-gradient(
+    135deg,
+    var(--slogan-area-main),
+    var(--slogan-area-accent)
+  );
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  color: var(--slogan-letters);
+
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* TEXTO */
+.carousel-title{
+  font-family: "Yuji Boku", serif;
+  font-weight: 400;
+  font-size: 1.65rem;
+  margin: 0;
+  letter-spacing: 0.4px;
+  line-height: 1.15;
+  text-align: center;
+  cursor: pointer;
+  color: var(--slogan-letters);
+
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =========================================================
+   🫀 MONITOR (ELEMENTO REAL) — 100% control desde HTML
+   ✅ Base (línea) = --slogan-monitor-base
+   ✅ ECG (picos)  = --slogan-monitor-ecg  (pintado por background-color)
+   ✅ Glow         = --slogan-monitor-glow
+   ✅ Alpha        = --slogan-monitor-alpha
+   ========================================================= */
+
+/* El “slot” del monitor (base + scanlines) */
+.slogan-monitor{
+  position: absolute;
+
+  left: 12px;
+  width: min(240px, 62%);
+  right: auto;
+
+  top: 2px;
+  height: 10px;
+
+  pointer-events: none;
+  opacity: var(--slogan-monitor-alpha);
+
+  /* base line + scanlines (NO son el ECG) */
+  background-image:
+    /* línea base */
+    linear-gradient(
+      to right,
+      rgba(255,255,255,0) 0%,
+      var(--slogan-monitor-base) 18%,
+      var(--slogan-monitor-base) 82%,
+      rgba(255,255,255,0) 100%
+    ),
+    /* scanlines */
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.035) 0px,
+      rgba(255,255,255,0.035) 1px,
+      rgba(255,255,255,0) 3px,
+      rgba(255,255,255,0) 6px
+    );
+
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 2px, 100% 100%;
+  background-position: left 8px, 0 0;
+
+  z-index: 1;
+}
+
+/* ✅ ECG real (picos) pintado por color del HTML + mask */
+.slogan-monitor::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  /* ✅ El color del ECG viene SOLO del HTML */
+  background-color: var(--slogan-monitor-ecg);
+
+  /* ✅ SVG como máscara (repetible) */
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='12' viewBox='0 0 140 12'%3E%3Cpath d='M0 6 L34 6 L44 6 L50 6 L56 6 L60 3 L64 10 L68 6 L86 6 L96 6 L104 6 L110 6 L140 6' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='12' viewBox='0 0 140 12'%3E%3Cpath d='M0 6 L34 6 L44 6 L50 6 L56 6 L60 3 L64 10 L68 6 L86 6 L96 6 L104 6 L110 6 L140 6' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+
+  -webkit-mask-size: 140px 12px;
+  mask-size: 140px 12px;
+
+  -webkit-mask-position: 0 0;
+  mask-position: 0 0;
+
+  /* glow */
+  filter:
+    drop-shadow(0 0 6px var(--slogan-monitor-glow))
+    drop-shadow(0 0 14px var(--slogan-monitor-glow));
+
+  transform-origin: left center;
+  transform: translate3d(0,0,0) scaleY(1);
+
+  animation:
+    ecg-scroll 4.9s linear infinite,
+    ecg-life 7.2s ease-in-out infinite;
+
+  z-index: 2;
+}
+
+/* FLASH (latido humano) */
+.slogan-monitor::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  opacity: 0;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0) 38%,
+    var(--slogan-monitor-ecg) 50%,
+    rgba(255,255,255,0) 64%,
+    rgba(255,255,255,0) 100%
+  );
+
+  filter:
+    blur(0.35px)
+    drop-shadow(0 0 8px var(--slogan-monitor-glow));
+
+  animation: ecg-pulse-human 10.7s linear infinite;
+
+  z-index: 3;
+}
+
+
+/* =========================================================
+   ANIMACIONES
+   ========================================================= */
+
+/* scroll de la máscara ECG */
+@keyframes ecg-scroll{
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: -560px 0; /* 140*4 */
+    mask-position: -560px 0;
+  }
+}
+
+/* micro-realismo + picos más altos */
+@keyframes ecg-life{
+  0%{
+    transform: translate3d(0,0,0) scaleY(1);
+    opacity: 0.92;
+  }
+  10%{
+    transform: translate3d(0.22px,-0.12px,0) scaleY(1);
+    opacity: 0.98;
+  }
+  18%{
+    transform: translate3d(-0.15px,0.18px,0) scaleY(1);
+    opacity: 0.90;
+  }
+  22%{
+    transform: translate3d(0.08px,0,0) scaleY(1.35);
+    opacity: 1;
+  }
+  26%{
+    transform: translate3d(-0.18px,0.10px,0) scaleY(0.95);
+    opacity: 0.90;
+  }
+  35%{
+    transform: translate3d(0.28px,0,0) scaleY(1);
+    opacity: 0.98;
+  }
+  58%{
+    transform: translate3d(-0.12px,-0.08px,0) scaleY(1.15);
+    opacity: 0.93;
+  }
+  62%{
+    transform: translate3d(0.10px,0.15px,0) scaleY(1);
+    opacity: 0.99;
+  }
+  78%{
+    transform: translate3d(0,0,0) scaleY(1);
+    opacity: 0.92;
+  }
+  100%{
+    transform: translate3d(0,0,0) scaleY(1);
+    opacity: 0.92;
+  }
+}
+
+/* pulso humano */
+@keyframes ecg-pulse-human{
+  0%    { opacity: 0; transform: translateX(-26px); }
+  8%    { opacity: 0; transform: translateX(-26px); }
+
+  10%   { opacity: 0.72; transform: translateX(-6px); }
+  12%   { opacity: 0.22; transform: translateX(10px); }
+  14%   { opacity: 0;    transform: translateX(22px); }
+
+  14.01%{ opacity: 0; transform: translateX(22px); }
+  36%   { opacity: 0; transform: translateX(-18px); }
+
+  38%   { opacity: 0.48; transform: translateX(-2px); }
+  40%   { opacity: 0.16; transform: translateX(12px); }
+  42%   { opacity: 0;    transform: translateX(24px); }
+
+  42.01%{ opacity: 0; transform: translateX(24px); }
+  66%   { opacity: 0; transform: translateX(-22px); }
+
+  68%   { opacity: 0.34; transform: translateX(0px); }
+  69.5% { opacity: 0.12; transform: translateX(9px); }
+  71%   { opacity: 0;    transform: translateX(20px); }
+
+  100%  { opacity: 0; transform: translateX(20px); }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 768px){
+  .carousel-info{ max-width: 360px; }
+  .carousel-title{ font-size: 1.35rem; }
+
+  .slogan-monitor{
+    width: min(210px, 64%);
+    opacity: calc(var(--slogan-monitor-alpha) * 0.68);
+  }
+
+  .slogan-monitor::before{
+    animation:
+      ecg-scroll 5.05s linear infinite,
+      ecg-life 7.8s ease-in-out infinite;
+  }
+}
+
+
+/* =========================================================
+   ACCESIBILIDAD
+   ========================================================= */
+@media (prefers-reduced-motion: reduce){
+  .slogan-monitor::before,
+  .slogan-monitor::after{
+    animation: none !important;
+  }
+
+  .slogan-monitor::before{
+    opacity: 0.5;
+    transform: none;
+  }
+
+  .slogan-monitor::after{
+    opacity: 0;
+  }
+}
