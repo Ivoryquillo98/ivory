@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/layout-global.css">
   <link rel="stylesheet" href="css/titulos.css">
 
+  <!-- ✅ Fuentes (las de antes) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
@@ -28,9 +29,8 @@
       --slogan-area-accent: rgba(190, 130, 255, 0.22);
       --slogan-letters: #ffffff;
 
-      /* ✅ TODO el color del monitor se controla aquí */
-      --slogan-monitor-base: rgba(255, 255, 255, 0.55);
-      --slogan-monitor-ecg: rgba(196, 88, 255, 0.98);
+      /* ✅ Monitor (solo CSS) */
+      --slogan-monitor-line: rgba(196, 88, 255, 0.98);
       --slogan-monitor-glow: rgba(196, 88, 255, 0.75);
       --slogan-monitor-alpha: 1;
     }
@@ -83,9 +83,7 @@
       <div>
 
         <div class="carousel-info">
-          <!-- ✅ NUEVO: monitor real (para que no exista “negro” fuera del HTML) -->
-          <span class="slogan-monitor" aria-hidden="true"></span>
-
+          <!-- ✅ Monitor ahora es 100% CSS (carousel-info::before / ::after) -->
           <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
@@ -176,7 +174,7 @@
   </script>
 
   <script src="js/page-ui.js"></script>
-  <script src="js/monitor.js"></script>
+  <!-- ❌ monitor.js eliminado -->
 
 </body>
 </html>
