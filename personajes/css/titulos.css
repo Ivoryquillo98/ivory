@@ -1,249 +1,161 @@
-/* ===========================
-   TÍTULOS
-   Archivo: css/titulos.css
+/* =========================================================
+   ✅ MÓDULO: MONITOR DE SIGNOS VITALES (SLOGAN)
+   Fuente incluida (Yuji Boku)
 
-   ✅ FIX IMPORTANTE:
-   - No usamos currentColor dentro de background-image (puede volverse negro)
-   - Ahora el ECG se pinta con background-color + mask-image
-   - El color queda 100% controlado desde el HTML
-
-   Variables desde HTML:
-   --slogan-perimeter
-   --slogan-area-main
-   --slogan-area-accent
-   --slogan-letters
-
-   --slogan-monitor-base
-   --slogan-monitor-ecg
-   --slogan-monitor-glow
-   --slogan-monitor-alpha
-   =========================== */
-
+   AJUSTE FINO:
+   ✅ El monitor sube MÁS
+   ✅ El texto NO se pega al monitor
+   ✅ Separación limpia y controlada
+   ========================================================= */
 
 /* =========================================================
-   SLOGAN / CONTENEDOR
+   VARIABLES
+   ========================================================= */
+:root{
+  --slogan-monitor-line: rgba(255,255,255,0.95);
+  --slogan-monitor-glow: rgba(255,255,255,0.28);
+  --slogan-monitor-alpha: 1;
+
+  --slogan-font-family: "Yuji Boku", serif;
+  --slogan-font-size: 1.65rem;
+  --slogan-letter-spacing: 0.4px;
+
+  /* 🎛️ AJUSTES FINOS */
+  --slogan-monitor-pad-top: 0.30rem; /* ⬆️ sube el ECG */
+  --slogan-gap-bottom: 0.40rem;      /* aire con slider */
+  --slogan-title-nudge: 0.15rem;     /* ⬇️ baja solo el texto */
+}
+
+/* =========================================================
+   CONTENEDOR SLOGAN
    ========================================================= */
 .carousel-info{
-  max-width: 420px;
-  margin: 0 0 0.9rem;
-  padding: 1.25rem 1rem 0.95rem;
-
-  border-radius: 14px;
-  border: 1px solid var(--slogan-perimeter);
-
-  background: linear-gradient(
-    135deg,
-    var(--slogan-area-main),
-    var(--slogan-area-accent)
-  );
-
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  color: var(--slogan-letters);
-
   position: relative;
   overflow: hidden;
+  padding-top: var(--slogan-monitor-pad-top);
+  margin: 0 0 var(--slogan-gap-bottom);
 }
-
-
-/* TEXTO */
-.carousel-title{
-  font-family: "Yuji Boku", serif;
-  font-weight: 400;
-  font-size: 1.65rem;
-  margin: 0;
-  letter-spacing: 0.4px;
-  line-height: 1.15;
-  text-align: center;
-  cursor: pointer;
-  color: var(--slogan-letters);
-
-  position: relative;
-  z-index: 2;
-}
-
 
 /* =========================================================
-   🫀 MONITOR (ELEMENTO REAL)
+   TEXTO DEL SLOGAN
    ========================================================= */
+.carousel-title{
+  font-family: var(--slogan-font-family);
+  font-weight: 400;
+  font-size: var(--slogan-font-size);
+  letter-spacing: var(--slogan-letter-spacing);
+  line-height: 1.15;
+  text-align: center;
 
-/* Slot del monitor */
-.slogan-monitor{
-  position: absolute;
+  /* ✅ separación REAL respecto al monitor */
+  margin: var(--slogan-title-nudge) 0 0;
 
-  left: 12px;
-  width: min(240px, 62%);
-  right: auto;
-
-  top: 2px;
-  height: 10px;
-
-  pointer-events: none;
-  opacity: var(--slogan-monitor-alpha);
-
-  background-image:
-    linear-gradient(
-      to right,
-      rgba(255,255,255,0) 0%,
-      var(--slogan-monitor-base) 18%,
-      var(--slogan-monitor-base) 82%,
-      rgba(255,255,255,0) 100%
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.035) 0px,
-      rgba(255,255,255,0.035) 1px,
-      rgba(255,255,255,0) 3px,
-      rgba(255,255,255,0) 6px
-    );
-
-  background-repeat: no-repeat, repeat;
-  background-size: 100% 2px, 100% 100%;
-  background-position: left 8px, 0 0;
-
-  z-index: 1;
+  cursor: pointer;
+  color: var(--slogan-letters, #fff);
 }
 
-
-/* ECG real */
-.slogan-monitor::before{
+/* =========================================================
+   MONITOR SUPERIOR (ECG)
+   ========================================================= */
+.carousel-info::before{
   content: "";
   position: absolute;
-  inset: 0;
+  left: 10px;
+  right: 10px;
+  top: 0px;
 
-  background-color: var(--slogan-monitor-ecg);
+  height: 12px;
+  opacity: var(--slogan-monitor-alpha);
+  pointer-events: none;
 
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='12' viewBox='0 0 140 12'%3E%3Cpath d='M0 6 L34 6 L44 6 L50 6 L56 6 L60 3 L64 10 L68 6 L86 6 L96 6 L104 6 L110 6 L140 6' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='12' viewBox='0 0 140 12'%3E%3Cpath d='M0 6 L34 6 L44 6 L50 6 L56 6 L60 3 L64 10 L68 6 L86 6 L96 6 L104 6 L110 6 L140 6' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image:
+    linear-gradient(to right,
+      rgba(255,255,255,0.00) 0%,
+      var(--slogan-monitor-line) 10%,
+      var(--slogan-monitor-line) 90%,
+      rgba(255,255,255,0.00) 100%
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='12' viewBox='0 0 260 12'%3E%3Cpath d='M0 6 L55 6 L65 6 L71 6 L76 6 L82 6 L88 6 L94 6 L98 2 L102 10 L106 6 L112 6 L118 6 L124 6 L130 6 L136 6 L142 6 L148 6 L154 6 L160 6 L166 6 L172 6 L178 6 L184 6 L190 6 L196 6 L202 6 L208 6 L214 6 L220 6 L226 6 L232 6 L238 6 L244 6 L260 6' fill='none' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 
-  -webkit-mask-repeat: repeat-x;
-  mask-repeat: repeat-x;
-
-  -webkit-mask-size: 140px 12px;
-  mask-size: 140px 12px;
-
-  -webkit-mask-position: 0 0;
-  mask-position: 0 0;
+  background-repeat: no-repeat, repeat-x;
+  background-size: 100% 2px, 260px 12px;
+  background-position: center 10px, 0 0;
 
   filter:
     drop-shadow(0 0 6px var(--slogan-monitor-glow))
     drop-shadow(0 0 14px var(--slogan-monitor-glow));
 
-  transform-origin: left center;
-  transform: translate3d(0,0,0) scaleY(1);
-
-  animation:
-    ecg-scroll 4.9s linear infinite,
-    ecg-life 7.2s ease-in-out infinite;
-
-  z-index: 2;
+  transform: translateZ(0);
+  animation: monitor-scroll 5.5s linear infinite;
 }
 
-
-/* Flash del latido */
-.slogan-monitor::after{
+/* =========================================================
+   PULSO OCASIONAL
+   ========================================================= */
+.carousel-info::after{
   content: "";
   position: absolute;
-  inset: 0;
+  left: 10px;
+  right: 10px;
+  top: 0px;
 
+  height: 12px;
+  pointer-events: none;
   opacity: 0;
 
   background: linear-gradient(
     90deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0) 38%,
-    var(--slogan-monitor-ecg) 50%,
-    rgba(255,255,255,0) 64%,
-    rgba(255,255,255,0) 100%
+    rgba(255,255,255,0.00) 0%,
+    rgba(255,255,255,0.00) 35%,
+    rgba(255,255,255,0.35) 48%,
+    rgba(255,255,255,0.00) 60%,
+    rgba(255,255,255,0.00) 100%
   );
 
-  filter:
-    blur(0.35px)
-    drop-shadow(0 0 8px var(--slogan-monitor-glow));
-
-  animation: ecg-pulse-human 10.7s linear infinite;
-
-  z-index: 3;
+  filter: blur(0.2px);
+  animation: monitor-flash 7.2s ease-in-out infinite;
 }
-
 
 /* =========================================================
    ANIMACIONES
    ========================================================= */
-
-@keyframes ecg-scroll{
-  from{
-    -webkit-mask-position: 0 0;
-    mask-position: 0 0;
-  }
-  to{
-    -webkit-mask-position: -560px 0;
-    mask-position: -560px 0;
-  }
+@keyframes monitor-scroll{
+  from { background-position: center 10px, 0 0; }
+  to   { background-position: center 10px, -520px 0; }
 }
 
-@keyframes ecg-life{
-  0%   { transform: scaleY(1); opacity: 0.92; }
-  10%  { transform: translateY(-0.12px) scaleY(1); }
-  22%  { transform: scaleY(1.35); opacity: 1; }
-  26%  { transform: scaleY(0.95); }
-  58%  { transform: scaleY(1.15); }
-  100% { transform: scaleY(1); opacity: 0.92; }
+@keyframes monitor-flash{
+  0%, 52% { opacity: 0; transform: translateX(-20px); }
+  56%     { opacity: 0.55; transform: translateX(0); }
+  60%     { opacity: 0.15; transform: translateX(18px); }
+  100%    { opacity: 0; transform: translateX(24px); }
 }
-
-@keyframes ecg-pulse-human{
-  0%,8%   { opacity: 0; transform: translateX(-26px); }
-  10%     { opacity: 0.72; transform: translateX(-6px); }
-  12%     { opacity: 0.22; transform: translateX(10px); }
-  14%     { opacity: 0; transform: translateX(22px); }
-  100%    { opacity: 0; transform: translateX(22px); }
-}
-
-
-/* =========================================================
-   RESPONSIVE — SOLO MÓVIL
-   ========================================================= */
-@media (max-width: 768px){
-
-  /* ✅ ÚNICO CAMBIO PEDIDO */
-  .carousel-info{
-    max-width: 360px;
-    margin-top: 4rem;
-  }
-
-  .carousel-title{
-    font-size: 1.35rem;
-  }
-
-  .slogan-monitor{
-    width: min(210px, 64%);
-    opacity: calc(var(--slogan-monitor-alpha) * 0.68);
-  }
-
-  .slogan-monitor::before{
-    animation:
-      ecg-scroll 5.05s linear infinite,
-      ecg-life 7.8s ease-in-out infinite;
-  }
-}
-
 
 /* =========================================================
    ACCESIBILIDAD
    ========================================================= */
 @media (prefers-reduced-motion: reduce){
-  .slogan-monitor::before,
-  .slogan-monitor::after{
+  .carousel-info::before,
+  .carousel-info::after{
     animation: none !important;
   }
+  .carousel-info::before{ opacity: 0.55; }
+  .carousel-info::after{ opacity: 0; }
+}
 
-  .slogan-monitor::before{
-    opacity: 0.5;
-    transform: none;
+/* =========================================================
+   MÓVIL
+   ========================================================= */
+@media (max-width: 768px){
+  .carousel-info{
+    margin-top: 3rem;
   }
 
-  .slogan-monitor::after{
-    opacity: 0;
+  .carousel-info::before{
+    opacity: calc(var(--slogan-monitor-alpha) * 0.75);
+  }
+
+  .carousel-title{
+    font-size: 1.5rem;
   }
 }
