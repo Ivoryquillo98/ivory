@@ -14,6 +14,12 @@
   <link rel="stylesheet" href="css/boku-brand.css">
   <link rel="stylesheet" href="css/layout-global.css">
 
+  <!-- ✅ Títulos / Slogan monitor -->
+  <link rel="stylesheet" href="css/titulos.css">
+
+  <!-- ✅ ECG PRO -->
+  <link rel="stylesheet" href="css/ecg-pro.css">
+
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,20 +27,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet">
 
   <style>
-    /* 🟣 Fondo Sasuke */
+    /* 🔵⚫ Fondo Sasuke — azul + negro (frío, sombra) */
     body{
       background:
-        radial-gradient(circle at 30% 18%, rgba(120,90,255,0.35) 0%, rgba(120,90,255,0) 45%),
-        radial-gradient(circle at 70% 30%, rgba(180,150,255,0.25) 0%, rgba(180,150,255,0) 55%),
-        linear-gradient(135deg, #06030f, #140c2b, #2a1b4d);
+        radial-gradient(circle at 30% 18%, rgba(60, 130, 255, 0.35) 0%, rgba(60, 130, 255, 0) 45%),
+        radial-gradient(circle at 70% 30%, rgba(120, 180, 255, 0.22) 0%, rgba(120, 180, 255, 0) 55%),
+        radial-gradient(circle at 50% 85%, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0) 55%),
+        linear-gradient(135deg, #02040a, #050b16, #000000);
     }
 
-    /* 🎴 Vibe Sasuke para la marca */
+    :root{
+      --slogan-perimeter: rgba(255,255,255,0.88);
+      --slogan-area-main: rgba(60, 130, 255, 0.22);
+      --slogan-area-accent: rgba(0, 0, 0, 0.45);
+
+      /* ✅ Letras slogan: azul */
+      --slogan-letters: rgba(60, 130, 255, 0.98);
+
+      /* ✅ Monitor superior (slogan)
+         Color 1: azul
+         Color 2: negro */
+      --slogan-monitor-line:  rgba(60, 130, 255, 0.98); /* azul */
+      --slogan-monitor-line2: rgba(0, 0, 0, 0.95);      /* negro */
+      --slogan-monitor-glow:  rgba(60, 130, 255, 0.55); /* azul */
+      --slogan-monitor-alpha: 1;
+    }
+
+    /* 🎴 Vibe Sasuke para la marca (azul/negro) */
     @keyframes bokuColor{
-      0%   { color: #d9c8ff; }
+      0%   { color: rgba(60,130,255,0.95); }
       30%  { color: #ffffff; }
-      60%  { color: #b79bff; }
-      100% { color: #d9c8ff; }
+      60%  { color: rgba(0,0,0,0.95); }
+      100% { color: rgba(60,130,255,0.95); }
     }
   </style>
 </head>
@@ -96,9 +120,10 @@
     <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER -->
+      <!-- SLOGAN + SLIDER -->
       <div>
         <div class="carousel-info">
+          <div class="slogan-monitor" aria-hidden="true"></div>
           <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
@@ -108,8 +133,7 @@
           <a href="#slide-3">3</a>
           <a href="#slide-4">4</a>
 
-          <div class="slides" id="slides">
-            <!-- ✅ src inicial para que no quede en blanco -->
+          <div class="slides" id="slides" data-tier="silver">
             <img
               id="sliderImage"
               src="imagenes/sasuke/sasuke1.png"
@@ -123,6 +147,22 @@
             <span class="owner-name" id="ownerName">Emilio Contreras</span>
           </div>
         </div>
+      </div>
+
+      <!-- ECG -->
+      <div
+        class="ecg-pro"
+        aria-label="Monitor ECG"
+        style="
+          --ecg-color: rgba(60, 130, 255, 0.98); /* azul */
+          --ecg-baseline: rgba(0, 0, 0, 0.85);  /* negro */
+          --ecg-width: 360px;
+        "
+      >
+        <svg class="ecg-svg" viewBox="0 0 450 73" aria-hidden="true">
+          <path class="ecg-baseline" d="M0 45.486H450"></path>
+          <path class="ecg-trace"></path>
+        </svg>
       </div>
 
       <!-- COMPRA -->
@@ -181,18 +221,19 @@
       characterName: "Sasuke",
       voiceSrc: "voces/sasuke.mp3",
       nextHref: "shizuku.html",
-      nextVoiceSrc: "voces/shizuku.mp3", // ✅ agregado
+      nextVoiceSrc: "voces/shizuku.mp3",
       phoneNumber: "56920282860",
       images: [
-        { src: "imagenes/sasuke/sasuke1.png", owner: "Emilio Contreras" },
-        { src: "imagenes/sasuke/sasuke2.png", owner: "María Pérez" },
-        { src: "imagenes/sasuke/sasuke3.png", owner: "Carlos Gómez" },
-        { src: "imagenes/sasuke/sasuke4.png", owner: "Lucía Torres" }
+        { src: "imagenes/sasuke/sasuke1.png", owner: "Emilio Contreras", tier: "silver" },
+        { src: "imagenes/sasuke/sasuke2.png", owner: "María Pérez", tier: "gold" },
+        { src: "imagenes/sasuke/sasuke3.png", owner: "Carlos Gómez", tier: "platinum" },
+        { src: "imagenes/sasuke/sasuke4.png", owner: "Lucía Torres", tier: "silver" }
       ]
     };
   </script>
 
   <script src="js/page-ui.js"></script>
+  <script src="js/ecg-pro.js"></script>
 
 </body>
 </html>
