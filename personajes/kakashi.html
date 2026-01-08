@@ -16,6 +16,12 @@
   <!-- ✅ CSS global de layout -->
   <link rel="stylesheet" href="css/layout-global.css">
 
+  <!-- ✅ Títulos / Slogan monitor -->
+  <link rel="stylesheet" href="css/titulos.css">
+
+  <!-- ✅ ECG PRO (solo móvil vía CSS) -->
+  <link rel="stylesheet" href="css/ecg-pro.css">
+
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,6 +36,25 @@
         radial-gradient(circle at 70% 35%, rgba(90, 140, 200, 0.25) 0%, rgba(90, 140, 200, 0) 50%),
         radial-gradient(circle at 50% 85%, rgba(200, 220, 255, 0.15) 0%, rgba(200, 220, 255, 0) 55%),
         linear-gradient(135deg, #0b1a2a, #1c2f44, #0a141f);
+    }
+
+    :root{
+      /* compatibilidad visual */
+      --slogan-perimeter: rgba(255,255,255,0.88);
+      --slogan-area-main: rgba(120, 180, 255, 0.22);
+      --slogan-area-accent: rgba(150, 160, 170, 0.22);
+
+      /* ✅ Letras del slogan: celeste */
+      --slogan-letters: rgba(120, 200, 255, 0.98);
+
+      /* ✅ Monitor superior (slogan)
+         Regla aplicada:
+         Color 1 (principal): celeste
+         Color 2 (secundario): plomo */
+      --slogan-monitor-line:  rgba(120, 200, 255, 0.98); /* celeste */
+      --slogan-monitor-line2: rgba(150, 160, 170, 0.95); /* plomo */
+      --slogan-monitor-glow:  rgba(120, 200, 255, 0.55); /* celeste */
+      --slogan-monitor-alpha: 1;
     }
   </style>
 </head>
@@ -82,9 +107,13 @@
     <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER -->
+      <!-- =========================
+           BLOQUE: Carrusel + Slogan
+           ========================= -->
       <div>
+
         <div class="carousel-info">
+          <div class="slogan-monitor" aria-hidden="true"></div>
           <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
@@ -94,7 +123,7 @@
           <a href="#slide-3">3</a>
           <a href="#slide-4">4</a>
 
-          <div class="slides" id="slides">
+          <div class="slides" id="slides" data-tier="silver">
             <img id="sliderImage" src="imagenes/kakashi/kakashi1.png" class="fade show" alt="Kakashi artwork">
           </div>
 
@@ -103,6 +132,24 @@
             <span class="owner-name" id="ownerName">Emilio Contreras</span>
           </div>
         </div>
+      </div>
+
+      <!-- =========================
+           ✅ ECG PRO
+           ========================= -->
+      <div
+        class="ecg-pro"
+        aria-label="Monitor ECG"
+        style="
+          --ecg-color: rgba(120, 200, 255, 0.98);  /* celeste */
+          --ecg-baseline: rgba(150, 160, 170, 0.85); /* plomo */
+          --ecg-width: 360px;
+        "
+      >
+        <svg class="ecg-svg" viewBox="0 0 450 73" aria-hidden="true">
+          <path class="ecg-baseline" d="M0 45.486H450"></path>
+          <path class="ecg-trace"></path>
+        </svg>
       </div>
 
       <!-- BLOQUE DE COMPRA -->
@@ -164,20 +211,22 @@
       characterName: "Kakashi",
       voiceSrc: "voces/kakashi.mp3",
       nextHref: "killua.html",
-      nextVoiceSrc: "voces/killua.mp3", // ✅ agregado
+      nextVoiceSrc: "voces/killua.mp3",
       phoneNumber: "56920282860",
       images: [
-        { src: "imagenes/kakashi/kakashi1.png", owner: "Emilio Contreras" },
-        { src: "imagenes/kakashi/kakashi2.png", owner: "María Pérez" },
-        { src: "imagenes/kakashi/kakashi3.png", owner: "Carlos Gómez" },
-        { src: "imagenes/kakashi/kakashi4.png", owner: "Lucía Torres" }
+        { src: "imagenes/kakashi/kakashi1.png", owner: "Emilio Contreras", tier: "silver" },
+        { src: "imagenes/kakashi/kakashi2.png", owner: "María Pérez", tier: "gold" },
+        { src: "imagenes/kakashi/kakashi3.png", owner: "Carlos Gómez", tier: "platinum" },
+        { src: "imagenes/kakashi/kakashi4.png", owner: "Lucía Torres", tier: "silver" }
       ]
     };
   </script>
 
-  <!-- ✅ Lógica global: slider + label + planes + WhatsApp + voz -->
-  <!-- IMPORTANTE: usa el page-ui.js corregido (con voz en la flecha) -->
+  <!-- ✅ Lógica global -->
   <script src="js/page-ui.js"></script>
+
+  <!-- ✅ ECG PRO (JS) -->
+  <script src="js/ecg-pro.js"></script>
 
 </body>
 </html>
