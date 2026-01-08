@@ -14,6 +14,12 @@
   <link rel="stylesheet" href="css/boku-brand.css">
   <link rel="stylesheet" href="css/layout-global.css">
 
+  <!-- ✅ Slogan / Monitor -->
+  <link rel="stylesheet" href="css/titulos.css">
+
+  <!-- ✅ ECG PRO -->
+  <link rel="stylesheet" href="css/ecg-pro.css">
+
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,20 +27,37 @@
   <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet">
 
   <style>
-    /* 🟢⚔️ Fondo Zoro — honor, acero y determinación */
+    /* 🟢⚔️ Fondo Zoro — dos verdes (honor + acero) */
     body{
       background:
-        radial-gradient(circle at 28% 18%, rgba(46, 255, 164, 0.18) 0%, rgba(46, 255, 164, 0) 55%),
-        radial-gradient(circle at 78% 36%, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0) 60%),
-        radial-gradient(circle at top, #1e5f3b 0%, #0e2f22 45%, #050d0a 100%);
+        radial-gradient(circle at 28% 18%, rgba(80, 255, 170, 0.22) 0%, rgba(80, 255, 170, 0) 55%),
+        radial-gradient(circle at 78% 36%, rgba(30, 140, 90, 0.25) 0%, rgba(30, 140, 90, 0) 60%),
+        linear-gradient(135deg, #062017, #0e3a2b, #04110c);
+    }
+
+    :root{
+      /* 🎨 PALETA AUTOMÁTICA: VERDE CLARO + VERDE OSCURO */
+
+      --slogan-perimeter: rgba(210, 255, 235, 0.92);
+      --slogan-area-main: rgba(80, 255, 170, 0.35);     /* verde claro */
+      --slogan-area-accent: rgba(30, 140, 90, 0.22);    /* verde oscuro */
+
+      /* Letras */
+      --slogan-letters: rgba(180, 255, 220, 0.98);
+
+      /* Monitor superior */
+      --slogan-monitor-line:  rgba(80, 255, 170, 0.95); /* verde claro */
+      --slogan-monitor-line2: rgba(30, 140, 90, 0.85);  /* verde oscuro */
+      --slogan-monitor-glow:  rgba(80, 255, 170, 0.45);
+      --slogan-monitor-alpha: 1;
     }
 
     /* 🎨 Vibe Zoro para Boku */
     @keyframes bokuColor{
-      0%   { color: #c9ffe7; }  /* verde suave */
+      0%   { color: rgba(180,255,220,0.95); }
       30%  { color: #ffffff; }
-      60%  { color: #7dffbd; }  /* verde energía */
-      100% { color: #c9ffe7; }
+      60%  { color: rgba(80,255,170,0.95); }
+      100% { color: rgba(180,255,220,0.95); }
     }
   </style>
 </head>
@@ -70,7 +93,6 @@
           <div class="title-row">
             <h2 class="card__title" id="characterTitle">Zoro</h2>
 
-            <!-- ✅ flecha con voz del siguiente -->
             <a class="go-character"
                href="chrollo.html"
                data-voice-next="voces/chrollo.mp3"
@@ -92,9 +114,10 @@
     <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER -->
+      <!-- SLOGAN + SLIDER -->
       <div>
         <div class="carousel-info">
+          <div class="slogan-monitor" aria-hidden="true"></div>
           <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
@@ -105,13 +128,7 @@
           <a href="#slide-4">4</a>
 
           <div class="slides" id="slides">
-            <!-- ✅ src inicial -->
-            <img
-              id="sliderImage"
-              src="imagenes/zoro/zoro1.png"
-              class="fade show"
-              alt="Zoro artwork"
-            >
+            <img id="sliderImage" src="imagenes/zoro/zoro1.png" class="fade show" alt="Zoro artwork">
           </div>
 
           <div id="dueños-container">
@@ -119,6 +136,22 @@
             <span class="owner-name" id="ownerName">Cristian Soto</span>
           </div>
         </div>
+      </div>
+
+      <!-- ECG -->
+      <div
+        class="ecg-pro"
+        aria-label="Monitor ECG"
+        style="
+          --ecg-color: rgba(80, 255, 170, 0.98);     /* verde claro */
+          --ecg-baseline: rgba(30, 140, 90, 0.40);  /* verde oscuro */
+          --ecg-width: 360px;
+        "
+      >
+        <svg class="ecg-svg" viewBox="0 0 450 73" aria-hidden="true">
+          <path class="ecg-baseline" d="M0 45.486H450"></path>
+          <path class="ecg-trace"></path>
+        </svg>
       </div>
 
       <!-- COMPRA -->
@@ -177,7 +210,7 @@
       characterName: "Zoro",
       voiceSrc: "voces/zoro.mp3",
       nextHref: "chrollo.html",
-      nextVoiceSrc: "voces/chrollo.mp3", // ✅ agregado
+      nextVoiceSrc: "voces/chrollo.mp3",
       phoneNumber: "56920282860",
       images: [
         { src: "imagenes/zoro/zoro1.png", owner: "Cristian Soto" },
@@ -189,6 +222,7 @@
   </script>
 
   <script src="js/page-ui.js"></script>
+  <script src="js/ecg-pro.js"></script>
 
 </body>
 </html>
