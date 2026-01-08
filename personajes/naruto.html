@@ -17,6 +17,12 @@
   <!-- ✅ CSS global de layout -->
   <link rel="stylesheet" href="css/layout-global.css">
 
+  <!-- ✅ Títulos / Slogan monitor -->
+  <link rel="stylesheet" href="css/titulos.css">
+
+  <!-- ✅ ECG PRO -->
+  <link rel="stylesheet" href="css/ecg-pro.css">
+
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,34 +30,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet">
 
   <style>
-    /* 🟠 Fondo inspirado en Naruto (naranja + fuego + sombra) */
+    /* 🟠 Fondo Naruto — amarillo + naranjo (chakra + fuego) */
     body{
       background:
-        radial-gradient(circle at 25% 18%, rgba(255, 190, 80, 0.40) 0%, rgba(255, 190, 80, 0) 45%),
-        radial-gradient(circle at 80% 22%, rgba(255, 90, 40, 0.28) 0%, rgba(255, 90, 40, 0) 50%),
-        radial-gradient(circle at 50% 85%, rgba(255, 230, 160, 0.16) 0%, rgba(255, 230, 160, 0) 55%),
+        radial-gradient(circle at 25% 18%, rgba(255, 215, 90, 0.45) 0%, rgba(255, 215, 90, 0) 45%),
+        radial-gradient(circle at 80% 22%, rgba(255, 140, 40, 0.35) 0%, rgba(255, 140, 40, 0) 50%),
+        radial-gradient(circle at 50% 85%, rgba(255, 235, 170, 0.18) 0%, rgba(255, 235, 170, 0) 55%),
         linear-gradient(135deg, #1a0b06, #4a1b0a, #0a0605);
     }
 
-    /* ✅ Color vibes de la marca "Boku" SOLO en esta página */
-    @keyframes bokuColor{
-      0%   { color: #ffb74d; }
-      25%  { color: #ff7043; }
-      55%  { color: #64b5f6; }
-      80%  { color: #ffffff; }
-      100% { color: #ffb74d; }
+    :root{
+      /* base visual */
+      --slogan-perimeter: rgba(255,255,255,0.88);
+      --slogan-area-main: rgba(255, 215, 90, 0.25);
+      --slogan-area-accent: rgba(255, 140, 40, 0.22);
+
+      /* ✅ Letras slogan: amarillo */
+      --slogan-letters: rgba(255, 215, 90, 0.98);
+
+      /* ✅ Monitor superior (slogan)
+         Color 1: amarillo
+         Color 2: naranjo */
+      --slogan-monitor-line:  rgba(255, 215, 90, 0.98); /* amarillo */
+      --slogan-monitor-line2: rgba(255, 140, 40, 0.98); /* naranjo */
+      --slogan-monitor-glow:  rgba(255, 215, 90, 0.55); /* amarillo */
+      --slogan-monitor-alpha: 1;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ✅ MARCA SUPERIOR IZQUIERDA -->
+  <!-- ✅ MARCA -->
   <a class="brand-boku" href="index.html" aria-label="Ir al inicio">
     <span>B</span><span>o</span><span>k</span><span>u</span>
   </a>
 
-  <!-- ✅ BOTÓN AUDIO (global ON/OFF + voz por página) -->
+  <!-- ✅ AUDIO -->
   <button
     class="audio-fab"
     id="audioFab"
@@ -65,13 +80,9 @@
 
   <div class="container">
 
-    <!-- TARJETA DEL PERSONAJE -->
+    <!-- CARD -->
     <article class="card" id="characterCard">
-      <img
-        class="card__background"
-        src="imagenes/naruto/naruto.png"
-        alt="Naruto"
-      />
+      <img class="card__background" src="imagenes/naruto/naruto.png" alt="Naruto Uzumaki" />
 
       <div class="card__content flow">
         <div class="card__content--container flow">
@@ -79,7 +90,6 @@
           <div class="title-row">
             <h2 class="card__title" id="characterTitle">Naruto Uzumaki</h2>
 
-            <!-- ✅ Flecha: reproduce la VOZ del siguiente personaje antes de navegar -->
             <a class="go-character"
                href="sanji.html"
                data-voice-next="voces/sanji.mp3"
@@ -89,8 +99,8 @@
           </div>
 
           <p class="card__description">
-            Un joven ninja con un espíritu indomable y el sueño de convertirse en Hokage.
-            Naruto es símbolo de perseverancia, amistad y esperanza, capaz de inspirar a todos los que lo rodean.
+            Ninja de espíritu indomable y corazón puro, Naruto sueña con convertirse en Hokage.
+            Su energía, perseverancia y fe en la amistad lo convierten en un símbolo de esperanza.
           </p>
 
         </div>
@@ -100,10 +110,11 @@
     <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER -->
+      <!-- SLOGAN + SLIDER -->
       <div>
         <div class="carousel-info">
-          <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
+          <div class="slogan-monitor" aria-hidden="true"></div>
+          <h3 class="carousel-title">Este diseño existe porque tú existes</h3>
         </div>
 
         <div class="slider">
@@ -112,94 +123,93 @@
           <a href="#slide-3">3</a>
           <a href="#slide-4">4</a>
 
-          <div class="slides" id="slides">
-            <img
-              id="sliderImage"
-              src="imagenes/naruto/naruto1.png"
-              class="fade show"
-              alt="Naruto artwork"
-            >
+          <div class="slides" id="slides" data-tier="silver">
+            <img id="sliderImage" src="imagenes/naruto/naruto1.png" class="fade show" alt="Naruto artwork">
           </div>
 
           <div id="dueños-container">
-            <span class="owner-label" id="ownerLabel">Diseñada para</span>
+            <span class="owner-label">Diseñada para</span>
             <span class="owner-name" id="ownerName">Emilio Contreras</span>
           </div>
         </div>
       </div>
 
-      <!-- BLOQUE DE COMPRA -->
+      <!-- ECG -->
+      <div
+        class="ecg-pro"
+        aria-label="Monitor ECG"
+        style="
+          --ecg-color: rgba(255, 215, 90, 0.98);    /* amarillo */
+          --ecg-baseline: rgba(255, 140, 40, 0.85); /* naranjo */
+          --ecg-width: 360px;
+        "
+      >
+        <svg class="ecg-svg" viewBox="0 0 450 73" aria-hidden="true">
+          <path class="ecg-baseline" d="M0 45.486H450"></path>
+          <path class="ecg-trace"></path>
+        </svg>
+      </div>
+
+      <!-- COMPRA -->
       <div class="buy-panel">
         <h3 class="buy-title">Personaliza tu camiseta</h3>
 
         <div class="glass-radio-group-vertical" id="planRadios">
           <input checked id="glass-silver" name="plan" type="radio" />
-          <label for="glass-silver">
-            <span class="radio-indicator"><span class="checkmark">✓</span></span>
-            <span class="label-text">Silver</span>
-          </label>
+          <label for="glass-silver"><span class="radio-indicator"><span class="checkmark">✓</span></span><span class="label-text">Silver</span></label>
 
           <input id="glass-gold" name="plan" type="radio" />
-          <label for="glass-gold">
-            <span class="radio-indicator"><span class="checkmark">✓</span></span>
-            <span class="label-text">Gold</span>
-          </label>
+          <label for="glass-gold"><span class="radio-indicator"><span class="checkmark">✓</span></span><span class="label-text">Gold</span></label>
 
           <input id="glass-platinum" name="plan" type="radio" />
-          <label for="glass-platinum">
-            <span class="radio-indicator"><span class="checkmark">✓</span></span>
-            <span class="label-text">Platinum</span>
-          </label>
+          <label for="glass-platinum"><span class="radio-indicator"><span class="checkmark">✓</span></span><span class="label-text">Platinum</span></label>
 
           <div class="glass-glider-vertical"></div>
         </div>
 
-        <div class="plan-box" id="planBox">
-          <p class="plan-name" id="planName">Plan Silver</p>
-          <p class="plan-price" id="planPrice">$12.990 CLP</p>
-          <ul class="plan-features" id="planFeatures">
-            <li>Camiseta personalizada con tu diseño</li>
-            <li>Estampado en 1 área (frente)</li>
-            <li>1 ajuste de color/contraste</li>
-            <li>Tu diseño puede aparecer en el catálogo</li>
+        <div class="plan-box">
+          <p class="plan-name">Plan Silver</p>
+          <p class="plan-price">$12.990 CLP</p>
+          <ul class="plan-features">
+            <li>Camiseta personalizada</li>
+            <li>Estampado frontal</li>
+            <li>Ajuste de color</li>
+            <li>Diseño en catálogo</li>
             <li>Entrega estándar</li>
           </ul>
         </div>
 
-        <a class="wsp-btn" id="wspBtn" href="#" target="_blank" rel="noopener">
-          Comprar por WhatsApp
-        </a>
-        <p class="wsp-sub" id="wspSub">Te llevará con el mensaje listo para enviar.</p>
+        <a class="wsp-btn" id="wspBtn" href="#" target="_blank" rel="noopener">Comprar por WhatsApp</a>
+        <p class="wsp-sub">Te llevará con el mensaje listo para enviar.</p>
       </div>
 
     </div>
   </div>
 
-  <!-- ✅ AUDIO base -->
+  <!-- AUDIO BASE -->
   <audio id="openingAudio" src="musica/naruto.mp3" preload="auto"></audio>
 
-  <!-- ✅ Sistema global (música + estado global + voz) -->
+  <!-- JS -->
   <script src="js/audio-system.js"></script>
 
-  <!-- ✅ Config por página -->
   <script>
     window.PAGE_CONFIG = {
       characterName: "Naruto",
       voiceSrc: "voces/naruto.mp3",
       nextHref: "sanji.html",
-      nextVoiceSrc: "voces/sanji.mp3", // ✅ agregado
+      nextVoiceSrc: "voces/sanji.mp3",
       phoneNumber: "56920282860",
       images: [
-        { src: "imagenes/naruto/naruto1.png", owner: "Emilio Contreras" },
-        { src: "imagenes/naruto/naruto2.png", owner: "María Pérez" },
-        { src: "imagenes/naruto/naruto3.png", owner: "Carlos Gómez" },
-        { src: "imagenes/naruto/naruto4.png", owner: "Lucía Torres" }
+        { src: "imagenes/naruto/naruto1.png", owner: "Emilio Contreras", tier: "silver" },
+        { src: "imagenes/naruto/naruto2.png", owner: "María Pérez", tier: "gold" },
+        { src: "imagenes/naruto/naruto3.png", owner: "Carlos Gómez", tier: "platinum" },
+        { src: "imagenes/naruto/naruto4.png", owner: "Lucía Torres", tier: "silver" }
       ]
     };
   </script>
 
-  <!-- ✅ Lógica global -->
   <script src="js/page-ui.js"></script>
+  <script src="js/ecg-pro.js"></script>
 
 </body>
 </html>
