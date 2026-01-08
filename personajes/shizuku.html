@@ -14,6 +14,12 @@
   <link rel="stylesheet" href="css/boku-brand.css">
   <link rel="stylesheet" href="css/layout-global.css">
 
+  <!-- ✅ Títulos / Slogan monitor -->
+  <link rel="stylesheet" href="css/titulos.css">
+
+  <!-- ✅ ECG PRO -->
+  <link rel="stylesheet" href="css/ecg-pro.css">
+
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,20 +27,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet">
 
   <style>
-    /* 🩵🟣 Fondo Shizuku (frío, suave, “calma letal”) */
+    /* ⚫🩶 Fondo Shizuku — negro + plomo (frío, sobrio, “calma letal”) */
     body{
       background:
-        radial-gradient(circle at 28% 16%, rgba(185,190,255,0.30) 0%, rgba(185,190,255,0) 46%),
-        radial-gradient(circle at 74% 30%, rgba(122,125,240,0.22) 0%, rgba(122,125,240,0) 55%),
-        linear-gradient(135deg, #0b0814, #3a2b66, #7a7df0);
+        radial-gradient(circle at 28% 16%, rgba(180, 180, 190, 0.22) 0%, rgba(180, 180, 190, 0) 46%),
+        radial-gradient(circle at 74% 30%, rgba(120, 120, 130, 0.18) 0%, rgba(120, 120, 130, 0) 55%),
+        radial-gradient(circle at 50% 85%, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0) 55%),
+        linear-gradient(135deg, #000000, #0b0b0e, #1b1b22);
     }
 
-    /* 🎴 Vibe Shizuku para la marca */
+    :root{
+      --slogan-perimeter: rgba(255,255,255,0.86);
+      --slogan-area-main: rgba(160, 160, 170, 0.18);
+      --slogan-area-accent: rgba(0, 0, 0, 0.55);
+
+      /* ✅ Letras slogan: plomo */
+      --slogan-letters: rgba(180, 180, 190, 0.98);
+
+      /* ✅ Monitor superior (slogan)
+         Color 1: plomo
+         Color 2: negro */
+      --slogan-monitor-line:  rgba(180, 180, 190, 0.98); /* plomo */
+      --slogan-monitor-line2: rgba(0, 0, 0, 0.95);       /* negro */
+      --slogan-monitor-glow:  rgba(180, 180, 190, 0.45); /* plomo */
+      --slogan-monitor-alpha: 1;
+    }
+
+    /* 🎴 Vibe Shizuku para la marca (plomo/negro) */
     @keyframes bokuColor{
-      0%   { color: #e7e6ff; }
+      0%   { color: rgba(180,180,190,0.95); }
       30%  { color: #ffffff; }
-      60%  { color: #b9b6ff; }
-      100% { color: #e7e6ff; }
+      60%  { color: rgba(0,0,0,0.95); }
+      100% { color: rgba(180,180,190,0.95); }
     }
   </style>
 </head>
@@ -95,9 +119,10 @@
     <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER -->
+      <!-- SLOGAN + SLIDER -->
       <div>
         <div class="carousel-info">
+          <div class="slogan-monitor" aria-hidden="true"></div>
           <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
@@ -107,8 +132,7 @@
           <a href="#slide-3">3</a>
           <a href="#slide-4">4</a>
 
-          <div class="slides" id="slides">
-            <!-- ✅ src inicial -->
+          <div class="slides" id="slides" data-tier="silver">
             <img
               id="sliderImage"
               src="imagenes/shizuku/shizuku1.png"
@@ -119,9 +143,25 @@
 
           <div id="dueños-container">
             <span class="owner-label" id="ownerLabel">Diseñada para</span>
-            <span class="owner-name" id="ownerName">Emilio Contreras</span>
+            <span class="owner-name" id="ownerName">Emiliooo Contreras</span>
           </div>
         </div>
+      </div>
+
+      <!-- ECG -->
+      <div
+        class="ecg-pro"
+        aria-label="Monitor ECG"
+        style="
+          --ecg-color: rgba(180, 180, 190, 0.98); /* plomo */
+          --ecg-baseline: rgba(0, 0, 0, 0.85);  /* negro */
+          --ecg-width: 360px;
+        "
+      >
+        <svg class="ecg-svg" viewBox="0 0 450 73" aria-hidden="true">
+          <path class="ecg-baseline" d="M0 45.486H450"></path>
+          <path class="ecg-trace"></path>
+        </svg>
       </div>
 
       <!-- COMPRA -->
@@ -180,18 +220,19 @@
       characterName: "Shizuku",
       voiceSrc: "voces/shizuku.mp3",
       nextHref: "trunks.html",
-      nextVoiceSrc: "voces/trunks.mp3", // ✅ agregado
+      nextVoiceSrc: "voces/trunks.mp3",
       phoneNumber: "56920282860",
       images: [
-        { src: "imagenes/shizuku/shizuku1.png", owner: "Emilio Contreras" },
-        { src: "imagenes/shizuku/shizuku2.png", owner: "María Pérez" },
-        { src: "imagenes/shizuku/shizuku3.png", owner: "Carlos Gómez" },
-        { src: "imagenes/shizuku/shizuku4.png", owner: "Lucía Torres" }
+        { src: "imagenes/shizuku/shizuku1.png", owner: "Emiliooo Contreras", tier: "silver" },
+        { src: "imagenes/shizuku/shizuku2.png", owner: "María Pérez", tier: "gold" },
+        { src: "imagenes/shizuku/shizuku3.png", owner: "Carlos Gómez", tier: "platinum" },
+        { src: "imagenes/shizuku/shizuku4.png", owner: "Lucía Torres", tier: "silver" }
       ]
     };
   </script>
 
   <script src="js/page-ui.js"></script>
+  <script src="js/ecg-pro.js"></script>
 
 </body>
 </html>
