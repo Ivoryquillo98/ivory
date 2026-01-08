@@ -14,8 +14,14 @@
 
   <!-- ✅ CSS global de marca + botón audio -->
   <link rel="stylesheet" href="css/boku-brand.css">
-  <!-- ✅ CSS global de layout (container / side-panel / buy-panel / etc.) -->
+  <!-- ✅ CSS global de layout -->
   <link rel="stylesheet" href="css/layout-global.css">
+
+  <!-- ✅ Títulos / Slogan monitor -->
+  <link rel="stylesheet" href="css/titulos.css">
+
+  <!-- ✅ ECG PRO -->
+  <link rel="stylesheet" href="css/ecg-pro.css">
 
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,34 +30,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet">
 
   <style>
-    /* 🏴‍☠️ Fondo Luffy: cielo + mar + dorado (tesoro) + rojo (ÚNICO por personaje) */
+    /* 🏴‍☠️ Fondo Luffy — rojo + café (pirata, cuero, aventura) */
     body{
       background:
-        radial-gradient(circle at 25% 18%, rgba(255, 220, 120, 0.35) 0%, rgba(255, 220, 120, 0) 45%),
-        radial-gradient(circle at 80% 22%, rgba(255, 80, 80, 0.25) 0%, rgba(255, 80, 80, 0) 50%),
-        radial-gradient(circle at 50% 85%, rgba(120, 200, 255, 0.20) 0%, rgba(120, 200, 255, 0) 55%),
-        linear-gradient(135deg, #0a1a2a, #0b3a5a, #06111d);
+        radial-gradient(circle at 25% 18%, rgba(180, 40, 40, 0.45) 0%, rgba(180, 40, 40, 0) 45%),
+        radial-gradient(circle at 75% 25%, rgba(140, 90, 40, 0.35) 0%, rgba(140, 90, 40, 0) 50%),
+        radial-gradient(circle at 50% 85%, rgba(220, 180, 120, 0.20) 0%, rgba(220, 180, 120, 0) 55%),
+        linear-gradient(135deg, #1a0c05, #3a1e0e, #0d0603);
     }
 
-    /* ✅ Color vibes para Boku en esta página (solo cambia el keyframes, la estructura queda global) */
-    @keyframes bokuColor{
-      0%   { color: #ffe08a; }   /* dorado */
-      25%  { color: #ff6b6b; }   /* rojo */
-      55%  { color: #7dd3ff; }   /* cielo */
-      80%  { color: #ffffff; }   /* blanco */
-      100% { color: #ffe08a; }
+    :root{
+      /* base visual */
+      --slogan-perimeter: rgba(255,255,255,0.88);
+      --slogan-area-main: rgba(180, 40, 40, 0.22);
+      --slogan-area-accent: rgba(140, 90, 40, 0.22);
+
+      /* ✅ Letras slogan: rojo */
+      --slogan-letters: rgba(200, 50, 50, 0.98);
+
+      /* ✅ Monitor superior (slogan)
+         Color 1: rojo
+         Color 2: café */
+      --slogan-monitor-line:  rgba(200, 50, 50, 0.98); /* rojo */
+      --slogan-monitor-line2: rgba(140, 90, 40, 0.98); /* café */
+      --slogan-monitor-glow:  rgba(200, 50, 50, 0.55); /* rojo */
+      --slogan-monitor-alpha: 1;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ✅ MARCA SUPERIOR IZQUIERDA -->
+  <!-- ✅ MARCA -->
   <a class="brand-boku" href="index.html" aria-label="Ir al inicio">
     <span>B</span><span>o</span><span>k</span><span>u</span>
   </a>
 
-  <!-- ✅ BOTÓN AUDIO (global ON/OFF + voz por página) -->
+  <!-- ✅ AUDIO -->
   <button
     class="audio-fab"
     id="audioFab"
@@ -65,13 +80,9 @@
 
   <div class="container">
 
-    <!-- TARJETA DEL PERSONAJE -->
+    <!-- CARD -->
     <article class="card" id="characterCard">
-      <img
-        class="card__background"
-        src="imagenes/luffy/luffy.png"
-        alt="Luffy"
-      />
+      <img class="card__background" src="imagenes/luffy/luffy.png" alt="Monkey D. Luffy" />
 
       <div class="card__content flow">
         <div class="card__content--container flow">
@@ -79,7 +90,6 @@
           <div class="title-row">
             <h2 class="card__title" id="characterTitle">Monkey D. Luffy</h2>
 
-            <!-- ✅ Flecha: reproduce la VOZ del siguiente personaje antes de navegar -->
             <a class="go-character"
                href="naruto.html"
                data-voice-next="voces/naruto.mp3"
@@ -89,8 +99,8 @@
           </div>
 
           <p class="card__description">
-            Capitán de los Sombrero de Paja, Luffy es alegre, incansable y decidido a convertirse en el Rey de los Piratas.
-            Con un gran sentido de la justicia y la amistad, su determinación inspira a toda su tripulación.
+            Capitán de los Sombrero de Paja, Luffy es alegre, decidido y libre.
+            Su sueño es convertirse en el Rey de los Piratas y proteger a su tripulación cueste lo que cueste.
           </p>
 
         </div>
@@ -100,10 +110,11 @@
     <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER -->
+      <!-- SLOGAN + SLIDER -->
       <div>
         <div class="carousel-info">
-          <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
+          <div class="slogan-monitor" aria-hidden="true"></div>
+          <h3 class="carousel-title">Este diseño existe porque tú existes</h3>
         </div>
 
         <div class="slider">
@@ -112,94 +123,93 @@
           <a href="#slide-3">3</a>
           <a href="#slide-4">4</a>
 
-          <div class="slides" id="slides">
-            <img
-              id="sliderImage"
-              src="imagenes/luffy/luffy1.png"
-              class="fade show"
-              alt="Luffy artwork"
-            >
+          <div class="slides" id="slides" data-tier="silver">
+            <img id="sliderImage" src="imagenes/luffy/luffy1.png" class="fade show" alt="Luffy artwork">
           </div>
 
           <div id="dueños-container">
-            <span class="owner-label" id="ownerLabel">Diseñada para</span>
+            <span class="owner-label">Diseñada para</span>
             <span class="owner-name" id="ownerName">Emilio Contreras</span>
           </div>
         </div>
       </div>
 
-      <!-- BLOQUE DE COMPRA -->
+      <!-- ECG -->
+      <div
+        class="ecg-pro"
+        aria-label="Monitor ECG"
+        style="
+          --ecg-color: rgba(200, 50, 50, 0.98);   /* rojo */
+          --ecg-baseline: rgba(140, 90, 40, 0.85); /* café */
+          --ecg-width: 360px;
+        "
+      >
+        <svg class="ecg-svg" viewBox="0 0 450 73" aria-hidden="true">
+          <path class="ecg-baseline" d="M0 45.486H450"></path>
+          <path class="ecg-trace"></path>
+        </svg>
+      </div>
+
+      <!-- COMPRA -->
       <div class="buy-panel">
         <h3 class="buy-title">Personaliza tu camiseta</h3>
 
         <div class="glass-radio-group-vertical" id="planRadios">
           <input checked id="glass-silver" name="plan" type="radio" />
-          <label for="glass-silver">
-            <span class="radio-indicator"><span class="checkmark">✓</span></span>
-            <span class="label-text">Silver</span>
-          </label>
+          <label for="glass-silver"><span class="radio-indicator"><span class="checkmark">✓</span></span><span class="label-text">Silver</span></label>
 
           <input id="glass-gold" name="plan" type="radio" />
-          <label for="glass-gold">
-            <span class="radio-indicator"><span class="checkmark">✓</span></span>
-            <span class="label-text">Gold</span>
-          </label>
+          <label for="glass-gold"><span class="radio-indicator"><span class="checkmark">✓</span></span><span class="label-text">Gold</span></label>
 
           <input id="glass-platinum" name="plan" type="radio" />
-          <label for="glass-platinum">
-            <span class="radio-indicator"><span class="checkmark">✓</span></span>
-            <span class="label-text">Platinum</span>
-          </label>
+          <label for="glass-platinum"><span class="radio-indicator"><span class="checkmark">✓</span></span><span class="label-text">Platinum</span></label>
 
           <div class="glass-glider-vertical"></div>
         </div>
 
-        <div class="plan-box" id="planBox">
-          <p class="plan-name" id="planName">Plan Silver</p>
-          <p class="plan-price" id="planPrice">$12.990 CLP</p>
-          <ul class="plan-features" id="planFeatures">
-            <li>Camiseta personalizada con tu diseño</li>
-            <li>Estampado en 1 área (frente)</li>
-            <li>1 ajuste de color/contraste</li>
-            <li>Tu diseño puede aparecer en el catálogo</li>
+        <div class="plan-box">
+          <p class="plan-name">Plan Silver</p>
+          <p class="plan-price">$12.990 CLP</p>
+          <ul class="plan-features">
+            <li>Camiseta personalizada</li>
+            <li>Estampado frontal</li>
+            <li>Ajuste de color</li>
+            <li>Diseño en catálogo</li>
             <li>Entrega estándar</li>
           </ul>
         </div>
 
-        <a class="wsp-btn" id="wspBtn" href="#" target="_blank" rel="noopener">
-          Comprar por WhatsApp
-        </a>
-        <p class="wsp-sub" id="wspSub">Te llevará con el mensaje listo para enviar.</p>
+        <a class="wsp-btn" id="wspBtn" href="#" target="_blank" rel="noopener">Comprar por WhatsApp</a>
+        <p class="wsp-sub">Te llevará con el mensaje listo para enviar.</p>
       </div>
 
     </div>
   </div>
 
-  <!-- ✅ AUDIO base (One Piece) -->
+  <!-- AUDIO BASE -->
   <audio id="openingAudio" src="musica/one.mp3" preload="auto"></audio>
 
-  <!-- ✅ Sistema global (música + estado global + voz) -->
+  <!-- JS -->
   <script src="js/audio-system.js"></script>
 
-  <!-- ✅ Config por página -->
   <script>
     window.PAGE_CONFIG = {
       characterName: "Luffy",
       voiceSrc: "voces/luffy.mp3",
       nextHref: "naruto.html",
-      nextVoiceSrc: "voces/naruto.mp3", // ✅ agregado
+      nextVoiceSrc: "voces/naruto.mp3",
       phoneNumber: "56920282860",
       images: [
-        { src: "imagenes/luffy/luffy1.png", owner: "Emilio Contreras" },
-        { src: "imagenes/luffy/luffy2.png", owner: "María Pérez" },
-        { src: "imagenes/luffy/luffy3.png", owner: "Carlos Gómez" },
-        { src: "imagenes/luffy/luffy4.png", owner: "Lucía Torres" }
+        { src: "imagenes/luffy/luffy1.png", owner: "Emilio Contreras", tier: "silver" },
+        { src: "imagenes/luffy/luffy2.png", owner: "María Pérez", tier: "gold" },
+        { src: "imagenes/luffy/luffy3.png", owner: "Carlos Gómez", tier: "platinum" },
+        { src: "imagenes/luffy/luffy4.png", owner: "Lucía Torres", tier: "silver" }
       ]
     };
   </script>
 
-  <!-- ✅ Lógica global: slider + label + planes + WhatsApp + voz -->
   <script src="js/page-ui.js"></script>
+  <script src="js/ecg-pro.js"></script>
 
 </body>
 </html>
