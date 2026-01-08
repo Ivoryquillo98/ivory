@@ -17,6 +17,12 @@
   <!-- ✅ CSS global de layout (container / side-panel / buy-panel / etc.) -->
   <link rel="stylesheet" href="css/layout-global.css">
 
+  <!-- ✅ Títulos / Slogan monitor -->
+  <link rel="stylesheet" href="css/titulos.css">
+
+  <!-- ✅ ECG PRO (solo móvil vía CSS) -->
+  <link rel="stylesheet" href="css/ecg-pro.css">
+
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,6 +36,25 @@
         radial-gradient(circle at 30% 20%, rgba(120, 180, 120, 0.35) 0%, rgba(120, 180, 120, 0) 45%),
         radial-gradient(circle at 70% 30%, rgba(200, 220, 170, 0.25) 0%, rgba(200, 220, 170, 0) 50%),
         linear-gradient(135deg, #f4f6ec, #dfe8d6, #c6d6b8);
+    }
+
+    :root{
+      /* compatibilidad visual */
+      --slogan-perimeter: rgba(255,255,255,0.88);
+      --slogan-area-main: rgba(80, 255, 160, 0.20);
+      --slogan-area-accent: rgba(80, 160, 255, 0.18);
+
+      /* ✅ Letras del slogan: verde */
+      --slogan-letters: rgba(80, 255, 160, 0.98);
+
+      /* ✅ Monitor superior (slogan)
+         Regla aplicada:
+         Color 1 (principal): verde
+         Color 2 (secundario): azul */
+      --slogan-monitor-line:  rgba(80, 255, 160, 0.98); /* verde */
+      --slogan-monitor-line2: rgba(80, 160, 255, 0.98); /* azul */
+      --slogan-monitor-glow:  rgba(80, 255, 160, 0.55); /* verde */
+      --slogan-monitor-alpha: 1;
     }
   </style>
 </head>
@@ -57,11 +82,7 @@
 
     <!-- TARJETA DEL PERSONAJE -->
     <article class="card" id="characterCard">
-      <img
-        class="card__background"
-        src="imagenes/leorio/leorio.png"
-        alt="Leorio"
-      />
+      <img class="card__background" src="imagenes/leorio/leorio.png" alt="Leorio" />
 
       <div class="card__content flow">
         <div class="card__content--container flow">
@@ -91,9 +112,13 @@
     <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER -->
+      <!-- =========================
+           BLOQUE: Carrusel + Slogan
+           ========================= -->
       <div>
+
         <div class="carousel-info">
+          <div class="slogan-monitor" aria-hidden="true"></div>
           <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
@@ -103,13 +128,8 @@
           <a href="#slide-3">3</a>
           <a href="#slide-4">4</a>
 
-          <div class="slides" id="slides">
-            <img
-              id="sliderImage"
-              src="imagenes/leorio/leorio1.png"
-              class="fade show"
-              alt="Leorio artwork"
-            >
+          <div class="slides" id="slides" data-tier="silver">
+            <img id="sliderImage" src="imagenes/leorio/leorio1.png" class="fade show" alt="Leorio artwork">
           </div>
 
           <div id="dueños-container">
@@ -117,6 +137,24 @@
             <span class="owner-name" id="ownerName">Emilio Contreras</span>
           </div>
         </div>
+      </div>
+
+      <!-- =========================
+           ✅ ECG PRO
+           ========================= -->
+      <div
+        class="ecg-pro"
+        aria-label="Monitor ECG"
+        style="
+          --ecg-color: rgba(80, 255, 160, 0.98);     /* verde */
+          --ecg-baseline: rgba(80, 160, 255, 0.85); /* azul */
+          --ecg-width: 360px;
+        "
+      >
+        <svg class="ecg-svg" viewBox="0 0 450 73" aria-hidden="true">
+          <path class="ecg-baseline" d="M0 45.486H450"></path>
+          <path class="ecg-trace"></path>
+        </svg>
       </div>
 
       <!-- BLOQUE DE COMPRA -->
@@ -178,19 +216,22 @@
       characterName: "Leorio",
       voiceSrc: "voces/leorio.mp3",
       nextHref: "luffy.html",
-      nextVoiceSrc: "voces/luffy.mp3", // ✅ agregado
+      nextVoiceSrc: "voces/luffy.mp3",
       phoneNumber: "56920282860",
       images: [
-        { src: "imagenes/leorio/leorio1.png", owner: "Emilio Contreras" },
-        { src: "imagenes/leorio/leorio2.png", owner: "María Pérez" },
-        { src: "imagenes/leorio/leorio3.png", owner: "Carlos Gómez" },
-        { src: "imagenes/leorio/leorio4.png", owner: "Lucía Torres" }
+        { src: "imagenes/leorio/leorio1.png", owner: "Emilio Contreras", tier: "silver" },
+        { src: "imagenes/leorio/leorio2.png", owner: "María Pérez", tier: "gold" },
+        { src: "imagenes/leorio/leorio3.png", owner: "Carlos Gómez", tier: "platinum" },
+        { src: "imagenes/leorio/leorio4.png", owner: "Lucía Torres", tier: "silver" }
       ]
     };
   </script>
 
   <!-- ✅ Lógica global: slider + label + planes + WhatsApp + voz -->
   <script src="js/page-ui.js"></script>
+
+  <!-- ✅ ECG PRO (JS) -->
+  <script src="js/ecg-pro.js"></script>
 
 </body>
 </html>
