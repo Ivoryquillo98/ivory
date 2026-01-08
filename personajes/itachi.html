@@ -16,6 +16,12 @@
   <!-- ✅ CSS global de layout -->
   <link rel="stylesheet" href="css/layout-global.css">
 
+  <!-- ✅ Títulos / Slogan monitor -->
+  <link rel="stylesheet" href="css/titulos.css">
+
+  <!-- ✅ ECG PRO (solo móvil vía CSS) -->
+  <link rel="stylesheet" href="css/ecg-pro.css">
+
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,6 +36,25 @@
         radial-gradient(circle at 70% 30%, rgba(120, 0, 0, 0.35) 0%, rgba(120, 0, 0, 0) 50%),
         radial-gradient(circle at 50% 85%, rgba(255, 60, 60, 0.15) 0%, rgba(255, 60, 60, 0) 55%),
         linear-gradient(135deg, #090000, #1a0000, #000000);
+    }
+
+    :root{
+      /* compatibilidad visual */
+      --slogan-perimeter: rgba(255,255,255,0.88);
+      --slogan-area-main: rgba(255, 60, 60, 0.20);
+      --slogan-area-accent: rgba(0, 0, 0, 0.25);
+
+      /* ✅ Letras del slogan: rojo */
+      --slogan-letters: rgba(255, 60, 60, 0.98);
+
+      /* ✅ Monitor superior (slogan)
+         Regla aplicada:
+         Color 1 (principal): rojo
+         Color 2 (secundario): negro */
+      --slogan-monitor-line:  rgba(255, 60, 60, 0.98); /* rojo */
+      --slogan-monitor-line2: rgba(0, 0, 0, 0.95);     /* negro */
+      --slogan-monitor-glow:  rgba(255, 60, 60, 0.55); /* rojo */
+      --slogan-monitor-alpha: 1;
     }
   </style>
 </head>
@@ -81,9 +106,13 @@
     <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER -->
+      <!-- =========================
+           BLOQUE: Carrusel + Slogan
+           ========================= -->
       <div>
+
         <div class="carousel-info">
+          <div class="slogan-monitor" aria-hidden="true"></div>
           <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
@@ -93,7 +122,7 @@
           <a href="#slide-3">3</a>
           <a href="#slide-4">4</a>
 
-          <div class="slides" id="slides">
+          <div class="slides" id="slides" data-tier="silver">
             <img id="sliderImage" src="imagenes/itachi/itachi1.png" class="fade show" alt="Itachi artwork">
           </div>
 
@@ -102,6 +131,24 @@
             <span class="owner-name" id="ownerName">Emilio Contreras</span>
           </div>
         </div>
+      </div>
+
+      <!-- =========================
+           ✅ ECG PRO
+           ========================= -->
+      <div
+        class="ecg-pro"
+        aria-label="Monitor ECG"
+        style="
+          --ecg-color: rgba(255, 60, 60, 0.98); /* rojo */
+          --ecg-baseline: rgba(0, 0, 0, 0.85); /* negro */
+          --ecg-width: 360px;
+        "
+      >
+        <svg class="ecg-svg" viewBox="0 0 450 73" aria-hidden="true">
+          <path class="ecg-baseline" d="M0 45.486H450"></path>
+          <path class="ecg-trace"></path>
+        </svg>
       </div>
 
       <!-- BLOQUE DE COMPRA -->
@@ -163,21 +210,22 @@
       characterName: "Itachi",
       voiceSrc: "voces/itachi.mp3",
       nextHref: "kakashi.html",
-      nextVoiceSrc: "voces/kakashi.mp3",   // ✅ agregado
+      nextVoiceSrc: "voces/kakashi.mp3",
       phoneNumber: "56920282860",
       images: [
-        { src: "imagenes/itachi/itachi1.png", owner: "Emilio Contreras" },
-        { src: "imagenes/itachi/itachi2.jfif", owner: "María Pérez" },
-        { src: "imagenes/itachi/itachi3.jfif", owner: "Carlos Gómez" },
-        { src: "imagenes/itachi/itachi4.jfif", owner: "Lucía Torres" }
+        { src: "imagenes/itachi/itachi1.png", owner: "Emilio Contreras", tier: "silver" },
+        { src: "imagenes/itachi/itachi2.png", owner: "María Pérez", tier: "gold" },
+        { src: "imagenes/itachi/itachi3.png", owner: "Carlos Gómez", tier: "platinum" },
+        { src: "imagenes/itachi/itachi4.png", owner: "Lucía Torres", tier: "silver" }
       ]
     };
   </script>
 
-  <!-- ✅ Lógica global: slider + label + planes + WhatsApp + voz -->
-  <!-- IMPORTANTE: usa el page-ui.js corregido (con voz en la flecha) -->
+  <!-- ✅ Lógica global -->
   <script src="js/page-ui.js"></script>
+
+  <!-- ✅ ECG PRO (JS) -->
+  <script src="js/ecg-pro.js"></script>
 
 </body>
 </html>
-
