@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="css/radio.css">
   <link rel="stylesheet" href="css/boku-brand.css">
   <link rel="stylesheet" href="css/layout-global.css">
+
+  <!-- ✅ Títulos / Slogan monitor -->
   <link rel="stylesheet" href="css/titulos.css">
 
   <!-- ✅ ECG PRO (solo móvil vía CSS) -->
@@ -32,9 +34,10 @@
       --slogan-area-accent: rgba(190, 130, 255, 0.22);
       --slogan-letters: #ffffff;
 
-      /* (esto lo puedes dejar, pero ya no controla el ECG nuevo) */
-      --slogan-monitor-line: rgba(196, 88, 255, 0.98);
-      --slogan-monitor-glow: rgba(196, 88, 255, 0.75);
+      /* ✅ Monitor superior (slogan) */
+      --slogan-monitor-line: rgba(196, 88, 255, 0.98);     /* línea base */
+      --slogan-monitor-line2: rgba(124, 77, 170, 0.538);     /* pulso (arriba) */
+      --slogan-monitor-glow: rgba(194, 79, 223, 0.34);
       --slogan-monitor-alpha: 1;
     }
   </style>
@@ -89,6 +92,9 @@
       <div>
 
         <div class="carousel-info">
+          <!-- ✅ IMPORTANTE: ahora es DIV (bloque) para que el mask funcione perfecto -->
+          <div class="slogan-monitor" aria-hidden="true"></div>
+
           <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
@@ -114,8 +120,6 @@
 
       <!-- =========================
            ✅ ECG PRO
-           ✅ POSICIÓN: debajo del carrusel y arriba del buy-panel
-           ✅ Visible SOLO en móvil (lo controla ecg-pro.css)
            ========================= -->
       <div
         class="ecg-pro"
