@@ -14,6 +14,12 @@
   <link rel="stylesheet" href="css/boku-brand.css">
   <link rel="stylesheet" href="css/layout-global.css">
 
+  <!-- ✅ Títulos / Slogan monitor -->
+  <link rel="stylesheet" href="css/titulos.css">
+
+  <!-- ✅ ECG PRO -->
+  <link rel="stylesheet" href="css/ecg-pro.css">
+
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,20 +27,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet">
 
   <style>
-    /* 💜⚡ Fondo Trunks (violeta/azul frío + energía) */
+    /* 💜💛 Fondo Trunks — morado + amarillo (energía + contraste) */
     body{
       background:
-        radial-gradient(circle at 28% 16%, rgba(199,183,255,0.30) 0%, rgba(199,183,255,0) 48%),
-        radial-gradient(circle at 74% 32%, rgba(168,107,255,0.22) 0%, rgba(168,107,255,0) 55%),
-        linear-gradient(135deg, #08060f, #2b1a4a, #a86bff);
+        radial-gradient(circle at 26% 16%, rgba(255, 220, 120, 0.34) 0%, rgba(255, 220, 120, 0) 46%),
+        radial-gradient(circle at 76% 28%, rgba(168, 107, 255, 0.28) 0%, rgba(168, 107, 255, 0) 55%),
+        radial-gradient(circle at 50% 88%, rgba(255, 230, 160, 0.14) 0%, rgba(255, 230, 160, 0) 55%),
+        linear-gradient(135deg, #07040f, #2b1650, #12081f);
     }
 
-    /* 🎨 Vibe Trunks para la marca */
+    :root{
+      --slogan-perimeter: rgba(255,255,255,0.88);
+      --slogan-area-main: rgba(168, 107, 255, 0.26); /* morado */
+      --slogan-area-accent: rgba(255, 220, 120, 0.14); /* amarillo suave */
+
+      /* ✅ Letras slogan: amarillo */
+      --slogan-letters: rgba(255, 230, 140, 0.98);
+
+      /* ✅ Monitor superior (slogan)
+         Color 1: morado
+         Color 2: amarillo */
+      --slogan-monitor-line:  rgba(168, 107, 255, 0.98); /* morado */
+      --slogan-monitor-line2: rgba(255, 220, 120, 0.80); /* amarillo */
+      --slogan-monitor-glow:  rgba(255, 220, 120, 0.45); /* glow amarillo */
+      --slogan-monitor-alpha: 1;
+    }
+
+    /* 🎨 Vibe Trunks para la marca (morado/amarillo) */
     @keyframes bokuColor{
-      0%   { color: #efeaff; }
+      0%   { color: rgba(255,230,140,0.95); } /* amarillo */
       35%  { color: #ffffff; }
-      70%  { color: #c7b7ff; }
-      100% { color: #efeaff; }
+      70%  { color: rgba(168,107,255,0.95); } /* morado */
+      100% { color: rgba(255,230,140,0.95); }
     }
   </style>
 </head>
@@ -96,9 +120,10 @@
     <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER -->
+      <!-- SLOGAN + SLIDER -->
       <div>
         <div class="carousel-info">
+          <div class="slogan-monitor" aria-hidden="true"></div>
           <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
@@ -108,7 +133,7 @@
           <a href="#slide-3">3</a>
           <a href="#slide-4">4</a>
 
-          <div class="slides" id="slides">
+          <div class="slides" id="slides" data-tier="silver">
             <!-- ✅ src inicial para que no quede en blanco -->
             <img
               id="sliderImage"
@@ -123,6 +148,22 @@
             <span class="owner-name" id="ownerName">Emilio Contreras</span>
           </div>
         </div>
+      </div>
+
+      <!-- ECG -->
+      <div
+        class="ecg-pro"
+        aria-label="Monitor ECG"
+        style="
+          --ecg-color: rgba(255, 220, 120, 0.98);     /* amarillo */
+          --ecg-baseline: rgba(168, 107, 255, 0.45); /* morado */
+          --ecg-width: 360px;
+        "
+      >
+        <svg class="ecg-svg" viewBox="0 0 450 73" aria-hidden="true">
+          <path class="ecg-baseline" d="M0 45.486H450"></path>
+          <path class="ecg-trace"></path>
+        </svg>
       </div>
 
       <!-- COMPRA -->
@@ -181,18 +222,19 @@
       characterName: "Trunks",
       voiceSrc: "voces/trunks.mp3",
       nextHref: "vegeta.html",
-      nextVoiceSrc: "voces/vegeta.mp3",  // ✅ agregado
+      nextVoiceSrc: "voces/vegeta.mp3",
       phoneNumber: "56920282860",
       images: [
-        { src: "imagenes/trunks/trunks1.png", owner: "Emilio Contreras" },
-        { src: "imagenes/trunks/trunks2.png", owner: "María Pérez" },
-        { src: "imagenes/trunks/trunks3.png", owner: "Carlos Gómez" },
-        { src: "imagenes/trunks/trunks4.png", owner: "Lucía Torres" }
+        { src: "imagenes/trunks/trunks1.png", owner: "Emilio Contreras", tier: "silver" },
+        { src: "imagenes/trunks/trunks2.png", owner: "María Pérez", tier: "gold" },
+        { src: "imagenes/trunks/trunks3.png", owner: "Carlos Gómez", tier: "platinum" },
+        { src: "imagenes/trunks/trunks4.png", owner: "Lucía Torres", tier: "silver" }
       ]
     };
   </script>
 
   <script src="js/page-ui.js"></script>
+  <script src="js/ecg-pro.js"></script>
 
 </body>
 </html>
