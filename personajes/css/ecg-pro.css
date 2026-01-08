@@ -1,0 +1,57 @@
+/* =========================================================
+   ECG PRO — SOLO MÓVIL
+   Archivo: css/ecg-pro.css
+   ✅ En PC NO se muestra
+   ✅ En móvil (<=768px) se muestra y funciona normal
+   ========================================================= */
+
+/* ✅ Default: oculto en desktop/tablet */
+.ecg-pro{
+  display: none;
+}
+
+/* ✅ SOLO MÓVIL */
+@media (max-width: 768px){
+
+  .ecg-pro{
+    /* Valores por defecto (fallbacks) */
+    --ecg-width: 560px;
+    --ecg-color: #00d7d9;
+    --ecg-baseline: rgba(255,255,255,0.18);
+    --ecg-stroke: 3;
+    --ecg-baseline-stroke: 2;
+
+    display: block;              /* ✅ ahora sí aparece */
+    width: 100%;
+    max-width: var(--ecg-width); /* respeta lo definido en HTML */
+  }
+
+  .ecg-svg{
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ecg-baseline{
+    fill: none;
+    stroke: var(--ecg-baseline);
+    stroke-width: var(--ecg-baseline-stroke);
+    stroke-linecap: round;
+  }
+
+  .ecg-trace{
+    fill: none;
+    stroke: var(--ecg-color);     /* 👈 viene del HTML */
+    stroke-width: var(--ecg-stroke);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    stroke-dasharray: 0;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Accesibilidad: reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .ecg-trace{ transition: none !important; }
+}
