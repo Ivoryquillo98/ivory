@@ -16,6 +16,12 @@
   <!-- ✅ CSS global de layout -->
   <link rel="stylesheet" href="css/layout-global.css">
 
+  <!-- ✅ Títulos / Slogan monitor -->
+  <link rel="stylesheet" href="css/titulos.css">
+
+  <!-- ✅ ECG PRO (solo móvil vía CSS) -->
+  <link rel="stylesheet" href="css/ecg-pro.css">
+
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,6 +36,22 @@
         radial-gradient(circle at 75% 25%, rgba(120, 255, 120, 0.45) 0%, rgba(120, 255, 120, 0) 50%),
         radial-gradient(circle at 50% 85%, rgba(255, 255, 180, 0.25) 0%, rgba(255, 255, 180, 0) 55%),
         linear-gradient(135deg, #0b2e1b, #114a2d, #071a10);
+    }
+
+    :root{
+      /* (mantengo estas por compatibilidad con tu estilo actual) */
+      --slogan-perimeter: rgba(255,255,255,0.88);
+      --slogan-area-main: rgba(80, 255, 160, 0.26);
+      --slogan-area-accent: rgba(255, 60, 80, 0.18);
+
+      /* ✅ Letras del slogan: verde */
+      --slogan-letters: rgba(80, 255, 160, 0.98);
+
+      /* ✅ Monitor superior (slogan) */
+      --slogan-monitor-line: rgba(80, 255, 160, 0.98);   /* verde */
+      --slogan-monitor-line2: rgba(255, 60, 80, 0.98);   /* rojo */
+      --slogan-monitor-glow: rgba(80, 255, 160, 0.55);   /* verde */
+      --slogan-monitor-alpha: 1;
     }
   </style>
 </head>
@@ -82,9 +104,15 @@
     <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER -->
+      <!-- =========================
+           BLOQUE: Carrusel + Slogan
+           ========================= -->
       <div>
+
         <div class="carousel-info">
+          <!-- ✅ monitor superior (usa variables --slogan-monitor-line/line2/glow) -->
+          <div class="slogan-monitor" aria-hidden="true"></div>
+
           <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
@@ -94,7 +122,7 @@
           <a href="#slide-3">3</a>
           <a href="#slide-4">4</a>
 
-          <div class="slides" id="slides">
+          <div class="slides" id="slides" data-tier="silver">
             <img id="sliderImage" src="imagenes/gon/gon1.png" class="fade show" alt="Gon artwork">
           </div>
 
@@ -103,6 +131,24 @@
             <span class="owner-name" id="ownerName">Emilio Contreras</span>
           </div>
         </div>
+      </div>
+
+      <!-- =========================
+           ✅ ECG PRO
+           ========================= -->
+      <div
+        class="ecg-pro"
+        aria-label="Monitor ECG"
+        style="
+          --ecg-color: rgba(80, 255, 160, 0.98);     /* verde */
+          --ecg-baseline: rgba(255, 60, 80, 0.80);  /* rojo */
+          --ecg-width: 360px;
+        "
+      >
+        <svg class="ecg-svg" viewBox="0 0 450 73" aria-hidden="true">
+          <path class="ecg-baseline" d="M0 45.486H450"></path>
+          <path class="ecg-trace"></path>
+        </svg>
       </div>
 
       <!-- BLOQUE DE COMPRA -->
@@ -164,19 +210,22 @@
       characterName: "Gon",
       voiceSrc: "voces/gon.mp3",
       nextHref: "hisoka.html",
-      nextVoiceSrc: "voces/hisoka.mp3", // ✅ agregado
+      nextVoiceSrc: "voces/hisoka.mp3",
       phoneNumber: "56920282860",
       images: [
-        { src: "imagenes/gon/gon1.png", owner: "Emilio Contreras" },
-        { src: "imagenes/gon/gon2.png", owner: "María Pérez" },
-        { src: "imagenes/gon/gon3.png", owner: "Carlos Gómez" },
-        { src: "imagenes/gon/gon4.png", owner: "Lucía Torres" }
+        { src: "imagenes/gon/gon1.png", owner: "Emilio Contreras", tier: "silver" },
+        { src: "imagenes/gon/gon2.png", owner: "María Pérez", tier: "gold" },
+        { src: "imagenes/gon/gon3.png", owner: "Carlos Gómez", tier: "platinum" },
+        { src: "imagenes/gon/gon4.png", owner: "Lucía Torres", tier: "silver" }
       ]
     };
   </script>
 
   <!-- ✅ Lógica global: slider + label + planes + WhatsApp + voz -->
   <script src="js/page-ui.js"></script>
+
+  <!-- ✅ ECG PRO (JS) -->
+  <script src="js/ecg-pro.js"></script>
 
 </body>
 </html>
