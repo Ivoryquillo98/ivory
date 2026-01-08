@@ -14,6 +14,12 @@
   <link rel="stylesheet" href="css/boku-brand.css">
   <link rel="stylesheet" href="css/layout-global.css">
 
+  <!-- ✅ Títulos / Slogan monitor -->
+  <link rel="stylesheet" href="css/titulos.css">
+
+  <!-- ✅ ECG PRO (solo móvil vía CSS) -->
+  <link rel="stylesheet" href="css/ecg-pro.css">
+
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,12 +35,26 @@
         radial-gradient(circle at top, #1e4fff 0%, #0a1b3a 45%, #040813 100%);
     }
 
+    :root{
+      /* 🔧 Paleta combinada: AZUL + AMARILLO */
+      --slogan-perimeter: rgba(255, 240, 190, 0.92);
+      --slogan-area-main: rgba(30, 79, 255, 0.42);
+      --slogan-area-accent: rgba(255, 211, 74, 0.18);
+      --slogan-letters: rgba(255, 211, 74, 1); /* letras amarillas */
+
+      /* ✅ Monitor superior (slogan) */
+      --slogan-monitor-line: rgba(30, 79, 255, 0.95);      /* azul (línea base) */
+      --slogan-monitor-line2: rgba(255, 211, 74, 0.70);    /* amarillo (pulso arriba) */
+      --slogan-monitor-glow: rgba(255, 211, 74, 0.40);     /* glow amarillo */
+      --slogan-monitor-alpha: 1;
+    }
+
     /* 🎨 Vibe Vegeta para Boku */
     @keyframes bokuColor{
-      0%   { color: #fff4c4; }   /* dorado suave */
+      0%   { color: rgba(255, 211, 74, 0.95); }
       30%  { color: #ffffff; }
-      60%  { color: #ffd46a; }   /* amarillo saiyajin */
-      100% { color: #fff4c4; }
+      60%  { color: rgba(30, 79, 255, 0.95); }
+      100% { color: rgba(255, 211, 74, 0.95); }
     }
   </style>
 </head>
@@ -96,9 +116,15 @@
     <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER -->
+      <!-- =========================
+           BLOQUE: Carrusel + Slogan
+           ========================= -->
       <div>
+
         <div class="carousel-info">
+          <!-- ✅ Monitor superior (controlado por variables :root) -->
+          <div class="slogan-monitor" aria-hidden="true"></div>
+
           <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
@@ -123,6 +149,24 @@
             <span class="owner-name" id="ownerName">Emilio Contreras</span>
           </div>
         </div>
+      </div>
+
+      <!-- =========================
+           ✅ ECG PRO
+           ========================= -->
+      <div
+        class="ecg-pro"
+        aria-label="Monitor ECG"
+        style="
+          --ecg-color: rgba(255, 211, 74, 0.98);     /* amarillo */
+          --ecg-baseline: rgba(30, 79, 255, 0.35);  /* azul */
+          --ecg-width: 360px;
+        "
+      >
+        <svg class="ecg-svg" viewBox="0 0 450 73" aria-hidden="true">
+          <path class="ecg-baseline" d="M0 45.486H450"></path>
+          <path class="ecg-trace"></path>
+        </svg>
       </div>
 
       <!-- COMPRA -->
@@ -181,12 +225,12 @@
       characterName: "Vegeta",
       voiceSrc: "voces/vegeta.mp3",
       nextHref: "zoro.html",
-      nextVoiceSrc: "voces/zoro.mp3", // ✅ agregado
+      nextVoiceSrc: "voces/zoro.mp3",
       phoneNumber: "56920282860",
       images: [
         { src: "imagenes/vegeta/vegeta1.webp", owner: "Emilio Contreras" },
         { src: "imagenes/vegeta/vegeta2.png", owner: "María Pérez" },
-        { src: "imagenes/vegeta/vegeta3.webp", owner: "Carlos Gómez" },
+        { src: "imagenes/vegeta/vegeta3.png", owner: "Carlos Gómez" },
         { src: "imagenes/vegeta/vegeta4.png", owner: "Lucía Torres" }
       ]
     };
@@ -194,6 +238,8 @@
 
   <script src="js/page-ui.js"></script>
 
+  <!-- ✅ ECG PRO (JS) -->
+  <script src="js/ecg-pro.js"></script>
+
 </body>
 </html>
-
