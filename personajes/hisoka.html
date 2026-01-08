@@ -3,301 +3,104 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Card Animada con Slider</title>
+  <title>Card Animada - Hisoka</title>
 
   <!-- CSS del personaje -->
   <link rel="stylesheet" href="css/personajes.css">
-  <!-- CSS del slider -->
+  <!-- CSS del slider/carrusel -->
   <link rel="stylesheet" href="css/carrusel.css">
   <!-- CSS radios de planes -->
   <link rel="stylesheet" href="css/radio.css">
-  <!-- CSS del Matrix -->
-  <link rel="stylesheet" href="css/matrix/hisoka.css">
+  <!-- ✅ CSS global de marca + botón de audio -->
+  <link rel="stylesheet" href="css/boku-brand.css">
+  <!-- ✅ CSS global de layout -->
+  <link rel="stylesheet" href="css/layout-global.css">
+
+  <!-- ✅ Títulos / Slogan monitor -->
+  <link rel="stylesheet" href="css/titulos.css">
+
+  <!-- ✅ ECG PRO (solo móvil vía CSS) -->
+  <link rel="stylesheet" href="css/ecg-pro.css">
 
   <!-- Fuentes -->
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet">
 
   <style>
-    /* ✅ FONDO SOLO DESDE CSS (PC vs MÓVIL) */
+    /* ✅ Fondo (rosado dominante con contraste verde) — ÚNICO por personaje */
     body{
-      /* 🖥️ PC: varios colores */
-      background: linear-gradient(135deg, #ff4fa3, #ff86c8, #ffd1e8);
+      background:
+        radial-gradient(circle at 25% 15%, rgba(255, 90, 180, 0.55) 0%, rgba(255, 90, 180, 0) 45%),
+        radial-gradient(circle at 75% 25%, rgba(80, 255, 160, 0.45) 0%, rgba(80, 255, 160, 0) 50%),
+        radial-gradient(circle at 50% 85%, rgba(255, 200, 230, 0.25) 0%, rgba(255, 200, 230, 0) 55%),
+        linear-gradient(135deg, #2a0a1f, #3b0f2c, #12050c);
     }
 
-    /* 📱 MÓVIL: un solo color */
-    @media (max-width: 768px){
-      body{
-        background: #ff86c8;
-      }
-    }
+    :root{
+      /* compatibilidad visual */
+      --slogan-perimeter: rgba(255,255,255,0.88);
+      --slogan-area-main: rgba(255, 90, 180, 0.30);
+      --slogan-area-accent: rgba(80, 255, 160, 0.22);
 
-    /* CONTENEDOR PRINCIPAL */
-    .container {
-      display: flex;
-      gap: 3.7rem;
-      align-items: flex-start;
-      justify-content: flex-start;
-      padding: 2rem;
+      /* ✅ Letras del slogan: rosado */
+      --slogan-letters: rgba(255, 90, 180, 0.98);
 
-      /* Para que el contenido quede sobre el matrix */
-      position: relative;
-      z-index: 1;
-    }
-
-    /* PANEL DERECHO GENERAL */
-    .side-panel{
-      display: flex;
-      flex-direction: row;          /* PC: slider + bloque compra en fila */
-      align-items: flex-start;
-      gap: 2rem;
-    }
-
-    /* ✅ bloque de texto sobre el carrusel */
-    .carousel-info{
-      max-width: 420px;
-      margin: 0 0 0.9rem;
-      padding: 0.85rem 1rem;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(10px);
-      color: #fff;
-    }
-    .carousel-title{
-      font-family: "Montserrat", sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
-      margin: 0 0 0.35rem;
-      letter-spacing: 0.2px;
-    }
-
-    /* BLOQUE DE COMPRA */
-    .buy-panel{
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      min-width: 260px;
-      max-width: 320px;
-
-      /* ✅ desplaza TODO el bloque de compra a la derecha (PC) */
-      margin-left: 5rem;
-    }
-
-    .buy-title{
-      font-family: "Montserrat", sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #fff;
-      letter-spacing: 0.2px;
-      margin: 0;
-    }
-
-    .plan-box{
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 14px;
-      padding: 1rem 1rem 0.9rem;
-      background: rgba(255,255,255,0.03);
-      backdrop-filter: blur(10px);
-      color: #fff;
-    }
-
-    .plan-name{
-      font-family: "Montserrat", sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      margin: 0 0 0.25rem;
-    }
-
-    .plan-price{
-      font-family: "Montserrat", sans-serif;
-      font-weight: 700;
-      font-size: 1.25rem;
-      margin: 0 0 0.75rem;
-    }
-
-    .plan-features{
-      margin: 0;
-      padding-left: 1.1rem;
-      font-family: "Lato", sans-serif;
-      line-height: 1.35;
-      color: rgba(255,255,255,0.92);
-      font-size: 0.95rem;
-    }
-
-    .plan-features li{
-      margin: 0.25rem 0;
-    }
-
-    .wsp-btn{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-
-      width: 100%;
-      padding: 0.9rem 1rem;
-      border-radius: 14px;
-
-      background: #25D366;
-      color: #08120b;
-      text-decoration: none;
-
-      font-family: "Montserrat", sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
-
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-      transition: transform 180ms ease;
-    }
-    .wsp-btn:hover{ transform: translateY(-1px); }
-
-    .wsp-sub{
-      font-family: "Lato", sans-serif;
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.75);
-      margin: 0;
-      text-align: center;
-    }
-
-    /* ✅ “Diseñada para: Nombre” bonito */
-    #dueños-container {
-      margin-top: 1rem;
-      text-align: center;
-      color: #fff;
-      padding: 0.75rem 0.9rem;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.03);
-      backdrop-filter: blur(10px);
-      font-size: initial; /* evita que herede el 1.5rem anterior */
-      font-weight: initial;
-    }
-    #dueños-container .owner-label{
-      display: block;
-      font-family: "Lato", sans-serif;
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.72);
-      letter-spacing: 0.2px;
-      margin-bottom: 0.2rem;
-    }
-    #dueños-container .owner-name{
-      display: block;
-      font-family: "Montserrat", sans-serif;
-      font-size: 1.15rem;
-      font-weight: 900;
-      color: rgba(255,255,255,0.98);
-      line-height: 1.15;
-    }
-
-    /* ✅ Flecha chica al lado del título */
-    .go-character{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(10px);
-      color: #fff;
-      text-decoration: none;
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-      transition: transform 180ms ease, background 180ms ease;
-      margin-top: 0;
-    }
-    .go-character:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,0.10);
-    }
-    .go-character span{
-      font-size: 1rem;
-      font-weight: 900;
-      line-height: 1;
-      font-family: "Montserrat", sans-serif;
-    }
-
-    .title-row{
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 0.6rem;
-    }
-    .title-row .card__title{ margin: 0; }
-
-    /* 📱 MÓVIL */
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 1.25rem 1rem;
-        gap: 1.5rem;
-      }
-
-      .side-panel{
-        flex-direction: column;
-        align-items: center;
-        gap: 1.25rem;
-      }
-
-      .buy-panel{
-        width: 100%;
-        max-width: 360px;
-        margin-left: 0;
-      }
-
-      .carousel-info{
-        max-width: 360px;
-      }
+      /* ✅ Monitor superior (slogan)
+         Regla aplicada:
+         Color 1 (principal): rosado
+         Color 2 (secundario): verde */
+      --slogan-monitor-line:  rgba(255, 90, 180, 0.98); /* rosado */
+      --slogan-monitor-line2: rgba(80, 255, 160, 0.98); /* verde */
+      --slogan-monitor-glow:  rgba(255, 90, 180, 0.55); /* rosado */
+      --slogan-monitor-alpha: 1;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ✅ MATRIX (10 columnas) -->
-  <div class="matrix-container">
-    <div class="matrix-pattern">
-      <div class="matrix-column"></div>
-      <div class="matrix-column"></div>
-      <div class="matrix-column"></div>
-      <div class="matrix-column"></div>
-      <div class="matrix-column"></div>
-      <div class="matrix-column"></div>
-      <div class="matrix-column"></div>
-      <div class="matrix-column"></div>
-      <div class="matrix-column"></div>
-      <div class="matrix-column"></div>
-    </div>
-  </div>
+  <!-- ✅ MARCA SUPERIOR IZQUIERDA -->
+  <a class="brand-boku" href="index.html" aria-label="Ir al inicio">
+    <span>B</span><span>o</span><span>k</span><span>u</span>
+  </a>
+
+  <!-- ✅ BOTÓN AUDIO (global ON/OFF) -->
+  <button class="audio-fab" id="audioFab"
+    data-voice="voces/hisoka.mp3"
+    aria-label="Audio: activar o silenciar" type="button">
+    <span id="audioIcon">🔇</span>
+    <span class="hint" id="audioHint">Click para activar</span>
+  </button>
 
   <div class="container">
 
-    <!-- TARJETA DEL PERSONAJE -->
-    <article class="card">
+    <!-- CARD DEL PERSONAJE -->
+    <article class="card" id="characterCard">
       <img class="card__background" src="imagenes/hisoka/hisoka.png" alt="Hisoka" />
 
       <div class="card__content flow">
         <div class="card__content--container flow">
 
           <div class="title-row">
-            <h2 class="card__title">Hisoka</h2>
+            <h2 class="card__title" id="characterTitle">Hisoka</h2>
 
-            <!-- ✅ Flecha a itachi.html -->
-            <a class="go-character" href="itachi.html" aria-label="Ir a Itachi">
+            <!-- ✅ Flecha: reproduce la VOZ del siguiente personaje antes de navegar -->
+            <a class="go-character"
+               href="itachi.html"
+               data-voice-next="voces/itachi.mp3"
+               aria-label="Ir a Itachi">
               <span>→</span>
             </a>
           </div>
 
           <p class="card__description">
-            El famoso personaje de anime de Hunter x Hunter con su estilo único y peligroso.
+            El famoso personaje de Hunter x Hunter con su estilo único y peligroso.
             Hisoka es un mago impredecible, carismático y letal, obsesionado con encontrar
             oponentes fuertes que le den verdadera emoción en combate.
           </p>
+
         </div>
       </div>
     </article>
@@ -305,49 +108,58 @@
     <!-- PANEL DERECHO -->
     <div class="side-panel">
 
-      <!-- SLIDER (diseños personalizados de clientes) -->
+      <!-- =========================
+           BLOQUE: Carrusel + Slogan
+           ========================= -->
       <div>
+
         <div class="carousel-info">
-          <h3 class="carousel-title">Este diseño existe porque tú existes</h3>
+          <div class="slogan-monitor" aria-hidden="true"></div>
+          <h3 class="carousel-title" id="carouselTitle">Este diseño existe porque tú existes</h3>
         </div>
 
         <div class="slider">
-
-          <!-- BOTONES -->
           <a href="#slide-1">1</a>
           <a href="#slide-2">2</a>
           <a href="#slide-3">3</a>
           <a href="#slide-4">4</a>
 
-          <!-- CONTENEDOR DE IMÁGENES -->
-          <div class="slides" id="slides">
-
-            <!-- LUPA -->
-            <div class="magnifier-lens" id="lens"></div>
-
-            <!-- IMAGEN ACTIVA -->
-            <img
-              id="sliderImage"
-              src="imagenes/hisoka/hisoka1.png"
-              class="fade show"
-              alt="Hisoka artwork"
-            >
+          <div class="slides" id="slides" data-tier="silver">
+            <img id="sliderImage"
+                 src="imagenes/hisoka/hisoka1.png"
+                 class="fade show"
+                 alt="Hisoka artwork">
           </div>
 
-          <!-- ✅ Dueño bonito -->
           <div id="dueños-container">
-            <span class="owner-label">Diseñada para</span>
-            <span class="owner-name">Emilio Contreras</span>
+            <span class="owner-label" id="ownerLabel">Diseñada para</span>
+            <span class="owner-name" id="ownerName">Emilio Contreras</span>
           </div>
-
         </div>
+      </div>
+
+      <!-- =========================
+           ✅ ECG PRO
+           ========================= -->
+      <div
+        class="ecg-pro"
+        aria-label="Monitor ECG"
+        style="
+          --ecg-color: rgba(255, 90, 180, 0.98);   /* rosado */
+          --ecg-baseline: rgba(80, 255, 160, 0.85); /* verde */
+          --ecg-width: 360px;
+        "
+      >
+        <svg class="ecg-svg" viewBox="0 0 450 73" aria-hidden="true">
+          <path class="ecg-baseline" d="M0 45.486H450"></path>
+          <path class="ecg-trace"></path>
+        </svg>
       </div>
 
       <!-- BLOQUE DE COMPRA -->
       <div class="buy-panel">
         <h3 class="buy-title">Personaliza tu camiseta</h3>
 
-        <!-- RADIOS (radio.css) -->
         <div class="glass-radio-group-vertical" id="planRadios">
           <input checked id="glass-silver" name="plan" type="radio" />
           <label for="glass-silver">
@@ -370,7 +182,6 @@
           <div class="glass-glider-vertical"></div>
         </div>
 
-        <!-- DETALLES -->
         <div class="plan-box" id="planBox">
           <p class="plan-name" id="planName">Plan Silver</p>
           <p class="plan-price" id="planPrice">$12.990 CLP</p>
@@ -383,7 +194,6 @@
           </ul>
         </div>
 
-        <!-- WHATSAPP -->
         <a class="wsp-btn" id="wspBtn" href="#" target="_blank" rel="noopener">
           Comprar por WhatsApp
         </a>
@@ -393,164 +203,34 @@
     </div>
   </div>
 
-  <!-- JS -->
+  <!-- ✅ Música base SOLO para el sistema global -->
+  <audio id="openingAudio" src="musica/hxh.mp3" preload="auto"></audio>
+
+  <!-- ✅ Sistema global (música + estado global + voz) -->
+  <script src="js/audio-system.js"></script>
+
+  <!-- ✅ Config por página -->
   <script>
-    /* ===========================
-       SLIDER + soporte hash #slide-X
-       (manteniendo lupa)
-       =========================== */
-    const imagenesHisoka = [
-      { src: "imagenes/hisoka/hisoka1.png", dueño: "Emilio Contreras" },
-      { src: "imagenes/hisoka/hisoka2.png", dueño: "María Pérez" },
-      { src: "imagenes/hisoka/hisoka3.png", dueño: "Carlos Gómez" },
-      { src: "imagenes/hisoka/hisoka4.png", dueño: "Lucía Torres" }
-    ];
-
-    const sliderImage = document.getElementById("sliderImage");
-    const lens = document.getElementById("lens");
-    const slidesContainer = document.getElementById("slides");
-    const dueñoContainer = document.getElementById("dueños-container");
-    const buttons = document.querySelectorAll(".slider > a");
-
-    function setOwner(name){
-      dueñoContainer.innerHTML =
-        `<span class="owner-label">Diseñada para</span>` +
-        `<span class="owner-name">${name}</span>`;
-    }
-
-    function showSlide(index){
-      if (index < 0 || index >= imagenesHisoka.length) return;
-
-      sliderImage.classList.remove("show");
-
-      setTimeout(() => {
-        sliderImage.src = imagenesHisoka[index].src;
-        setOwner(imagenesHisoka[index].dueño);
-        sliderImage.classList.add("show");
-      }, 150);
-    }
-
-    function applyHash(){
-      const hash = window.location.hash;
-      const match = hash.match(/^#slide-(\d+)$/);
-      if (!match) return;
-
-      const num = Number(match[1]);
-      const index = num - 1;
-      showSlide(index);
-    }
-
-    /* Click: dejamos que el href cambie el hash, y mostramos */
-    buttons.forEach((btn, index) => {
-      btn.addEventListener("click", () => {
-        showSlide(index);
-      });
-    });
-
-    window.addEventListener("hashchange", applyHash);
-    applyHash();
-
-    /* LUPA */
-    slidesContainer.addEventListener("mousemove", (e) => {
-      lens.style.display = "block";
-
-      const rect = slidesContainer.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      const relX = (x / rect.width) * 100;
-      const relY = (y / rect.height) * 100;
-
-      lens.style.left = (x - lens.offsetWidth / 2) + "px";
-      lens.style.top = (y - lens.offsetHeight / 2) + "px";
-
-      lens.style.backgroundImage = `url(${sliderImage.src})`;
-      lens.style.backgroundSize = "500%";
-      lens.style.backgroundPosition = `${relX}% ${relY}%`;
-    });
-
-    slidesContainer.addEventListener("mouseleave", () => {
-      lens.style.display = "none";
-    });
-
-    /* ===========================
-       PLANES
-       =========================== */
-    const plans = {
-      silver: {
-        label: "Plan Silver",
-        price: "$12.990 CLP",
-        features: [
-          "Camiseta personalizada con tu diseño",
-          "Estampado en 1 área (frente)",
-          "1 ajuste de color/contraste",
-          "Tu diseño puede aparecer en el catálogo",
-          "Entrega estándar"
-        ]
-      },
-      gold: {
-        label: "Plan Gold",
-        price: "$17.990 CLP",
-        features: [
-          "Camiseta personalizada (mejor calidad de tela)",
-          "Estampado más nítido + mejor durabilidad",
-          "Estampado en 2 áreas (frente + espalda o manga)",
-          "Hasta 2 revisiones del diseño",
-          "Tu diseño puede aparecer en el catálogo",
-          "Entrega prioritaria"
-        ]
-      },
-      platinum: {
-        label: "Plan Platinum",
-        price: "$24.990 CLP",
-        features: [
-          "Camiseta premium + opción oversize",
-          "Estampado full color (máxima calidad)",
-          "Estampado en 3 áreas (frente + espalda + manga)",
-          "Hasta 4 revisiones + retoque pro del diseño",
-          "Tu diseño puede aparecer en el catálogo",
-          "Empaque premium + entrega prioritaria"
-        ]
-      }
+    window.PAGE_CONFIG = {
+      characterName: "Hisoka",
+      voiceSrc: "voces/hisoka.mp3",
+      nextHref: "itachi.html",
+      nextVoiceSrc: "voces/itachi.mp3",
+      phoneNumber: "56920282860",
+      images: [
+        { src: "imagenes/hisoka/hisoka1.png", owner: "Emilio Contreras", tier: "silver" },
+        { src: "imagenes/hisoka/hisoka2.png", owner: "María Pérez", tier: "gold" },
+        { src: "imagenes/hisoka/hisoka3.png", owner: "Carlos Gómez", tier: "platinum" },
+        { src: "imagenes/hisoka/hisoka4.png", owner: "Lucía Torres", tier: "silver" }
+      ]
     };
-
-    const planName = document.getElementById("planName");
-    const planPrice = document.getElementById("planPrice");
-    const planFeatures = document.getElementById("planFeatures");
-    const wspBtn = document.getElementById("wspBtn");
-
-    const phoneNumber = "56920282860";
-
-    function setPlan(planKey) {
-      const p = plans[planKey];
-
-      planName.textContent = p.label;
-      planPrice.textContent = p.price;
-
-      planFeatures.innerHTML = "";
-      p.features.forEach((f) => {
-        const li = document.createElement("li");
-        li.textContent = f;
-        planFeatures.appendChild(li);
-      });
-
-      const msg =
-        `Hola! Quiero comprar una camiseta personalizada (Camisetas Únicas).\n` +
-        `Diseño inspirado en: Hisoka\n` +
-        `Plan elegido: ${p.label}\n` +
-        `Precio: ${p.price}\n` +
-        `¿Qué tallas y colores tienes disponibles?`;
-
-      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
-      wspBtn.href = url;
-    }
-
-    setPlan("silver");
-
-    document.getElementById("glass-silver").addEventListener("change", () => setPlan("silver"));
-    document.getElementById("glass-gold").addEventListener("change", () => setPlan("gold"));
-    document.getElementById("glass-platinum").addEventListener("change", () => setPlan("platinum"));
   </script>
+
+  <!-- ✅ Lógica global -->
+  <script src="js/page-ui.js"></script>
+
+  <!-- ✅ ECG PRO (JS) -->
+  <script src="js/ecg-pro.js"></script>
 
 </body>
 </html>
